@@ -1,0 +1,10 @@
+# Ignoring Data and Objects Directory
+# Code
+# Notes
+**/.idea
+**/.log
+**/.pyc
+**/__pycache__/
+**/Data/
+!Projects\Dictionary\Data
+PythonVirtualEnvs
