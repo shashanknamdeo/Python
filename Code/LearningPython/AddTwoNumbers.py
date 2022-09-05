@@ -5,6 +5,3 @@ def addTwoNumbers(a,b):
 # print(addTwoNumbers(5,10))
 
 print(addTwoNumbers(int(input("Enter the first number: ")),int(input("Enter the first number: "))))
-
-num1 = int(input("Enter the first number: "))
-print(addTwoNumbers(num1 ,15))
