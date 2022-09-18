@@ -4,7 +4,11 @@ def toCheckEvenOrOdd(val):
     else:
         return 1
 
-def binarysearch(given_list,element):
+def binarySearch(given_list, element):
+    """
+    given_list=[r for r in range(1,101)]
+    binarySearch(given_list=given_list, element=51)
+    """
     low=0
     high=len(given_list)-1
     while (high-low)>0:
