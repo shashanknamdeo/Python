@@ -68,7 +68,26 @@ Upload Code as File
 
 Test against custom input
 """
-
+def toCheckInteger(n):
+    import math
+    a = math.floor(n)
+    b = n/a
+    if b == 1.0:
+        # n is integer
+        return 0
+    else:
+        # n is non integer
+        return 1
 
 def kangaroo(x1, v1, x2, v2):
-    j=(x1-x2)/(v2-v1)
+    if v1 != v2:
+        j=(x1-x2)/(v2-v1)
+        if j >= 1 :
+            if toCheckInteger(j) == 0:
+                return 'YES'
+            else:
+                return 'NO'
+        else:
+            return 'NO'
+    else:
+        return 'NO'

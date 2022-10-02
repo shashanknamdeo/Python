@@ -1,0 +1,4 @@
+import requests as rq
+url = "web page address"
+r = rq.get(url)
+htmlContent = r.content
