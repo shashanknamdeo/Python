@@ -6,7 +6,7 @@ import math
 # import KiteConnectSysPath
 # from GlobalVariables import DROPBOX_TRADING_OPTION_CHAIN_DATA_DIR
 
-DROPBOX_TRADING_OPTION_CHAIN_DATA_DIR = r'D:\Trading\OptionChainData'
+DROPBOX_TRADING_OPTION_CHAIN_DATA_DIR = r'D:\OptionChainData'
 
 # from LibSaveDataFrameToDisk import saveDataFrameToDisk
 # from LibLoadDataFrameFromDisk import loadCSVFileFromDirectoryIntoDataFrame
@@ -176,12 +176,10 @@ def getOptionChainData(optionChainDF, instrument, option_type, expiry_date):
 
 def getOptionChainDataFiltered(optionChainDF, instrument=None, option_type=None, expiry_date=None, strike_price=None):
     """
-
     instrument = 'BANKNIFTY'
     option_type = 'CE'
     expiry_date = '29-Sep-2022'
     strike_price = 40000
-
     getOptionChainData(optionChainDF)
     getOptionChainData(optionChainDF, strike_price=40000)
     getOptionChainData(optionChainDF, instrument, option_type, expiry_date, strike_price)
@@ -211,7 +209,6 @@ def getOptionChainExpiryDateData(optionChainDF, instrument, expiry_date):
     optionChainDF = fetchNseOptionChainData()
     instrument = 'BANKNIFTY'
     expiry_date = '29-Sep-2022'
-
     getOptionChainStrikePriceData(getOptionChainExpiryDateData(optionChainDF, instrument='BANKNIFTY', expiry_date='29-Sep-2022'),
         instrument='BANKNIFTY', strike_price=42500)
     """
@@ -401,8 +398,7 @@ def fetchAndSaveNseOptionChainData(expiry_date, option_type):
     if not os.path.exists(directory_path):
         os.makedirs(directory_path)
     # 
-    # while (current_time <= end_time):
-    while(true):
+    while (current_time <= end_time):
         try:
             optionChainDF = fetchNseOptionChainData()
             saveDataFrameToDisk(dataframe_to_save=optionChainDF, directory_path=directory_path, file_extension='csv')
@@ -516,9 +512,7 @@ if __name__ == '__main__':
     parser.add_argument('--option_type', '-ot', required=False, help='CE/PE', default='CE')
     parser.add_argument('--run_type', '-rt', required=False, help='Manual/Auto', default='Auto')
     args = parser.parse_args()
-    print(11)
     expiry_date = tryConvertStringToDate(date_string=args.expiry_date, output_date_format='%d-%b-%Y')
-    print(22)
     # 
     if  args.run_type.lower() == 'auto':
         fetchAndSaveNseOptionChainData(expiry_date, option_type=args.option_type)
