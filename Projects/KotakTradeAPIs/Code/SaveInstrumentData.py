@@ -1,28 +1,43 @@
-Username = 'SN28092002'
-Passward = '_Sknam28'
-Consumer_Key = '7Sivw6iASSCFNNgQia16uhbUQ98a'
-Consumer_Secret = '3PzkUybzXXZOftP5Ap5iV5mJ2NYa'
-Access_Token = 'b8171848-872e-3a12-a529-28bada211c56'
-Access_Code = '5269'
+username = 'SN28092002'
+passward = '_Sknam28'
+consumer_key = '7Sivw6iASSCFNNgQia16uhbUQ98a'
+consumer_secret = '3PzkUybzXXZOftP5Ap5iV5mJ2NYa'
+access_token = 'b8171848-872e-3a12-a529-28bada211c56'
+access_code = '5269'
 
 from ks_api_client import ks_api
 from datetime import datetime
+from pprint import pprint
+import pandas as pd
 import time
 
-client = ks_api.KSTradeApi(access_token = Access_Token , userid = Username, \
-                consumer_key = Consumer_Key, ip = "127.0.0.1", app_id = Consumer_Secret)
+client = ks_api.KSTradeApi(access_token = access_token , userid = username, \
+                consumer_key = consumer_key, ip = "127.0.0.1", app_id = consumer_secret)
 
 # Get session for user
-client.login(password = Passward)
+client.login(password = passward)
 
-client.session_2fa(access_code = Access_Code)
+session_2fa = client.session_2fa(access_code = access_code)
+pprint(session_2fa)
+
+# -------------------------------------------------------------------------------------------------
+
+import inspect
+inspect.getsourcelines((client.positions))
+
+client.positions(position_type = 'TODAYS')
+client.positions(position_type = 'OPEN')
+client.positions(position_type = 'STOCKS')
+
+
+
+_dict = client.quote(instrument_token = 91623)['success'][0]
+pd.DataFrame(_dict, index=[0])
+
 
 def getLatestLTP():  
     try:
-        # Get full quote details
-        temp_quote_list = client.quote(instrument_token = 91623)
-        quote_list = temp_quote_list['success']
-        quote_dict = quote_list[0]
+        # Get full quote detail
         ltp = float(quote_dict['ltp'])
         print(ltp)
     
