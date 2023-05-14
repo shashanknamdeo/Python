@@ -6,10 +6,13 @@ Access_Token = 'b8171848-872e-3a12-a529-28bada211c56'
 
 
 from ks_api_client import ks_api
+from pprint import pprint
+import pandas as pd
+
+
 # Defining the host is optional and defaults to https://tradeapi.kotaksecurities.com/apim
 # See configuration.py for a list of all supported configuration parameters.
-client = ks_api.KSTradeApi(access_token = Access_Token , userid = Username, \
-                consumer_key = Consumer_Key, ip = "127.0.0.1", app_id = Consumer_Secret)
+client = ks_api.KSTradeApi(access_token = Access_Token , userid = Username, consumer_key = Consumer_Key, ip = "127.0.0.1", app_id = Consumer_Secret)
 
 # Get session for user
 client.login(password = '_Sknam28')
