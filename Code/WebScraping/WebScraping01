@@ -1,6 +1,6 @@
 import requests
 url = "web page address"
-r = request.get(url)
+r = requests.get(url)
 htmlContent = r.content
 
 
@@ -21,6 +21,14 @@ soup = bs(htmlContent, 'html.parser')
 table = soup.tbody
 
 tr_list = table.find_all('tr')
+
+# To save HTML content
+import requests
+url = "https://preferred.kotaksecurities.com/security/production/TradeApiInstruments_Cash_15_05_2023.txt"
+r = requests.get(url)
+htmlContent = r.content
+with open('fnoinstrument1.csv', 'wb+') as f:
+    f.write(htmlContent.content)
 
 
 
@@ -106,5 +114,3 @@ def getDateOfFnoStock(FNO_stock_list, tr_list, verbose=0):
             pass
     FNO_stock_sorted_dict = sortDictionaryByValues(dict=FNO_stock_dict)
     return FNO_stock_sorted_dict
-
-
