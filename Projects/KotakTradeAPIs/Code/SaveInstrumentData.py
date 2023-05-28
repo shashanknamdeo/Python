@@ -128,7 +128,8 @@ print("Token list updated")
 #
 if len(instrument_name_list) == len(instrument_token_list) and len(instrument_name_list) == len(file_name_list):
     flag = ''
-    while time.strftime("%H%M%S") <= '230000' and flag == '':
+    # while time.strftime("%H%M%S") <= '230000' and flag == '':
+    while time.strftime("%H%M%S") <= '230000':
         for i in range(0,len(instrument_name_list)):
             # print(instrument_token_list[i]) if verbose >=1 else None
             value_string = getLatestquote(token_no = int(instrument_token_list[i]))
@@ -136,8 +137,8 @@ if len(instrument_name_list) == len(instrument_token_list) and len(instrument_na
                 f.write(value_string + '\n')
                 f.close()
         #
-        # time.sleep(5)
-        flag = str(input("enter desision :"))
+        time.sleep(300)
+        # flag = str(input("enter desision :"))
 
 
 
