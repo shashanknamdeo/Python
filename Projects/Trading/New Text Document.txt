@@ -1,0 +1,18 @@
+insertPostgresDatabse(database='', table_name='', data_to_insert={}/[{}..])
+deletePostgresDatabse(database='', table_name='', data_to_delete={}/[{}..])
+updatePostgresDatabse(database='', table_name='', data_to_update={}/[{}..])
+fetchPostgresDatabse(database='',  table_name=''  data_to_fetch={}/[{}..])
+
+DROP TABLE IF EXISTS instrument_statistics;
+CREATE TABLE instrument_statistics(
+    instrument_name      TEXT NOT NULL,
+    trading_date         TEXT NOT NULL,
+    backtesting_date     TEXT NOT NULL,
+    high_low_range       INTEGER,
+    trading_day_type     TEXT,
+    gapup_gapdown_flag   TEXT,
+    gapup_gapdown_points INTEGER,
+    comments             TEXT,
+    PRIMARY KEY (instrument_name, trading_date, backtesting_date),
+    CONSTRAINT fk_trading_day_type FOREIGN KEY(trading_day_type) REFERENCES trading_day_types(trading_day_type)
+);

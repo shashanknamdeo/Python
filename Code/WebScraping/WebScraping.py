@@ -114,3 +114,17 @@ def getDateOfFnoStock(FNO_stock_list, tr_list, verbose=0):
             pass
     FNO_stock_sorted_dict = sortDictionaryByValues(dict=FNO_stock_dict)
     return FNO_stock_sorted_dict
+
+# To download instrument tokens
+"""
+equity tokens URL =   https://preferred.kotaksecurities.com/security/production/TradeApiInstruments_Cash_15_05_2023.txt
+fno tokens URL =   https://preferred.kotaksecurities.com/security/production/TradeApiInstruments_FNO_11_05_2023.txt
+"""
+
+import requests
+url = "https://preferred.kotaksecurities.com/security/production/TradeApiInstruments_FNO_11_05_2023.txt"
+r = requests.get(url)
+htmlContent = r.content
+with open('fnoinstrument1', 'wb+') as f:
+    f.write(htmlContent.content)
+
