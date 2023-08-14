@@ -1,6 +1,0 @@
-[ x for j in range(0, 10) for x in range(0,10)]
-[ x+j for j in range(0, 10) for x in range(0,10)]
-[ x+j for j in range(0, 10) for x in range(0,10)]
-->list = [i for i in range(11) if i % 2 == 0]
-  print(list)
-->matrix = [[j for j in range(3)] for i in range(3)]
