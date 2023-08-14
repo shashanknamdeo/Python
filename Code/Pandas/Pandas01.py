@@ -1,8 +1,8 @@
-file_name = r'C:\Users\Notebook\Downloads\Orders\Orders01.csv'
+file_name = r'G:\My Drive\TradeData\IndexData\ZerodhaData\NIFTY\15MINUTE\MONTHLY\202301.csv'
 
 import pandas as pd
 
-orderDF = pd.read_csv(file_name)
+DF = pd.read_csv(file_name)
 
 # To count no. of names in row 
 ordersDF.value_counts('row name')
