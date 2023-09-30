@@ -141,6 +141,13 @@ if len(instrument_name_list) == len(instrument_token_list) and len(instrument_na
         # flag = str(input("enter desision :"))
 
 
+client.quote(token_no)['success'][0]
+
+def getLTP():
+    ltp = float(client.quote(18100)['success'][0]['ltp'])
+    time = datetime.now().strftime("%H%M%S")
+    return time, ltp
+
 
 
 

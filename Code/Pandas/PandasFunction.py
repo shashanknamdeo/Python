@@ -15,7 +15,7 @@ pd.DataFrame(list(details.items()), columns = ['Name', 'rol_no'])
     # To Resets the options
     pd.reset_option('all')
 
-# To see top n rowsof dataframe
+# To see top n rows of dataframe
 df.head('n')
 
 # To slice Dataframe
@@ -24,6 +24,8 @@ df[:]
 # To describe values of a perticular ColumnS
 df[["column1","column2"]].describe(include="all")
 
+# drop a column name 'A'
+df.drop(['A'], axis=1)
 
 # To drop the column/row with null values
 df.dropna()
@@ -54,6 +56,10 @@ df.index[df['points']==7].tolist()
 # to get value of a column at a peticular index
 df._get_value('index_no', 'column_name')
 
+# to get full row
+df.iloc['row no'] # vertically
+df.iloc[['row no']] # horizontally
+
 # to fill none value of a column wit its previous filled value
 nba["College"].fillna( method ='ffill', inplace = True)
 
@@ -64,3 +70,5 @@ nba["College"].fillna( method ='ffill', inplace = True)
 # to reset index and drop previous index
 df.reset_index(inplace = True, drop = True)
 
+# to get instrument token value at which instrumentName == 'instrument_name' , expiry == 'expiry_date' etc
+instrument_token = token_df[(token_df.instrumentName == 'instrument_name') & (token_df.expiry == 'expiry_date') & (token_df.strike == 'strike_price') & (token_df.optionType == 'option_type')].instrumentToken.values[0]
