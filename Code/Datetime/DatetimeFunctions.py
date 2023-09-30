@@ -33,9 +33,13 @@
 %%         A literal ‘%’ character                                         %
 """
 
-datetime.strptime(i, format_data) strftime
+datetime.strptime(i, 'data_fornat')
 # example  datetime.strptime('2023-01-03T15:25:00', "%Y-%m-%dT%H:%M:%S") -> datetime.datetime(2023, 1, 3, 15, 25)
 
-formatted = now.strftime(format_data)
+formatted = datetime.now().strftime('data_fornat')
 # example   datetime.now().strftime("%Y%m%d_%H%M") -> '20230103_1525'
 
+
+# timedelta
+# Syntax : datetime.timedelta(days=0, seconds=0, microseconds=0, milliseconds=0, minutes=0, hours=0, weeks=0) 
+date_after_two_day = datetime.now() + timedelta(days = 2)
