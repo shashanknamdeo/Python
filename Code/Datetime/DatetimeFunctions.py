@@ -43,3 +43,9 @@ formatted = datetime.now().strftime('data_fornat')
 # timedelta
 # Syntax : datetime.timedelta(days=0, seconds=0, microseconds=0, milliseconds=0, minutes=0, hours=0, weeks=0) 
 date_after_two_day = datetime.now() + timedelta(days = 2)
+
+# replace
+Date.replace()
+# Syntax : datetime.replace(days=0, seconds=0, microseconds=0, milliseconds=0, minutes=0, hours=0, weeks=0) 
+# Date = date(2010, 2, 12) -> 2010-02-12
+# Date.replace(month=5) -> 2010-05-12
