@@ -24,7 +24,7 @@ df[:]
 # To describe values of a perticular ColumnS
 df[["column1","column2"]].describe(include="all")
 
-# drop a column name 'A'
+# drop a column name 'A' (axis=1 for column)
 df.drop(['A'], axis=1)
 
 # To drop the column/row with null values
@@ -72,3 +72,6 @@ df.reset_index(inplace = True, drop = True)
 
 # to get instrument token value at which instrumentName == 'instrument_name' , expiry == 'expiry_date' etc
 instrument_token = token_df[(token_df.instrumentName == 'instrument_name') & (token_df.expiry == 'expiry_date') & (token_df.strike == 'strike_price') & (token_df.optionType == 'option_type')].instrumentToken.values[0]
+
+# To get the list of index having row with none values in cloumn_1 and cloumn_2
+df[(df.cloumn_1.isnull()) | (df.cloumn_2.isnull())].index.to_list()
