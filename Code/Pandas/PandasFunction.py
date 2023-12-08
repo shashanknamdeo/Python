@@ -64,8 +64,8 @@ df.iloc[['row no']] # horizontally
 nba["College"].fillna( method ='ffill', inplace = True)
 
 # Merge
-    # to merge 'Grade', 'Name' column of df2 with df1 on 'name' column
-    df1.merge(df2[['Grade', 'Name']], on = 'Name', how = 'left')
+# to merge 'Grade', 'Name' column of df2 with df1 on 'name' column
+df1.merge(df2[['Grade', 'Name']], on = 'Name', how = 'left')
 
 # to reset index and drop previous index
 df.reset_index(inplace = True, drop = True)
@@ -75,3 +75,22 @@ instrument_token = token_df[(token_df.instrumentName == 'instrument_name') & (to
 
 # To get the list of index having row with none values in cloumn_1 and cloumn_2
 df[(df.cloumn_1.isnull()) | (df.cloumn_2.isnull())].index.to_list()
+
+# to view some basic statistical details like percentile, mean, std, etc. 
+# Parameters: 
+# percentile: list like data type of numbers between 0-1 to return the respective percentile (ex: percentiles=[.20, .40, .60, .80])
+# include: List of data types to be included while describing dataframe. Default is None (ex: include=['object', 'float', 'int'])
+# exclude: List of data types to be Excluded while describing dataframe. Default is None (ex: exclude=['object', 'float', 'int'])
+# Return type: Statistical summary of data frame
+df.describe(percentiles=None, include=None, exclude=None)
+df.describe().T # rotate describe table by 90 degree
+
+df.size    # To return size of dataframe/series which is equivalent to total number of elements. That is rows x columns.
+df.shape   # To return tuple of shape (Rows, columns) of dataframe/series
+df.ndim    # To Returns dimension of dataframe/series. 1 for one dimension (series), 2 for two dimension (dataframe)
+
+# To find the co-relation between columns of DataFrame
+df.corr()
+
+# To find difference between column values
+df.Close.diff(periods = 1, axis=1)
