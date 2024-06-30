@@ -63,6 +63,9 @@ df.iloc[['row no']] # horizontally
 # to fill none value of a column wit its previous filled value
 nba["College"].fillna( method ='ffill', inplace = True)
 
+# to fill none value of a column with 0
+df['column_name'] = df['column_name'].fillna(0)
+
 # Merge
 # to merge 'Grade', 'Name' column of df2 with df1 on 'name' column
 df1.merge(df2[['Grade', 'Name']], on = 'Name', how = 'left')
@@ -94,3 +97,6 @@ df.corr()
 
 # To find difference between column values
 df.Close.diff(periods = 1, axis=1)
+
+# To create new df with clumns of old df
+new_df = old_df[['col1','col2']].copy()
