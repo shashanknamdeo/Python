@@ -38,11 +38,11 @@ GOTO :END
 	GOTO :END
 :OPTION2
     git add .
-	git commit -m "Shirish Update"
+	git commit -m "Shashank Update"
 	GOTO :END
 :OPTION3
 	git add .
-	git commit -m "Shirish Update"
+	git commit -m "Shashank Update"
 	git push origin
 	GOTO :END
 :OPTION4
