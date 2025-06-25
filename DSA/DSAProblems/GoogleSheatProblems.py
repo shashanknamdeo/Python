@@ -122,3 +122,12 @@ def arrayReverse(array):
     else:
         return oddArrayReverse(array=array, length=n)
 
+
+def arrayReverse(array):
+    """
+    """
+    n = len()
+    mid = n
+    for i in range(0, ):
+
+
