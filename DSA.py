@@ -37,7 +37,7 @@ Algorithms
 1. Sorting
     Bubble, Selection, Insertion
     Merge Sort
-    Quick Sort
+    Quick Sort (Quick select)
     Counting / Radix Sort
 
 2. Searching
@@ -72,6 +72,11 @@ Algorithms
 9. Two Pointer Technique
 
 10. Union_Find / Disjoint Set
+
+
+Quick select
+
+
 """
 
 # _____________________________________________________________________________________________
