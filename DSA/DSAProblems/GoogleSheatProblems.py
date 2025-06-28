@@ -141,112 +141,130 @@ def arrayReverse(array):
 def maxSubArray(self, nums):
     """
     find the continous sub array having maximum sum
+    Kadane’s Algorithm
+        1. start a new sub array
+        2. extend subarray
     """
-init_flag       = False       # express that is there any item in sub string
-    for item in nums:
-
-
-if init_flag == False:
-    sub_array       = []
-    negetive_sum    = None
-    negative_flag   = False   # express that are we incounterd with a negestive sum which is not normalise by positive sum
-    # 
-    if item < 0 :
-        continue
-    else :
-        init_flag = True
-        sub_array.append(item)
-# 
-else:
-    if negative_flag == False:
-        if item > 0:
-            handelpositiveItem()
+    def maxSubArray(self, nums):
+        max_current = max_global = nums[0]
         # 
-        elif item < 0:
-            handelNegativeItem(item=item, negetive_sum=negetive_sum, negative_flag=negative_flag, sub_array=array, init_flag=init_flag)
-    # 
-    if negative_flag == True:
-        handelNegativeItem(item=item, negetive_sum=negetive_sum, negative_flag=negative_flag, sub_array=array, init_flag=init_flag)
+        for i in range(1, len(nums)):
+            max_current = max(nums[i], max_current + nums[i]) # condition - start a new sub array / extend subarray
+            max_global = max(max_global, max_current)
+        # 
+        return max_global
 
 
-def handelpositiveItem(item=item, negetive_sum=negetive_sum, negative_flag=negative_flag, sub_array=array, init_flag=init_flag):
+def containsDuplicate(self, nums):
     """
     """
-    if negative_flag == False and item > 0:
-        sub_array.append(item)
-    # 
-    elif negative_flag == True:
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def handelNegativeItem(item, negetive_sum, negative_flag, sub_array, init_flag):
-    """
-    """
-    if negative_flag == False :
-        if sub_array.sum() + item >= 0 :
-            sub_array.append(item)
-            negative_flag = True
-            negetive_sum = item
+    nums.sort()
+    prev_item = nums[0]
+    for i in range(1, len(nums)):
+        if prev_item == nums[i]:
+            return True
         else:
-            init_flag = False
-            return
+            prev_item = nums[i]
     # 
-    else:
-        if sub_array.sum() + item < 0:
-            init_flag = False
-            return
-        else:
+    return False
 
 
-
-
-
-1,2,-2,1,-1
-
-
-
-# devide and conquer menthord
-#     divide the arrray in single element substring
-#     if add subarray  to other is make the the sum grater than add it
-#     otherwise left it
-
-
-def maxSubArray(self, nums):
+def minimizeChocolateDifference(array, m):
     """
-    find the continous sub array having maximum sum
-    Divide and Conquer
-    """
-
-
-
-
-def getLargestSumSubarray(array):
-    """
-    """
-    # divide
+    Chocolate Distribution Problem
     
-    # base case
-    if 
+    Given an array arr[] of n integers where arr[i] represents the number of chocolates in ith packet.
+    Each packet can have a variable number of chocolates.
+    There are m students
+    the task is to distribute chocolate packets such that: 
+    Each student gets exactly one packet.
+    The difference between the maximum and minimum number of chocolates in the packets given to the students is minimized.
+    """
+    array.sort()
+    print(array)
+    min_diff = array[-1]
+    for i in range(0, len(array)-m+1):
+        min_diff = min(array[i+m-1] - array[i], min_diff)
+        print(min_diff)
+    # 
+    return min_diff
 
 
-hash
+def search(array, target):
+    """
+    def search(self, array, target):
+    """
+    pivort = searchPivot(array)
+    pivort_index = array.index(pivort)
+    array = array[pivort_index:] + array[:pivort_index]
+    print(array)
+    try:
+        index = array.index(target)
+    except ValueError as e:
+        return -1
+    # 
+    print(index, pivort_index)
+    if index + pivort_index < len(array):
+        return index + pivort_index
+    else :
+        return index + pivort_index - len(array)
+
+
+def searchPivot(array):
+    """
+    """
+    print(array)
+    array_len = len(array)
+    # 
+    if array_len == 1 :
+        return array[0]
+    # 
+    elif array_len > 1 :
+        m1, m2 = array_len//2-1, array_len//2
+        # 
+        if array[0] > array[m1]: # first half is unsorted
+            return searchPivot(array=array[:m1+1])
+                # 
+        # 
+        elif array[m2] > array[-1] : # second half is unsorted
+            return searchPivot(array=array[m2:])
+        # 
+        else : # both are sorted
+            if array[0] < array[m2]:
+                return array[0]
+            else:
+                return array[m2]
+
+
+
+def nextPermutation(array):
+    """
+    https://leetcode.com/problems/next-permutation/
+    nextPermutation(self, nums)
+    """
+    len_array = len(array)
+    # 
+    sorted_array = array.copy()
+    sorted_array.sort()
+    sorted_array.reverse()
+    if array == sorted_array:
+        array.reverse()
+        return array
+    # 
+    sub_array = [array[-1]]
+    for i in range(2,len_array+1):
+        if array[-i] > array[1-i]:
+            sub_array.append(array[-i])
+        else:
+            sub_array.append(array[-i])
+            sub_array.sort()
+            just_big_num = sub_array[1+sub_array.index(array[-i])]
+            print(sub_array, 1+sub_array.index(array[-i]))
+            sub_array.pop(1+sub_array.index(array[-i]))
+            return array[:-i] + [just_big_num] + sub_array
 
 
 
 
-
-
-
+123
+132
