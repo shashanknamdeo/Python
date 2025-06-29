@@ -148,14 +148,13 @@
 #         1. start a new sub array
 #         2. extend subarray
 #     """
-#     def maxSubArray(self, nums):
-#         max_current = max_global = nums[0]
-#         # 
-#         for i in range(1, len(nums)):
-#             max_current = max(nums[i], max_current + nums[i]) # condition - start a new sub array / extend subarray
-#             max_global = max(max_global, max_current)
-#         # 
-#         return max_global
+#     max_current = max_global = nums[0]
+#     # 
+#     for i in range(1, len(nums)):
+#         max_current = max(nums[i], max_current + nums[i]) # condition - start a new sub array / extend subarray
+#         max_global = max(max_global, max_current)
+#     # 
+#     return max_global
 
 
 # # -------------------------------------------------------------------------------------------------
@@ -366,56 +365,191 @@
 # # -------------------------------------------------------------------------------------------------
 
 
-def trap(array):
+# def trap(array):
+#     """
+#     """
+#     len_array = len(array)
+#     # 
+#     max_hight = 0
+#     max_hight_array = []
+#     # 
+#     for i in range(0,len_array):
+#         if array[i] > max_hight:
+#             max_hight = array[i]
+#             max_hight_array = [i]
+#         # 
+#         elif array[i] == max_hight:
+#             max_hight_array.append(i)
+#     print('max_hight :', max_hight, "max_hight_array", max_hight_array)
+#     # 
+#     total_volume = max_hight*len_array
+#     # 
+#     # subtract left blank volume
+#     left_blank_volume = max_hight - array[0]
+#     temp_hight = array[0]
+#     # 
+#     for item in array[1:max_hight_array[0]+1]:
+#         if item > temp_hight:
+#             left_blank_volume += max_hight - item
+#             temp_hight = item
+#         # 
+#         else:
+#             left_blank_volume += max_hight - temp_hight
+#     # 
+#     # subtract right blank volume
+#     reverse_array = array[max_hight_array[-1]:]
+#     reverse_array.reverse()
+#     print(reverse_array)
+#     right_blank_volume = max_hight - reverse_array[0]
+#     temp_hight = reverse_array[0]
+#     # 
+#     for item in reverse_array[1:]:
+#         if item > temp_hight:
+#             right_blank_volume += max_hight - item
+#             temp_hight = item
+#         # 
+#         else:
+#             right_blank_volume += max_hight - temp_hight
+#     # 
+#     print('total_volume : ', total_volume, 'left_blank_volume : ', left_blank_volume, 'right_blank_volume : ', right_blank_volume, 'sum(array) : ', sum(array))
+#     return total_volume - left_blank_volume - right_blank_volume - sum(array)
+
+
+# # # -------------------------------------------------------------------------------------------------
+
+
+# def productExceptSelf(array):
+#     """
+#     """
+#     if 0 in array:
+#         zero_index = array.index(0)
+#         temp_array = array.copy()
+#         temp_array.pop(zero_index)
+#         if 0 not in temp_array:
+#             answer_array = []
+#             # 
+#             total_mult = 1
+#             for item in temp_array:
+#                 total_mult = total_mult*item
+#             # 
+#             for item in array:
+#                 if item != 0:
+#                     answer_array.append(0)
+#                 else:
+#                     answer_array.append(total_mult)
+#             # 
+#             return answer_array
+#         else:
+#             answer_array = []
+#             # 
+#             for i in range(0,len(array)):
+#                 answer_array.append(0)
+#             # 
+#             return answer_array
+#     # 
+#     else:
+#         answer_array = []
+#         # 
+#         total_mult = 1
+#         for item in array:
+#             total_mult = total_mult*item
+#         # 
+#         for item in array:
+#             answer_array.append(total_mult//item)
+#         # 
+#         return answer_array
+
+
+# def productExceptSelf(nums):
+#     n = len(nums)
+#     answer = [1] * n
+    
+#     # Step 1: Prefix product
+#     prefix = 1
+#     for i in range(n):
+#         answer[i] = prefix
+#         prefix *= nums[i]
+#         # 
+#     # Step 2: Suffix product
+#     suffix = 1
+#     for i in range(n - 1, -1, -1):
+#         answer[i] *= suffix
+#         suffix *= nums[i]
+#         # 
+#     return answer
+
+
+def maxProduct(array):
     """
     """
     len_array = len(array)
-    # 
-    max_hight = 0
-    max_hight_array = []
-    # 
-    for i in range(0,len_array):
-        if array[i] > max_hight:
-            max_hight = array[i]
-            max_hight_array = [i]
-        # 
-        elif array[i] == max_hight:
-            max_hight_array.append(i)
-    print('max_hight :', max_hight, "max_hight_array", max_hight_array)
-    # 
-    total_volume = max_hight*len_array
-    # 
-    # subtract left blank volume
-    left_blank_volume = max_hight - array[0]
-    temp_hight = array[0]
-    # 
-    for item in array[1:max_hight_array[0]+1]:
-        if item > temp_hight:
-            left_blank_volume += max_hight - item
-            temp_hight = item
-        # 
+    zero_index = []
+    sign_array = []
+    sign_flag = 1
+    neg_num = 0
+    neg_flag = False
+    for i in range(0, len_array):
+        if array[i] != 0:
+            if array[i] < 0:
+                sign_flag *= -1
         else:
-            left_blank_volume += max_hight - temp_hight
-    # 
-    # subtract right blank volume
-    reverse_array = array[max_hight_array[-1]:]
-    reverse_array.reverse()
-    print(reverse_array)
-    right_blank_volume = max_hight - reverse_array[0]
-    temp_hight = reverse_array[0]
-    # 
-    for item in reverse_array[1:]:
-        if item > temp_hight:
-            right_blank_volume += max_hight - item
-            temp_hight = item
+            zero_index.append(i)
+            sign_array.append(sign_flag)
         # 
-        else:
-            right_blank_volume += max_hight - temp_hight
+        if array[i] < 0:
+            neg_num += 1
+            neg_flag = True
     # 
-    print('total_volume : ', total_volume, 'left_blank_volume : ', left_blank_volume, 'right_blank_volume : ', right_blank_volume, 'sum(array) : ', sum(array))
-    return total_volume - left_blank_volume - right_blank_volume - sum(array)
+    len_zero = len(zero_index)
+    if len_zero > 0:
+        for i in range(0, len_zero):
+            raise 'exception 1'
+    # 
+    else:
+        if neg_num % 2 == 0 : # # Odd Number Of Negetive
+            print('Even Number Of Negetive')
+            return multiplyArrayProduct(array=array, start_index=0, end_index=len_array)
+        # 
+        else: # Odd Number Of Negetive
+            first_neg, last_neg = findIndexOfFirstAndLastNegative(array=array, len_array=len_array)
+            # 
+            mult_except_last_neg  = multiplyArrayProduct(array=array, start_index=0, end_index=last_neg)
+            mult_except_first_neg = multiplyArrayProduct(array=array, start_index=first_neg+1, end_index=len_array)
+            print('Odd Number Of Negetive')
+            return max(mult_except_last_neg, mult_except_first_neg)
 
 
-arr = [4,2,0,3,2,5]
+def findIndexOfFirstAndLastNegative(array, len_array):
+    """
+    """
+    first_neg = None
+    last_neg = None
+    # 
+    for i in range(0, len_array):
+        if array[i] < 0:
+            first_neg = i
+    # 
+    for i in range(1, len_array+1):
+        if array[-i] < 0:
+            last_neg = len_array-i
+    # 
+    print('findIndexOfFirstAndLastNegative : ', 'first_neg : ', first_neg , 'last_neg : ', last_neg)
+    return first_neg, last_neg
 
-print(trap(array=arr))
+
+def multiplyArrayProduct(array, start_index, end_index):
+    """
+    """
+    mult = 1
+    # 
+    for i in range(start_index, end_index):
+        mult *= array[i]
+    # 
+    return mult
+
+
+
+
+arr = [2,3,-2,4]
+
+print(maxProduct(array=arr))
