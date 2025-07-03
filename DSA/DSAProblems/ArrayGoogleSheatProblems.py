@@ -730,44 +730,106 @@ def mergeOverlappingIntervals(array):
 # # -------------------------------------------------------------------------------------------------
 
 
-def formBiggestNumber(array):
-    """
-    """
-    str_array = []
-    for item in array:
-        str_array.append(str(item))
-    # 
-    str_array.sort()
-    str_array.reverse()
-    print(str_array)
-    # 
-    max_str =''
-    pointer_1 = str_array[0]
-    pointer_2 = str_array[1]
-    for item in str_array[2:] + ['0','0']:
-        print(max_str)
-        if int(pointer_1 + pointer_2) >= int(pointer_2 + pointer_1):
-            max_str += pointer_1
-            pointer_1 = item
-        # 
-        else:
-            max_str += pointer_2
-            pointer_2 = item
-    # 
-    return max_str
+# def formBiggestNumber(array):
+#     """
+#     """
+#     str_array = []
+#     for item in array:
+#         str_array.append(str(item))
+#     # 
+#     str_array.sort()
+#     str_array.reverse()
+#     print(str_array)
+#     # 
+#     max_str =''
+#     pointer_1 = str_array[0]
+#     pointer_2 = str_array[1]
+#     for item in str_array[2:] + ['0','0']:
+#         print(max_str)
+#         if int(pointer_1 + pointer_2) >= int(pointer_2 + pointer_1):
+#             max_str += pointer_1
+#             pointer_1 = item
+#         # 
+#         else:
+#             max_str += pointer_2
+#             pointer_2 = item
+#     # 
+#     return max_str
 
 
+# # -------------------------------------------------------------------------------------------------
 
 
+# Space optimization using bit manipulations
+# not solving this question because it want bit manipulations concept which has question down in sheet
+# so i will understand and use bit manipulations concept later
 
 
+# # -------------------------------------------------------------------------------------------------
 
 
+# def longestSubarrayDivK(array, k):
+#     """
+#     concept:
+#     1. summing array element from fist to last and calculate its remender
+#     2. if that remender occour in past means the sum between past ocuurance and this occurance is a multiple of k
+#     3. save fist and last occurance in dict
+#     4. at last calculate the max diffrence between first and last occurance of every remender
+#     """
+#     len_array = len(array)
+#     rmd_dict = {}
+#     sum = 0
+#     # 
+#     for i in range(0,len_array):
+#         sum += array[i]
+#         rmd = sum % k
+#         # 
+#         if rmd not in rmd_dict:
+#            rmd_dict[rmd] = [i, i]
+#         # 
+#         else:
+#             rmd_dict[rmd][1] = i
+#     # 
+#     max_subarray_len = 0
+#     for key in list(rmd_dict.keys()):
+#         max_subarray_len = max(max_subarray_len, rmd_dict[key][1] - rmd_dict[key][0])
+#     # 
+#     return max_subarray_len
 
 
+# # -------------------------------------------------------------------------------------------------
 
-# arr = [3, 30, 34, 5, 9]
-# arr = [54, 546, 548, 60]
-arr = [3, 4, 6, 5, 9]
 
-print(formBiggestNumber(array=arr))
+# def findCombination(array, r):
+#     """
+#     """
+#     # convert elements to string
+#     str_array = []
+#     for item in array:
+#         str_array.append(str(item))
+#     # 
+#     return recursiveFinding(array=str_array,r=r)
+
+
+# def recursiveFinding(array,r):
+#     """
+#     """
+#     # print('initiate - array : ', array, 'r : ', r)
+#     if r == 1:
+#         return array
+#     # 
+#     # r > 1
+#     fixed_item = array[0]
+#     item_list = []
+#     for i in range(1, len(array)):
+#         # print('internal array : ', array[i:],'r : ', r-1)
+#         rf = recursiveFinding(array[i:],r-1)
+#         # print('rf : ', rf)
+#         for item in rf:
+#             item_list.append(fixed_item + item)
+#         # 
+#         fixed_item = array[i]
+#     # 
+#     # print(item_list)
+#     return item_list
+
