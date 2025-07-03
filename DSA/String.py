@@ -46,3 +46,14 @@ re.escape()     Escapes special character
 re.search()     Searches for first occurrence of character or pattern
 re.findall()    finds and returns all matching occurrences in a list
 re.compile()    Regular expressions are compiled into pattern objects
+
+
+# ord() and chr()
+
+ord() # give numeric value belong to input character (input length = 1)
+
+ord('A') = 65
+
+chr() # give character value belong to input numeric (input length = 1)
+
+chr(65) = 'A'
