@@ -34,3 +34,15 @@ Important String Problems in DSA
     Maximum number of vowels in a substring of length `k`
 
 """
+
+# Regular expresion
+
+import re
+
+# Function        Description
+re.sub()        Replaces all occurrences of a character or patter with a replacement string.
+re.split()      Split string by the occurrences of a character or a pattern.
+re.escape()     Escapes special character
+re.search()     Searches for first occurrence of character or pattern
+re.findall()    finds and returns all matching occurrences in a list
+re.compile()    Regular expressions are compiled into pattern objects
