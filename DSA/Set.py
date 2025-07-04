@@ -2,13 +2,15 @@
 
 # typecasting list to set
 myset = set(["a", "b", "c"])
-print(myset)
- 
+
 # Adding element to the set
 myset.add("d")
-print(myset)
 
-# --------------------------------------------------------------------------------------------------
+# delete element from a set
+myset.remove('d') #  delete a specific element from a set. If the element is not found in the set, it raises a KeyError.
+myset.discard('d') # method can be used to remove an element, and it will not raise an error if the element is not present.
+
+# -------------------------------------------------------------------------------------------------
 
 # a set cannot have duplicate values
 myset = {"Geeks", "for", "Geeks"}
