@@ -122,31 +122,88 @@
 # # -------------------------------------------------------------------------------------------------
 
 
-def printSequence(arr, input):
-    """
-    str = ["2", "22", "222",
-        "3", "33", "333",
-        "4", "44", "444",
-        "5", "55", "555",
-        "6", "66", "666",
-        "7", "77", "777", "7777",
-        "8", "88", "888",
-        "9", "99", "999", "9999"]
-    1. make dict having A-Z having str values
-    2. iterate over input and get numeric value from dict and append it to output string
-    """
+# def printSequence(arr, input):
+#     """
+#     str = ["2", "22", "222",
+#         "3", "33", "333",
+#         "4", "44", "444",
+#         "5", "55", "555",
+#         "6", "66", "666",
+#         "7", "77", "777", "7777",
+#         "8", "88", "888",
+#         "9", "99", "999", "9999"]
+#     1. make dict having A-Z having str values
+#     2. iterate over input and get numeric value from dict and append it to output string
+#     """
 
 
+# # -------------------------------------------------------------------------------------------------
 
 
+# def printDuplicates(s):
+#     """
+#     1. using Counter, count number of occurance of character in string
+#     2. iterate the dict and return character has more than 1 occurance
+#     """
 
 
+# # -------------------------------------------------------------------------------------------------
 
 
+# def lengthOfLongestSubstring(string):
+#     """
+#     """
+#     char_dict = {}
+#     max_string = 0
+#     current_string = []
+#     # 
+#     for char in string:
+#         # print(char)
+#         value = char_dict.get(char, 0) + 1
+#         if value == 2:
+#             if max_string < len(current_string):
+#                 max_string = len(current_string)
+#             # 
+#             current_string = current_string[current_string.index(char)+1:]
+#             current_string.append(char)
+#             char_dict = {c : 1 for c in current_string}
+#         # 
+#         else :
+#             char_dict[char] = value
+#             current_string.append(char)
+#         # 
+#         # print('max_string : ', max_string, 'current_string : ', current_string)
+#     # 
+#     if max_string < len(current_string):
+#                 return len(current_string)
+#     # 
+#     return max_string
 
 
+# # -------------------------------------------------------------------------------------------------
+
+# from collections import defaultdict
 
 
-arr = ["flower","flow","flight"]
+# def characterReplacement(s, k):
+#     # 
+#     count = defaultdict(int)
+#     max_count = 0  # max freq of a single character in the current window
+#     left = 0
+#     result = 0
+#     # 
+#     for right in range(len(s)):
+#         count[s[right]] += 1
+#         max_count = max(max_count, count[s[right]])
+#         # 
+#         # If window is invalid (more than k changes needed), shrink from left
+#         if (right - left + 1) - max_count > k:
+#             count[s[left]] -= 1
+#             left += 1
+#             # 
+#         result = max(result, right - left + 1)
+#         # 
+#     return result
 
-print(longestCommonPrefix(array=arr))
+
+print(characterReplacement(string=string, k=k))
