@@ -252,6 +252,8 @@
 
 # def nextPermutation(array):
 #     """
+#         function give correct answer at cmd
+#         but wrong answer on leatcode and geeks for geeks interpreter
 #     """
 #     sub_array = [array[-1]]
 #     # 
