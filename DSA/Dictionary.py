@@ -18,7 +18,6 @@ d.get("salary", 0)
 
 
 
-
 # Removing Dictionary Items
 
 del         : Removes an item by key.
@@ -39,3 +38,27 @@ key, val = d.popitem()
 
 # Clear all items from the dictionary
 d.clear()
+
+
+
+# Defaultdict in Python
+
+# It is used to provide a default value for a nonexistent key in the dictionary
+
+from collections import defaultdict
+
+# Using int: If you use int as the factory function, the default value will be 0 (since int() returns 0).
+d = defaultdict(int)
+
+# Using list: If you use list as the factory function, the default value will be an empty list ([]).
+d = defaultdict(list)
+
+# Using str: If you use str, the default value will be an empty string ('').
+d = defaultdict(str)
+
+# Defining the dict and passing lambda as default_factory argument
+d = defaultdict(lambda: "Not Present")
+
+
+
+
