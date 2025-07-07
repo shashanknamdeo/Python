@@ -365,29 +365,123 @@
 # # -------------------------------------------------------------------------------------------------
 
 
-def match(wild, pattern):
-    """
-    """
-    len_wild = len(wild)
-    len_pattern = len(pattern)
-    if len_wild > len_pattern:
-        return False
-    # 
-    wild_array = ['' for i in range(len_pattern)]
-    for i in range(len_pattern):
-        if wild[i] == pattern:
-            wild_array.append(pattern[i])
-        elif wild[i] == '?':
-            wild_array.append(pattern[i])
+# def match(wild, pattern):
+#     """
+#     Dynamic programing
+#     Unable to solve now
+#     """
 
 
+# # -------------------------------------------------------------------------------------------------
 
 
-# s1 = "zoomlazapzo"
-# s2 = "oza"
+# def longestPrefixSuffix(string):
+#     """
+#     """
+#     len_string = len(string)
+#     if len_string == 1:
+#         return 0
+#     # 
+#     result_string = ''
+#     rev_string = string[::-1]
+#     # print(rev_string, ' - rev_string')
+#     # 
+#     pivot = 0
+#     start_i = i = 1
+#     while i < len_string:
+#         if rev_string[i] == rev_string[pivot]:
+#             # print(rev_string[i:])
+#             result_string += rev_string[i]
+#             if pivot == 0:
+#                 start_i = i
+#             pivot += 1
+#         # 
+#         elif pivot > 0 and rev_string[i] != rev_string[pivot] :
+#             # print(rev_string[i:], rev_string[i], pivot, rev_string[pivot])
+#             pivot = 0
+#             result_string = ''
+#             i = start_i
+#         # 
+#         i += 1
+#     # 
+#     if len(result_string) == 0 and string[0] == string[-1]:
+#         return 1
+#     else:
+#         return len(result_string)
 
 
-wild = 'ge*ks'
-pattern = 'geeks'
+# # -------------------------------------------------------------------------------------------------
 
-print(match(wild=wild, pattern=pattern))
+
+# def patterSearch(text, pattern):
+#     """
+#     """
+#     len_string = len(text)
+#     len_pattern = len(pattern)
+#     # 
+#     result_list = []
+#     pivot = 0
+#     start_i = i = 0
+#     while i < len_string:
+#         print(text[i:], pivot)
+#         if pivot > 0 and text[i] != pattern[pivot] :
+#             print(text[i:], text[i], pivot, text[pivot])
+#             pivot = 0
+#             i = start_i
+#         # 
+#         elif pattern[pivot] == text[i]:
+#             if pivot == 0:
+#                 start_i = i
+#             pivot += 1
+#             if pivot == len_pattern:
+#                 result_list.append(start_i)
+#                 pivot = 0
+#                 i = start_i
+#         # 
+#         i += 1
+#     # 
+#     return result_list
+
+
+# # -------------------------------------------------------------------------------------------------
+
+# from collections import Counter
+
+# def transformOneStringToAnother(string_1, string_2):
+#     """
+#     """
+#     if Counter(string_1) != Counter(string_2):
+#         return 'Unable to transform'
+#     # 
+#     res = 0
+#     i = n-1
+#     j = n-1    
+#     while i >= 0:
+#     # 
+#         # if there is a mismatch, then keep incrementing
+#         # result 'res' until B[j] is not found in A[0..i]
+#         while i>= 0 and A[i] != B[j]:
+#             i -= 1
+#             res += 1
+#             # 
+#         # if A[i] and B[j] match
+#         if i >= 0:
+#             i -= 1
+#             j -= 1
+#             # 
+#     return res
+
+
+# # -------------------------------------------------------------------------------------------------
+
+
+# def minWindow(self, s1, s2):
+#     """
+#     same as above
+#     def smallest_window(s1, s2):
+#     """
+
+
+# # -------------------------------------------------------------------------------------------------
+
+
