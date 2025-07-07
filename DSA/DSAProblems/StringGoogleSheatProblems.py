@@ -322,93 +322,64 @@
 
 # # -------------------------------------------------------------------------------------------------
 
-from collections import Counter
-from collections import defaultdict
 
-
-# def smallestWindow(s1, s2):
-#     """
-#     """
-#     s2_dict = dict(Counter(s2))
+# def smallest_window(s1, s2):
+#     if not s1 or not s2:
+#         return ""
 #     # 
-#     length_s1 = len(s1)
+#     target_count = Counter(s2)
+#     required = len(target_count)  # number of unique characters in s2
+#     # 
 #     left = 0
-#     right = length_s1 - 2
-#     #
-#     s1_dict = dict(Counter(s1))
-#     for char in s2_dict:
-#         if s1_dict[char] < s2_dict[char]:
-#             return ''
+#     formed = 0
+#     window_count = {}
+#     min_len = float('inf')
+#     min_window = ""
 #     # 
-#     right_fix = False
-#     while right_fix == False:
-#         sub_string = s1[:right]
-#         sub_dict = defaultdict(int)
-#         sub_dict =sub_dict | dict(Counter(sub_string))
-#         for char in s2_dict:
-#             print('char : ', char, 'sub_dict[char] : ', sub_dict[char], 's2_dict[char] : ', s2_dict[char])
-#             if sub_dict[char] < s2_dict[char]:
-#                 right += 2
-#                 right_fix = True
-#                 break
-#         right -= 1
+#     for right in range(len(s1)):
+#         char = s1[right]
+#         window_count[char] = window_count.get(char, 0) + 1
+#         # 
+#         # if current char matches required freq
+#         if char in target_count and window_count[char] == target_count[char]:
+#             formed += 1
+#         # 
+#         # try to shrink the window from the left
+#         while left <= right and formed == required:
+#             # update result if it's smaller
+#             window_size = right - left + 1
+#             if window_size < min_len:
+#                 min_len = window_size
+#                 min_window = s1[left:right + 1]
+#             # 
+#             # remove leftmost character
+#             left_char = s1[left]
+#             window_count[left_char] -= 1
+#             if left_char in target_count and window_count[left_char] < target_count[left_char]:
+#                 formed -= 1
+#             left += 1
 #     # 
-#     print(right)
-#     left_fix = False
-#     while left_fix == False:
-#         sub_string = s1[left:right]
-#         sub_dict = defaultdict(int)
-#         sub_dict =sub_dict | dict(Counter(sub_string))
-#         for char in s2_dict:
-#             print('char : ', char, 'sub_dict[char] : ', sub_dict[char], 's2_dict[char] : ', s2_dict[char])
-#             if sub_dict[char] < s2_dict[char]:
-#                 left -= 2
-#                 left_fix = True
-#                 break
-#         left += 1
-#     # 
-#     return s1[left:right]
+#     return min_window
 
 
-def smallestWindow(s1, s2):
+# # -------------------------------------------------------------------------------------------------
+
+
+def match(wild, pattern):
     """
     """
-    s1_dict = defaultdict(int)
-    s1_dict = s1_dict | dict(Counter(s1))
-    s2_dict = dict(Counter(s2))
+    len_wild = len(wild)
+    len_pattern = len(pattern)
+    if len_wild > len_pattern:
+        return False
     # 
-    for char in s2_dict:
-        if s1_dict[char] < s2_dict[char]:
-            return ''
-    #
-    length_s1 = len(s1)
-    min_string = s1
-    min_length = length_s1
-    # 
-    for left in range(0, length_s1):
-        # 
-        for right in range(left+1, length_s1+1):
-            sub_string = s1[left:right]
-            print(sub_string)
-            sub_dict = defaultdict(int)
-            sub_dict =sub_dict | dict(Counter(sub_string))
-            # 
-            s2_found = True
-            for char in s2_dict:
-                # print('char : ', char, 'sub_dict[char] : ', sub_dict[char], 's2_dict[char] : ', s2_dict[char])
-                if sub_dict[char] < s2_dict[char]:
-                    # print('break')
-                    s2_found = False
-                    break
-            # 
-            if s2_found == True:
-                print('s2_found - sub_string : ', sub_string)
-                if right - left + 1 < min_length:
-                    min_string = s1[left:right]
-                    min_length  = right - left + 1
-                break
-    # 
-    return min_string
+    wild_array = ['' for i in range(len_pattern)]
+    for i in range(len_pattern):
+        if wild[i] == pattern:
+            wild_array.append(pattern[i])
+        elif wild[i] == '?':
+            wild_array.append(pattern[i])
+
 
 
 
@@ -416,7 +387,7 @@ def smallestWindow(s1, s2):
 # s2 = "oza"
 
 
-s1 = "zoom"
-s2 = "zooe"
+wild = 'ge*ks'
+pattern = 'geeks'
 
-print(smallestWindow(s1=s1, s2=s2))
+print(match(wild=wild, pattern=pattern))
