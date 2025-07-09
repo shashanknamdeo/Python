@@ -14,6 +14,10 @@ UserIDUnionBank : 2006825347
 
 IFSCUnionBank : UBIN0904414
 
+CardUnionBank : 6083329770025203
+
+CardCanaraBank(mummy) : 6523391002364113
+
 PanCardNumber : CLHPN2243L
 
 DrivingLicenceNumber : MP04 2023001528
@@ -44,3 +48,5 @@ https://www.usertesting.com/
 
 AO : ^#####@@
 UBP : @@@@@@@@#^8^^
+
+
