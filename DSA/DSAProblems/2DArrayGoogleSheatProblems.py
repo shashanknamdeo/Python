@@ -8,6 +8,11 @@ def diagonalTraversal(array):
         for j in range(0,i+1):
             diagonal_item.append(array[i][j])
             i -= 1
+    #
+    for i in range(row-1,-1,-1):
+        for j in range(0,i+1):
+            diagonal_item.append(array[i][j])
+            i -= 1
     # 
     return diagonal_item 
 
