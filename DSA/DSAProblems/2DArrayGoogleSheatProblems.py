@@ -126,6 +126,10 @@
 def rotate(matrix):
     """
     make 4 array
+    # 
+    another Approach:
+    step 1. Transpose the matrix (swap rows with columns).
+    step 2. Reverse each row.
     """
     top = left = 0
     bottom = right = len(matrix) - 1
@@ -157,9 +161,23 @@ def rotate(matrix):
     return matrix
 
 
-test remaining
+def exist(board, word):
+    """
+    https://leetcode.com/problems/word-search/
+    solve by advance topic like DP and back tracking
+    """
 
 
+def numberOfIslands():
+    """
+    https://www.geeksforgeeks.org/dsa/find-the-number-of-islands-using-dfs/
+    solve by advance topic like DFS
+    """
+
+def replaceOWithX():
+    """
+    https://www.geeksforgeeks.org/dsa/given-matrix-o-x-replace-o-x-surrounded-x/
+    """
 
 
 
