@@ -23,3 +23,5 @@ def hasCycle(self, head):
         next_node = current.next
         print(current.val)
         current = next_node
+
+
