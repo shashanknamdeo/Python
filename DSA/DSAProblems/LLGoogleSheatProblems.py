@@ -16,16 +16,18 @@ def reverseList(head):
 
 
 def hasCycle(self, head):
-        slow = head
-        fast = head
-        while fast :
-            slow = slow.next
-            fast = fast.next
-            if fast == None:
-                return False
-            fast = fast.next
-            if slow == fast:
-                return True
+    """
+    """
+    slow = head
+    fast = head
+    while fast :
+        slow = slow.next
+        fast = fast.next
+        if fast == None:
+            return False
+        fast = fast.next
+        if slow == fast:
+            return True
 
 
 def mergeTwoLists(self, head1, head2):
@@ -163,6 +165,103 @@ def multiplyLists(head1, head2):
         current = current.next
     # 
     return dummy.next
+
+
+def removeNthFromEnd(self, head, n):
+    """
+    """
+    total_number = 0
+    current = head
+    while current:
+        current = current.next
+        total_number += 1
+    # 
+    target_node = total_number - n
+    current = head
+    node_number = 0
+    while node_number < target_node -1:
+        current = current.next
+        node_number += 1
+    # 
+    # print(target_node)
+    if target_node == 0:
+        return head.next
+    # 
+    next_node_1 = current.next
+    current.next = next_node_1.next
+    # 
+    return head
+
+
+def reorderList(self, head):
+        """
+        """
+        fast = head
+        slow = head
+        # 
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+        # 
+        # print(slow.val)
+        head2 = reverseList(slow.next)
+        slow.next = None
+        # print(head2)
+        # 
+        current = head
+        while head2:
+            # print(head2.val)
+            current_next = current.next
+            head2_next = head2.next
+            current.next = head2
+            head2.next = current_next
+            current = current_next
+            head2 = head2_next
+        # 
+        return head
+
+
+def removeCycle(self, head):
+    slow = fast = head
+    # 
+    # Step 1: Detect the loop
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        if slow == fast:
+            break
+    else:
+        return head  # No loop found
+    # 
+    # Step 2: Find the start of the loop
+    pointer_1 = head
+    pointer_2 = slow
+    if pointer_1 == pointer_2:
+        # Special case: cycle starts at head
+        while pointer_2.next != pointer_1:
+            pointer_2 = pointer_2.next
+    else:
+        while pointer_1.next != pointer_2.next:
+            pointer_1 = pointer_1.next
+            pointer_2 = pointer_2.next
+    # 
+    # Step 3: Break the loop
+    pointer_2.next = None
+    return head
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
