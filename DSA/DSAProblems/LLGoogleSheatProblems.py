@@ -266,5 +266,8 @@ def removeCycle(self, head):
 
 
 
+
+
+
 # use set when want to find unique element 
 # and also searching is o(1) < binary searching
