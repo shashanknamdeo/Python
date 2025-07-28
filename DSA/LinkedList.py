@@ -11,15 +11,6 @@ Circular Linked List  - Last node connects back to the head node
 
 head # starting pointer of linked list
 
-# To take long step 2,3,4 etc
-
-# Wrong Way
-node_pointer.next.next 
-
-# Correct way
-node_pointer = node_pointer.next
-node_pointer = node_pointer.next
-
 
 """
 Common Linked List Problems in DSA

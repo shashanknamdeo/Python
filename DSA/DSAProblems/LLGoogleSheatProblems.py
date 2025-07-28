@@ -223,7 +223,7 @@ def reorderList(self, head):
 
 def removeCycle(self, head):
     slow = fast = head
-    # 
+
     # Step 1: Detect the loop
     while fast and fast.next:
         slow = slow.next
@@ -232,7 +232,7 @@ def removeCycle(self, head):
             break
     else:
         return head  # No loop found
-    # 
+
     # Step 2: Find the start of the loop
     pointer_1 = head
     pointer_2 = slow
@@ -244,10 +244,113 @@ def removeCycle(self, head):
         while pointer_1.next != pointer_2.next:
             pointer_1 = pointer_1.next
             pointer_2 = pointer_2.next
-    # 
+
     # Step 3: Break the loop
     pointer_2.next = None
     return head
+
+
+def intersectPoint(head1, head2):
+    """
+    4 Approches
+    [Naive Approach]        Using two nested loops
+    [Better Approach]       Using Hashing 
+    [Expected Approach - 1] Using difference in node counts
+    [Expected Approach - 2] Using Two Pointer Technique
+    # 
+    solve using 4th Approch - Using Two Pointer Technique
+    Idea:
+        start pointer from both head
+        when pointer reach end restart this pointer from start of another list
+        same with 2nd pointer
+        where both poiter meet it is intersection
+    """
+    pointer_1 = head1
+    pointer_2 = head2
+    # 
+    while pointer_1 != pointer_2:
+        pointer_1 = pointer_1.next if pointer_1 else head2
+        pointer_2 = pointer_2.next if pointer_2 else head1
+    # 
+    return pointer_1  # or pointer_2 (both are same)
+
+
+def flatten_list(head):
+class ListNode:
+    def __init__(self, val, next=None, child=None):
+        self.val = val
+        self.next = next
+        self.child = child
+
+def flatten_list(head):
+    if not head:
+        return None
+    # 
+    current = head
+    child_head = ListNode(0)     # Dummy node to collect children
+    child_tail = child_head      # Tail pointer for child list
+# 
+    while current:
+        if current.child:
+            # Append current child list to tail
+            child_tail.next = current.child
+            # 
+            # Move tail to the end of newly added child list
+            temp = current.child
+            while temp.next:
+                temp = temp.next
+            child_tail = temp
+            # 
+            current.child = None  # Optional: avoid dangling child pointers
+            # 
+        if current.next is None and child_head.next:
+            # Attach collected children to the end of this level
+            current.next = child_head.next
+            # 
+            # Reset dummy list for next level
+            child_head = ListNode(0)
+            child_tail = child_head
+        # 
+        current = current.next
+    # 
+    return head
+
+
+def zigZagList(head):
+    """
+    True : <
+    False : >
+    """
+    if not head or not head.next:
+        return head
+    # 
+    dummy = ListNode(0)
+    dummy.next = head
+    prev = dummy
+    curr = head
+    flag = True  # True means "<" expected
+    # 
+    while curr and curr.next:
+        if (flag and curr.val > curr.next.val) or (not flag and curr.val < curr.next.val):
+            # Swap nodes curr and curr.next
+            temp = curr.next
+            curr.next = temp.next
+            temp.next = curr
+            prev.next = temp
+            # 
+            # After swapping, update pointers
+            prev = temp
+        else:
+            prev = curr
+            curr = curr.next
+            # 
+        flag = not flag
+        # 
+    return dummy.next
+
+
+
+
 
 
 
