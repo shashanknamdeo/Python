@@ -1,18 +1,18 @@
-# def reverseList(head):
-#     """
-#     Given the head of a singly linked list
-#     we see input as a list but when leetcode give input it is a head pointer
-#     """
-#     current = head
-#     last = None
-#     # 
-#     while current:
-#         next_node = current.next
-#         current.next = last
-#         last = current
-#         current = next_node
-#     # 
-#     return last
+def reverseList(head):
+    """
+    Given the head of a singly linked list
+    we see input as a list but when leetcode give input it is a head pointer
+    """
+    current = head
+    last = None
+    # 
+    while current:
+        next_node = current.next
+        current.next = last
+        last = current
+        current = next_node
+    # 
+    return last
 
 
 # def hasCycle(self, head):
@@ -381,80 +381,62 @@
 #     return reverseList(head=head)
 
 
-def oddEvenList(self, head):
-    """
-    """
-    first_odd = None
-    last_odd = None
-    first_even = None
-    current = head
-    while current:
-        if first_even == None:
-            if current.val%2 == 0:
-                first_even = current
-        # 
-        if first_odd == None:
-            if current.val%2 == 1:
-                first_odd = current
-                last_odd = current
-        # 
-        elif current.val%2 == 1:
+# def oddEvenList(self, head):
+#     """
+#     """
+#     head_odd = ListNode('temp')
+#     current_odd = head_odd
+#     head_even = ListNode('temp')
+#     current_even = head_even
+#     current = head
+#     # 
+#     while current:
+#         next_item = current.next
+#         print(current.val)
+#         # 
+#         if current.val%2 == 1:
+#             current_odd.next = current
+#             current_odd = current_odd.next
+#         # 
+#         if current.val%2 == 0:
+#             current_even.next = current
+#             current_even = current_even.next 
+#         # 
+#         current.next = None
+#         current = next_item
+#     # 
+#     current_even.next = head_odd.next
+#     return head_even.next
 
 
-def oddEvenList(self, head):
-    """
-    """
-    head_odd = ListNode(1)
-    current_odd = head_odd
-    head_even = ListNode(2)
-    current_even = head_even
-    current = head
-    # 
-    while current:
-        next_item = current.next
-        # 
-        if current.val%2 == 1:
-            current_odd.next = current
-        # 
-        if current.val%2 == 0:
-            current_even.next = current
-        # 
-        current.next = None
-        current = next_item
-    # 
-    current_odd.next = head_even.next
-    return head_odd.next
-
-
-
-def oddEvenList(self, head):
+def nextLargerNodes(self, head):
         """
+        solve similer question of Leatcode
+        https://leetcode.com/problems/next-greater-node-in-linked-list/
+        concept - use stack to store max element
         """
-        head_odd = ListNode('temp')
-        current_odd = head_odd
-        head_even = ListNode('temp')
-        current_even = head_even
+        head = reverseList(head)
+        max_node = [0]
         current = head
+        answer = []
         # 
         while current:
-            next_item = current.next
-            print(current.val)
+            if max_node[0] <= current.val:
+                max_node = [current.val]
+                answer.append(0)
             # 
-            if current.val%2 == 1:
-                current_odd.next = current
-                current_odd = current_odd.next
+            else:
+                next_node = max_node.pop()
+                while next_node <= current.val:
+                    next_node = max_node.pop()
+                # 
+                answer.append(next_node)
+                max_node.append(next_node)
+                max_node.append(current.val)
             # 
-            if current.val%2 == 0:
-                current_even.next = current
-                current_even = current_even.next 
-            # 
-            current.next = None
-            current = next_item
+            current = current.next
         # 
-        current_odd.next = head_even.next
-        return head_odd.next
-
-
+        return answer[::-1]
 
 
 
