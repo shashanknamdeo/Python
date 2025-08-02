@@ -439,12 +439,120 @@ def nextLargerNodes(self, head):
         return answer[::-1]
 
 
+def rearrangeLinkedListInPlace():
+    """
+    done this before
+    reorderList(self, head)
+    """
 
 
+def sort_bitonic_dll_your_idea(head):
+    if not head or not head.next:
+        return head
+    # 
+    # Step 1: Go to the end of the list
+    tail = head
+    while tail.next:
+        tail = tail.next
+    # 
+    # Step 2: Two pointers — one at start, one at end
+    left = head
+    right = tail
+    # 
+    # Dummy node to form the new sorted list
+    dummy = Node(0)
+    curr = dummy
+    # 
+    # Step 3: Compare left and right, link smaller node
+    while left != right and left.prev != right:
+        if left.data <= right.data:
+            curr.next = left
+            left.prev = curr
+            left = left.next
+        else:
+            curr.next = right
+            right.prev = curr
+            right = right.prev
+        curr = curr.next
+    # 
+    # Add the last remaining node (if left == right)
+    if left == right:
+        curr.next = left
+        left.prev = curr
+        curr = curr.next
+    # 
+    # Set tail of final list
+    curr.next = None
+    # 
+    # Return head of new sorted DLL
+    sorted_head = dummy.next
+    if sorted_head:
+        sorted_head.prev = None
+    return sorted_head
 
 
+def mergeKLists(self, lists):
+    """
+    best way - use a min heap
+    """
+    k = len(lists)
+    heads = lists[:]  # copy of list heads
+    dummy = ListNode(0)
+    curr = dummy
+    # 
+    while True:
+        min_index = -1
+        min_val = float('inf')
+        # 
+        # Find the index of the smallest current node
+        for i in range(k):
+            if heads[i] and heads[i].val < min_val:
+                min_val = heads[i].val
+                min_index = i
+        # 
+        # If all heads are None, break
+        if min_index == -1:
+            break
+        # 
+        # Append the smallest node to result
+        curr.next = heads[min_index]
+        curr = curr.next
+        # 
+        # Move pointer forward in the selected list
+        heads[min_index] = heads[min_index].next
+    # 
+    return dummy.next
 
 
+def addListUsingRecursion(num1, num2):
+    """
+    """
+    tail_1 = reverseList(num1)
+    tail_2 = reverseList(num2)
+    # 
+
+
+def addNumber(digit, digit_1, digit_2, carry):
+    """
+    0 case
+    """
+    if not carry and digit1 and digit2:
+        return None
+    # 
+    carry = carry if carry else 0
+    digit_1 = digit_1 if digit_1 else ListNode(0)
+    digit_2 = digit_2 if digit_2 else ListNode(0)
+    # 
+    summation = digit_1.val + digit_2.val + carry
+    # 
+    if summation//10 == 0 :
+        digit.next = summation
+        digit = digit.next
+        return addNumber(digit=digit.next, digit_1=digit1.next, digit_2=digit2.next, carry=None)
+    else:
+        digit = summation//10
+        digit = digit.next
+        return digit.next = addNumber(digit=digit.next, digit_1=digit1.next, digit_2=digit2.next, carry=summation%10)
 
 
 
