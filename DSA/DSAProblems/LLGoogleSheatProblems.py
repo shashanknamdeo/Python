@@ -524,35 +524,47 @@ def mergeKLists(self, lists):
     return dummy.next
 
 
-def addListUsingRecursion(num1, num2):
-    """
-    """
-    tail_1 = reverseList(num1)
-    tail_2 = reverseList(num2)
-    # 
+def addTwoNumbers(self, num1, num2):
+        """
+        """
+        tail_1 = reverseList(num1)
+        tail_2 = reverseList(num2)
+        # 
+        answer = []
+        addNumber(digit=answer, digit_1=tail_1, digit_2=tail_2, carry=None)
+        # 
+        dummy = ListNode(0)
+        current = dummy.next
+        for item in answer:
+            current = ListNode(item)
+        # 
+        return dummy.next
 
 
 def addNumber(digit, digit_1, digit_2, carry):
     """
     0 case
     """
-    if not carry and digit1 and digit2:
-        return None
+    # print('------------------------------------------------')
+    # print(digit, digit_1, digit_2, carry)
+    if carry is None and digit_1 is None and digit_2 is None:
+        return digit
     # 
     carry = carry if carry else 0
     digit_1 = digit_1 if digit_1 else ListNode(0)
     digit_2 = digit_2 if digit_2 else ListNode(0)
     # 
     summation = digit_1.val + digit_2.val + carry
+    # print (digit_1.val, digit_2.val, carry, summation)
     # 
     if summation//10 == 0 :
-        digit.next = summation
-        digit = digit.next
-        return addNumber(digit=digit.next, digit_1=digit1.next, digit_2=digit2.next, carry=None)
+        # print ('NOT-CARRY')
+        digit.append(summation)
+        return addNumber(digit=digit, digit_1=digit_1.next, digit_2=digit_2.next, carry=None)
     else:
-        digit = summation//10
-        digit = digit.next
-        return digit.next = addNumber(digit=digit.next, digit_1=digit1.next, digit_2=digit2.next, carry=summation%10)
+        digit.append(summation%10)
+        # print ('CARRY')
+        return addNumber(digit=digit, digit_1=digit_1.next, digit_2=digit_2.next, carry=summation//10)
 
 
 
