@@ -194,31 +194,31 @@ def reverseList(head):
 
 
 # def reorderList(self, head):
-#         """
-#         """
-#         fast = head
-#         slow = head
-#         # 
-#         while fast and fast.next:
-#             fast = fast.next.next
-#             slow = slow.next
-#         # 
-#         # print(slow.val)
-#         head2 = reverseList(slow.next)
-#         slow.next = None
-#         # print(head2)
-#         # 
-#         current = head
-#         while head2:
-#             # print(head2.val)
-#             current_next = current.next
-#             head2_next = head2.next
-#             current.next = head2
-#             head2.next = current_next
-#             current = current_next
-#             head2 = head2_next
-#         # 
-#         return head
+#     """
+#     """
+#     fast = head
+#     slow = head
+#     # 
+#     while fast and fast.next:
+#         fast = fast.next.next
+#         slow = slow.next
+#     # 
+#     # print(slow.val)
+#     head2 = reverseList(slow.next)
+#     slow.next = None
+#     # print(head2)
+#     # 
+#     current = head
+#     while head2:
+#         # print(head2.val)
+#         current_next = current.next
+#         head2_next = head2.next
+#         current.next = head2
+#         head2.next = current_next
+#         current = current_next
+#         head2 = head2_next
+#     # 
+#     return head
 
 
 # def removeCycle(self, head):
@@ -409,186 +409,249 @@ def reverseList(head):
 #     return head_even.next
 
 
-def nextLargerNodes(self, head):
-        """
-        solve similer question of Leatcode
-        https://leetcode.com/problems/next-greater-node-in-linked-list/
-        concept - use stack to store max element
-        """
-        head = reverseList(head)
-        max_node = [0]
-        current = head
-        answer = []
-        # 
-        while current:
-            if max_node[0] <= current.val:
-                max_node = [current.val]
-                answer.append(0)
-            # 
-            else:
-                next_node = max_node.pop()
-                while next_node <= current.val:
-                    next_node = max_node.pop()
-                # 
-                answer.append(next_node)
-                max_node.append(next_node)
-                max_node.append(current.val)
-            # 
-            current = current.next
-        # 
-        return answer[::-1]
+# def nextLargerNodes(self, head):
+#         """
+#         solve similer question of Leatcode
+#         https://leetcode.com/problems/next-greater-node-in-linked-list/
+#         concept - use stack to store max element
+#         """
+#         head = reverseList(head)
+#         max_node = [0]
+#         current = head
+#         answer = []
+#         # 
+#         while current:
+#             if max_node[0] <= current.val:
+#                 max_node = [current.val]
+#                 answer.append(0)
+#             # 
+#             else:
+#                 next_node = max_node.pop()
+#                 while next_node <= current.val:
+#                     next_node = max_node.pop()
+#                 # 
+#                 answer.append(next_node)
+#                 max_node.append(next_node)
+#                 max_node.append(current.val)
+#             # 
+#             current = current.next
+#         # 
+#         return answer[::-1]
 
 
-def rearrangeLinkedListInPlace():
-    """
-    done this before
-    reorderList(self, head)
-    """
+# def rearrangeLinkedListInPlace():
+#     """
+#     done this before
+#     reorderList(self, head)
+#     """
 
 
-def sort_bitonic_dll_your_idea(head):
-    if not head or not head.next:
-        return head
-    # 
-    # Step 1: Go to the end of the list
-    tail = head
-    while tail.next:
-        tail = tail.next
-    # 
-    # Step 2: Two pointers — one at start, one at end
-    left = head
-    right = tail
-    # 
-    # Dummy node to form the new sorted list
-    dummy = Node(0)
-    curr = dummy
-    # 
-    # Step 3: Compare left and right, link smaller node
-    while left != right and left.prev != right:
-        if left.data <= right.data:
-            curr.next = left
-            left.prev = curr
-            left = left.next
-        else:
-            curr.next = right
-            right.prev = curr
-            right = right.prev
-        curr = curr.next
-    # 
-    # Add the last remaining node (if left == right)
-    if left == right:
-        curr.next = left
-        left.prev = curr
-        curr = curr.next
-    # 
-    # Set tail of final list
-    curr.next = None
-    # 
-    # Return head of new sorted DLL
-    sorted_head = dummy.next
-    if sorted_head:
-        sorted_head.prev = None
-    return sorted_head
+# def sort_bitonic_dll_your_idea(head):
+#     if not head or not head.next:
+#         return head
+#     # 
+#     # Step 1: Go to the end of the list
+#     tail = head
+#     while tail.next:
+#         tail = tail.next
+#     # 
+#     # Step 2: Two pointers — one at start, one at end
+#     left = head
+#     right = tail
+#     # 
+#     # Dummy node to form the new sorted list
+#     dummy = Node(0)
+#     curr = dummy
+#     # 
+#     # Step 3: Compare left and right, link smaller node
+#     while left != right and left.prev != right:
+#         if left.data <= right.data:
+#             curr.next = left
+#             left.prev = curr
+#             left = left.next
+#         else:
+#             curr.next = right
+#             right.prev = curr
+#             right = right.prev
+#         curr = curr.next
+#     # 
+#     # Add the last remaining node (if left == right)
+#     if left == right:
+#         curr.next = left
+#         left.prev = curr
+#         curr = curr.next
+#     # 
+#     # Set tail of final list
+#     curr.next = None
+#     # 
+#     # Return head of new sorted DLL
+#     sorted_head = dummy.next
+#     if sorted_head:
+#         sorted_head.prev = None
+#     return sorted_head
 
 
-def mergeKLists(self, lists):
-    """
-    best way - use a min heap
-    """
-    k = len(lists)
-    heads = lists[:]  # copy of list heads
-    dummy = ListNode(0)
-    curr = dummy
-    # 
-    while True:
-        min_index = -1
-        min_val = float('inf')
-        # 
-        # Find the index of the smallest current node
-        for i in range(k):
-            if heads[i] and heads[i].val < min_val:
-                min_val = heads[i].val
-                min_index = i
-        # 
-        # If all heads are None, break
-        if min_index == -1:
-            break
-        # 
-        # Append the smallest node to result
-        curr.next = heads[min_index]
-        curr = curr.next
-        # 
-        # Move pointer forward in the selected list
-        heads[min_index] = heads[min_index].next
-    # 
-    return dummy.next
+# def mergeKLists(self, lists):
+#     """
+#     best way - use a min heap
+#     """
+#     k = len(lists)
+#     heads = lists[:]  # copy of list heads
+#     dummy = ListNode(0)
+#     curr = dummy
+#     # 
+#     while True:
+#         min_index = -1
+#         min_val = float('inf')
+#         # 
+#         # Find the index of the smallest current node
+#         for i in range(k):
+#             if heads[i] and heads[i].val < min_val:
+#                 min_val = heads[i].val
+#                 min_index = i
+#         # 
+#         # If all heads are None, break
+#         if min_index == -1:
+#             break
+#         # 
+#         # Append the smallest node to result
+#         curr.next = heads[min_index]
+#         curr = curr.next
+#         # 
+#         # Move pointer forward in the selected list
+#         heads[min_index] = heads[min_index].next
+#     # 
+#     return dummy.next
 
 
-def addTwoNumbers(self, num1, num2):
-        """
-        """
-        tail_1 = reverseList(num1)
-        tail_2 = reverseList(num2)
-        # 
-        answer = []
-        addNumber(digit=answer, digit_1=tail_1, digit_2=tail_2, carry=None)
-        # 
-        dummy = ListNode(0)
-        current = dummy.next
-        for item in answer:
-            current = ListNode(item)
-        # 
-        return dummy.next
+# def addTwoNumbers(self, num1, num2):
+#         """
+#         solve leetcode problem insted of GOG
+#         """
+#         answer = []
+#         addNumber(digit=answer, digit_1=num1, digit_2=num2, carry=None)
+#         # 
+#         dummy = ListNode(0)
+#         current = dummy
+#         for item in answer:
+#             current.next = ListNode(item)
+#             current = current.next
+#         # 
+#         return dummy.next
 
 
-def addNumber(digit, digit_1, digit_2, carry):
-    """
-    0 case
-    """
-    # print('------------------------------------------------')
-    # print(digit, digit_1, digit_2, carry)
-    if carry is None and digit_1 is None and digit_2 is None:
-        return digit
-    # 
-    carry = carry if carry else 0
-    digit_1 = digit_1 if digit_1 else ListNode(0)
-    digit_2 = digit_2 if digit_2 else ListNode(0)
-    # 
-    summation = digit_1.val + digit_2.val + carry
-    # print (digit_1.val, digit_2.val, carry, summation)
-    # 
-    if summation//10 == 0 :
-        # print ('NOT-CARRY')
-        digit.append(summation)
-        return addNumber(digit=digit, digit_1=digit_1.next, digit_2=digit_2.next, carry=None)
-    else:
-        digit.append(summation%10)
-        # print ('CARRY')
-        return addNumber(digit=digit, digit_1=digit_1.next, digit_2=digit_2.next, carry=summation//10)
+# def addNumber(digit, digit_1, digit_2, carry):
+#     """
+#     0 case
+#     """
+#     # print('------------------------------------------------')
+#     # print(digit, digit_1, digit_2, carry)
+#     if carry is None and digit_1 is None and digit_2 is None:
+#         return digit
+#     # 
+#     carry = carry if carry else 0
+#     digit_1 = digit_1 if digit_1 else ListNode(0)
+#     digit_2 = digit_2 if digit_2 else ListNode(0)
+#     # 
+#     summation = digit_1.val + digit_2.val + carry
+#     # print (digit_1.val, digit_2.val, carry, summation)
+#     # 
+#     if summation//10 == 0 :
+#         # print ('NOT-CARRY')
+#         digit.append(summation)
+#         return addNumber(digit=digit, digit_1=digit_1.next, digit_2=digit_2.next, carry=None)
+#     else:
+#         digit.append(summation%10)
+#         # print ('CARRY')
+#         return addNumber(digit=digit, digit_1=digit_1.next, digit_2=digit_2.next, carry=summation//10)
 
 
+# def flattenSortedLinkedList(head):
+#     while True:
+#         min_val = float('inf')
+#         min_node = None
+#         current = head
+#         # 
+#         while current:
+#             if current.val is not None and current.val < min_val:
+#                 min_val, min_node = current.val, current
+#             current = current.next
+#         if min_val == float('inf'):
+#             break
+#         # 
+#         print(min_val, end=' ')
+#         # 
+#         if min_node.next:
+#             min_node.val = min_node.next.val
+#             min_node.next = min_node.next.next
+#         else:
+#             min_node.val = None
 
 
+# def cloneLinkedListWithNextAndRandomPointer(head):
+#     """
+#     """
+#     current = head
+#     while current:
+#         temp = current.next
+#         current.next = ListNode(current.val)
+#         current.next.next = temp
+#         current = temp
+#     # 
+#     current = head
+#     while current:
+#         if current.random:
+#             current.next.random = current.random.next
+#         else:
+#             current.next.random = None
+#         # 
+#         current = current.next.next
+#     # 
+#     original = head
+#     clone_head = head.next
+#     clone = clone_head
+#     # 
+#     while original:
+#         original_next = original.next.next
+#         clone_next = clone.next.next if clone.next else None
+#         # 
+#         original.next = original_next
+#         clone.next = clone_next
+#         # 
+#         original = original_next
+#         clone = clone.next
+#     # 
+#     return clone_head
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# def subtractTwoNumbersRepresentedByLinkedLists(head_1, head_2):
+#     """
+#     """
+#     # Convert linked lists to string numbers
+#     num_1 = ''
+#     num_2 = ''
+#     while head_1:
+#         num_1 += str(head_1.val)
+#         head_1 = head_1.next
+#     while head_2:
+#         num_2 += str(head_2.val)
+#         head_2 = head_2.next
+#     # 
+#     # Subtract the numbers
+#     result = abs(int(num_1) - int(num_2))
+#     # 
+#     # Edge case: result is 0
+#     if result == 0:
+#         return ListNode(0)
+#     # 
+#     # Convert the result back to a linked list
+#     dummy = ListNode(0)
+#     current = dummy
+#     for digit in str(result):
+#         current.next = ListNode(int(digit))
+#         current = current.next
+#     # 
+#     return dummy.next
 
 
 # use set when want to find unique element 
