@@ -1,5 +1,6 @@
 Stack
 
+# Using List
 
 stack = []
  
@@ -24,6 +25,8 @@ print('\nStack after elements are popped:')
 print(stack)
 
 # --------------------------------------------------------------------------------------------------
+
+# Using collections (deque)
 
 from collections import deque
  
@@ -50,6 +53,8 @@ print('\nStack after elements are popped:')
 print(stack)
 
 # --------------------------------------------------------------------------------------------------
+
+# Using queue (LifoQueue)
 
 from queue import LifoQueue
  
