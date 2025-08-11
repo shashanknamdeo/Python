@@ -57,3 +57,16 @@ ord('A') = 65
 chr() # give character value belong to input numeric (input length = 1)
 
 chr(65) = 'A'
+
+
+# To remove white space in a string from front (white space - by default)
+.lstrip()
+
+"   Hello Python!".lstrip() # -> 'Hello Python!'
+
+
+# To check string is a digit
+.isdigit()
+
+'10'.isdigit() # -> True
+
