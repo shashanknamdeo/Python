@@ -1,1 +1,0 @@
-D:\NotebookShareAsus\Material\PythonVirtualEnvs\KiteConnectEnv\Scripts\activate
