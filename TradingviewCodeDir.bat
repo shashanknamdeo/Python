@@ -1,1 +1,0 @@
-cd /d D:\ShashankPC\Material\Python\Projects\TradingView\Code
