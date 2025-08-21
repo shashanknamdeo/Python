@@ -122,12 +122,18 @@ class MyStack(object):
             return False
 
 
-# Your MyStack object will be instantiated and called as such:
-# obj = MyStack()
-# obj.push(x)
-# param_2 = obj.pop()
-# param_3 = obj.top()
-# param_4 = obj.empty()
+def reverseQueue(self, queue):
+    """
+    """
+    stack = []
+    while not queue.empty() :
+        stack.push(item.get())
+    # 
+    while stack:
+        queue.enqueue(stack.pop())
+    # 
+    return queue
+
 
 
 
