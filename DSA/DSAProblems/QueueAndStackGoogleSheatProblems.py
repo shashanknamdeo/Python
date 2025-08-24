@@ -126,19 +126,82 @@ def reverseQueue(self, queue):
     """
     """
     stack = []
-    while not queue.empty() :
-        stack.push(item.get())
+    while not queue.empty():
+        stack.append(queue.get())
     # 
-    while stack:
-        queue.enqueue(stack.pop())
+    for _ in range(len(stack)):
+        queue.put(stack.pop())
     # 
     return queue
 
 
+class Deque:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+    # 
+    def node(self, data):
+        self.data = data
+        self.next = None
+        self.prev = None
+    # 
+    def insert_first(self,data):
+        self.next_node = node(self.data)
+        self.next_node.prev = self.head
+        self.head.next = self.next_node
+        self.head = self.next_node
+    # 
+    def insert_last(self,data):
+        prev_node = node(data)
+        prev_node.next = tail
+        tail.prev = prev_node
+        tail = prev_node
+    # 
+    def isEmpty(self):
+    # 
+    def size(self):
 
 
+        
+    def remove_first(self):
 
+        
+    def remove_last(self):
 
+        
+    def display(self):
+
+            
+class Stack:
+    def __init__(self):
+
+    
+    def push(self,data):
+
+    
+    def pop(self):
+
+        
+    def size(self):
+
+    
+    def display(self):
+
+        
+class Queue:
+    def __init__(self):
+
+    
+    def enqueue(self,data):
+
+    
+    def dequeue(self):
+
+        
+    def size(self):
+
+        
+    def display(self):
 
 
 
