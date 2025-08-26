@@ -33,6 +33,7 @@
 %%         A literal ‘%’ character                                         %
 """
 
+
 datetime.strptime(i, 'data_fornat')
 # example  datetime.strptime('2023-01-03T15:25:00', "%Y-%m-%dT%H:%M:%S") -> datetime.datetime(2023, 1, 3, 15, 25)
 
