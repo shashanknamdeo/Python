@@ -290,89 +290,96 @@
 
 # # -------------------------------------------------------------------------------------------------
 
-class Node:
-    def __init__(self, data):
-        self.data = data
-        self.next = None
-        self.prev = None
+# class Node:
+#     def __init__(self, data):
+#         self.data = data
+#         self.next = None
+#         self.prev = None
 
-class Stack:
-    def __init__(self):
-        self.head = None
-        self.tail = None
-        self.mid  = None
-        self.size = 0
+# class Stack:
+#     def __init__(self):
+#         self.head = None
+#         self.tail = None
+#         self.mid  = None
+#         self.size = 0
+#     # 
+#     def push(self, x):
+#         new_node = Node(x)
+#         self.size += 1
+#         # 
+#         if self.head == None:
+#             self.head = self.tail = self.mid = new_node
+#         else:
+#             self.tail.next = new_node
+#             new_node.prev = self.tail
+#             self.tail = self.tail.next
+#             # 
+#             if self.size % 2 == 0:
+#                 self.mid = self.mid.next
+#     # 
+#     def pop(self):
+#         if self.tail == None:
+#             print('Stack is Empty')
+#             return None
+#         # 
+#         data = self.tail.data
+#         self.size -= 1
+#         if self.size == 0:
+#             self.head = self.tail = self.mid = None
+#         else:
+#             self.tail = self.tail.prev
+#             self.tail.next = None
+#             # 
+#             if self.size % 2 == 1:
+#                 self.mid = self.mid.prev
+#         # 
+#         return data
+#     # 
+#     def findMiddle(self):
+#         return self.mid.data
+#     # 
+#     def deleteMiddle(self):
+#         if self.size == 0:
+#             print('Stack is Empty')
+#             return None
+#         # 
+#         self.size -= 1
+#         data = self.mid.data
+#         # 
+#         if self.size == 0:
+#             # 
+#             self.head = None
+#             self.tail = None
+#             self.mid  = None
+#         # 
+#         elif self.size == 1:
+#             self.tail = self.head
+#             self.mid  = self.head
+#             self.head.next = self.head.prev = None
+#         # 
+#         else:
+#             prev_node =  self.mid.prev
+#             next_node = self.mid.next
+#             # 
+#             prev_node.next = next_node
+#             next_node.prev = prev_node
+#             # 
+#             if self.size % 2 == 1:
+#                 self.mid = prev_node
+#             else :
+#                 self.mid = next_node
+#         # 
+#         return data
+
+
+# # -------------------------------------------------------------------------------------------------
+
+
+def infixtoPostfix(self, s):
+    """
+    """
+    priority_stack = ['(', '^', '*', '/', '+', '-']
     # 
-    def push(self, x):
-        new_node = Node(x)
-        self.size += 1
-        # 
-        if self.head == None:
-            self.head = self.tail = self.mid = new_node
-        else:
-            self.tail.next = new_node
-            new_node.prev = self.tail
-            self.tail = self.tail.next
-            # 
-            if self.size % 2 == 0:
-                self.mid = self.mid.next
-    # 
-    def pop(self):
-        if self.tail == None:
-            print('Stack is Empty')
-            return None
-        # 
-        data = self.tail.data
-        self.size -= 1
-        if self.size == 0:
-            self.head = self.tail = self.mid = None
-        else:
-            self.tail = self.tail.prev
-            self.tail.next = None
-            # 
-            if self.size % 2 == 1:
-                self.mid = self.mid.prev
-        # 
-        return data
-    # 
-    def findMiddle(self):
-        return self.mid.data
-    # 
-    def deleteMiddle(self):
-        if self.size == 0:
-            print('Stack is Empty')
-            return None
-        # 
-        self.size -= 1
-        data = self.mid.data
-        # 
-        if self.size == 0:
-            # 
-            self.head = None
-            self.tail = None
-            self.mid  = None
-        # 
-        elif self.size == 1:
-            self.tail = self.head
-            self.mid  = self.head
-            self.head.next = self.head.prev = None
-        # 
-        else:
-            prev_node =  self.mid.prev
-            next_node = self.mid.next
-            # 
-            prev_node.next = next_node
-            next_node.prev = prev_node
-            # 
-            if self.size % 2 == 1:
-                self.mid = prev_node
-            else :
-                self.mid = next_node
-        # 
-        return data
-
-
-
-
+    
 
 
