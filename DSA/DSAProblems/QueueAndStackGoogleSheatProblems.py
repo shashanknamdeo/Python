@@ -375,14 +375,69 @@
 # # -------------------------------------------------------------------------------------------------
 
 
-def infixtoPostfix(self, s):
-    """
-    """
-    priority_stack = ['(', '^', '*', '/', '+', '-']
+# def precedence(self, op):
+#     if op == '^':
+#         return 3
+#     elif op in ('*', '/'):
+#         return 2
+#     elif op in ('+', '-'):
+#         return 1
+#     return 0
+
+# def is_right_associative(self, op):
+#     return op == '^'
+
+# def infixtoPostfix(self, expr):
+#     result = []
+#     stack = []
+#     # 
+#     for ch in expr:
+#         if ch.isalnum():  # operand
+#             result.append(ch)
+#         # 
+#         elif ch == '(':
+#             stack.append(ch)
+#         # 
+#         elif ch == ')':
+#             while stack and stack[-1] != '(':
+#                 result.append(stack.pop())
+#             stack.pop()
+#         # 
+#         else:  # operator
+#             while (stack and stack[-1] != '(' and
+#                    (self.precedence(stack[-1]) > self.precedence(ch) or
+#                     (self.precedence(stack[-1]) == self.precedence(ch) and not self.is_right_associative(ch)))):
+#                 result.append(stack.pop())
+#             stack.append(ch)
+#     # 
+#     while stack:
+#         result.append(stack.pop())
+#     # 
+#     return "".join(result)
+
+
+# # -------------------------------------------------------------------------------------------------
+
+
+def maxLength(string):
+    max_result = 0
+    stack = [-1]
     # 
-    
+    for i in range(len(string)):
+        print(stack, max_result)
+        if string[i] == '(':
+            stack.append(i)
+        # 
+        elif string[i] == ')':
+            stack.pop()
+            if not stack:
+                stack.append(i)
+            else:
+                max_result = max(max_result, i - stack[-1])
+    # 
+    return max_result
 
+# s = ''
+s = '()))((())()(('
 
-    
-
-
+print(maxLength(string=s))
