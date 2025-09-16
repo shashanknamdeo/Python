@@ -437,7 +437,113 @@ def maxLength(string):
     # 
     return max_result
 
-# s = ''
-s = '()))((())()(('
 
-print(maxLength(string=s))
+# # -------------------------------------------------------------------------------------------------
+
+# Special stack
+
+def push(arr, ele):
+    if len(arr) == 0:
+        global min_stack 
+        min_stack = [ele]
+    else:
+        min_stack.append(min(ele, min_stack[-1]))
+    arr.append(ele)
+
+
+def pop(arr):
+    if not arr:  # stack empty
+        return -1   # GFG expects -1 when stack is empty
+    min_stack.pop()
+    return arr.pop()
+
+
+# function should return 1/0 or True/False
+def isFull(n, arr):
+    if len(arr) == n:
+        return True
+    return False
+
+
+# function should return 1/0 or True/False
+def isEmpty(arr):
+    return len(arr) == 0
+
+
+# function should return minimum element from the stack
+def getMin(n, arr):
+    if not arr:
+        return -1
+    return min_stack[-1]
+
+
+# # -------------------------------------------------------------------------------------------------
+
+
+def findDuplicateparenthesis(string):
+    print(string)
+    stack = ['#']
+    flag = False
+    for char in string:
+        if flag == False:
+            if char != ')':
+                stack.append(char)
+            else:
+                while stack[-1] != '(':
+                    stack.pop()
+                # 
+                stack.pop()
+                if stack[-1] == '(':
+                    flag = True
+                    continue
+        elif flag == True :
+            if char == ')':
+                return True
+            else:
+                flag = False
+                stack.append(char)
+    # 
+    return False
+
+
+# # -------------------------------------------------------------------------------------------------
+
+
+def validateOp(a, b):
+    """
+    """
+    print(a, b)
+    stack = ['temp_ele']
+    index_b = 0
+    while index_b < len(b):
+        print(stack, b[index_b])
+        if stack[-1] == b[index_b]:
+            stack.pop()
+            index_b += 1
+        else:
+            if a:
+                stack.append(a.pop(0))
+            else:
+                return False
+    # 
+    return True
+
+
+
+
+
+
+
+
+
+
+
+a = [1, 2, 3]
+b = [2, 1, 3]
+
+
+# a = [1, 2, 3]
+# b = [3, 1, 2]
+
+
+print(validateOp(a, b))
