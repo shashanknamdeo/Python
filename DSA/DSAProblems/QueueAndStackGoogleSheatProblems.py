@@ -513,22 +513,69 @@ def validateOp(a, b):
     """
     """
     print(a, b)
+    len_a = len(a)
+    len_b = len(b)
+    if len_a != len_b:
+        return False
+    # 
     stack = ['temp_ele']
     index_b = 0
-    while index_b < len(b):
+    index_a = 0
+    while index_b < len_b:
         print(stack, b[index_b])
         if stack[-1] == b[index_b]:
             stack.pop()
             index_b += 1
         else:
-            if a:
-                stack.append(a.pop(0))
+            if a and index_a < len_a:
+                stack.append(a[index_a])
+                index_a += 1
             else:
                 return False
     # 
     return True
 
 
+# # -------------------------------------------------------------------------------------------------
+
+
+def countNumber(n):
+    """
+    Count natural numbers whose all permutation are greater than that number
+    # 
+    approach 1 : simple
+    approach 2 : deficult to understand
+    """
+
+
+# # -------------------------------------------------------------------------------------------------
+
+def sortStack(stack):
+    """
+    """
+    if not stack:
+        return stack
+    # 
+    temp = stack.pop()
+    # 
+    stack = sortStack(stack)
+    # 
+    stack = insertTemp(stack, temp)
+    # 
+    return stack
+
+
+def insertTemp(stack, item):
+    """
+    """
+    if not stack or stack[-1] <= item:
+        stack.append(item)
+        return stack
+    # 
+    temp = stack.pop()
+    stack = insertTemp(stack, item)
+    stack.append(temp)
+    return stack
 
 
 
@@ -536,14 +583,7 @@ def validateOp(a, b):
 
 
 
+stack = [41, 3, 32, 2, 11]
 
 
-a = [1, 2, 3]
-b = [2, 1, 3]
-
-
-# a = [1, 2, 3]
-# b = [3, 1, 2]
-
-
-print(validateOp(a, b))
+print(sortStack(stack))
