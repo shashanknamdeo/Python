@@ -547,7 +547,6 @@ def countNumber(n):
     approach 2 : deficult to understand
     """
 
-
 # # -------------------------------------------------------------------------------------------------
 
 def sortStack(stack):
@@ -577,13 +576,138 @@ def insertTemp(stack, item):
     stack.append(temp)
     return stack
 
+# # -------------------------------------------------------------------------------------------------
+
+from collections import defaultdict
+
+def FirstNonRepeating(string):
+    """
+    """
+    if not string:
+        return string
+    # 
+    final_string = string[0]
+    queue = [string[0]]
+    # 
+    char_dict = defaultdict(int)
+    char_dict[string[0]] = 1
+    # 
+    print(string)
+    for char in string[1:]:
+        print(queue, char_dict, char_dict)
+        if queue and queue[0] == char:
+            queue.pop(0)
+            while queue and char_dict[queue[0]] > 1:
+                queue.pop(0)
+                print('while : ', queue)
+        # 
+        if char_dict[char] == 0:
+            queue.append(char)
+            char_dict[char] += 1
+        # 
+        elif char_dict[char] == 1:
+            char_dict[char] += 1
+        # 
+        final_string += queue[0] if queue else '#'
+    # 
+    return final_string
+
+# # -------------------------------------------------------------------------------------------------
+
+def celebrity(matrix):
+        size = len(matrix)
+        index_list = []
+        # 
+        for i in range(0, size):
+            if sum(matrix[i]) == 1:
+                index_list.append(i)
+        # 
+        if not index_list:
+            return -1
+        # 
+        for i in list(index_list):
+            print('index_list 1 : ', i)
+            celebrity = True
+            for row in matrix:
+                if row[i] == 0:
+                    index_list.pop(0)
+                    celebrity = False
+                    print('celebrity False: ', i)
+                    break
+            if celebrity:
+                print('celebrity True: ', i)
+                break
+            # 
+        print('index_list 2 : ', index_list)
+        return index_list[0] if index_list else -1
+
+# # -------------------------------------------------------------------------------------------------
+
+def nextLargerElement(self, array):
+    """
+    Find the next greater element for each element in array.
+    If no greater element exists, return -1 for that position.
+    """
+    n = len(array)
+    if n == 0:
+        return []
+    # 
+    result = [-1] * n   # default answer is -1
+    stack = []          # will store indices
+    # 
+    # Traverse from right to left
+    for i in range(n - 1, -1, -1):
+        # Pop elements from stack which are <= current element
+        while stack and stack[-1] <= array[i]:
+            stack.pop()
+        # 
+        # If stack not empty, top is the next greater element
+        if stack:
+            result[i] = stack[-1]
+        # 
+        # Push current element onto stack
+        stack.append(array[i])
+    # 
+    return result
 
 
 
 
 
 
-stack = [41, 3, 32, 2, 11]
 
 
-print(sortStack(stack))
+
+
+
+
+
+
+
+
+array = [20, 7, 15, 9, 7, 19, 8, 15, 19, 4, 6, 6, 11, 9, 13]
+
+
+def solution(array):
+    """
+    """
+    print(array)
+    len_array = len(array)
+    final_array = [-1]*len_array
+    stack = []
+    # 
+    for i in range(len_array-1, -1, -1):
+        # 
+        while stack and stack[-1] <= array[i]:
+            stack.pop()
+        # 
+        if stack:
+            final_array[i] = stack[-1]
+        # 
+        stack.append(array[i])
+    # 
+    return final_array
+
+
+
+print(solution(array))
