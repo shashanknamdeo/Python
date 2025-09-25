@@ -13,5 +13,10 @@ def replaceOWithX():
 def nearest(self, grid):
     """
     https://www.geeksforgeeks.org/problems/distance-of-nearest-cell-having-1-1587115620/1
-    Graph, Dynamic Programing, Matrix, Queue
     """
+
+def orangesRotting(self, mat):
+    """
+    https://www.geeksforgeeks.org/problems/rotten-oranges2536/1
+    """
+
