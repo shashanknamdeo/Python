@@ -416,7 +416,7 @@
 #     return "".join(result)
 
 
-# # -------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
 
 
 def maxLength(string):
@@ -438,7 +438,7 @@ def maxLength(string):
     return max_result
 
 
-# # -------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
 
 # Special stack
 
@@ -477,7 +477,7 @@ def getMin(n, arr):
     return min_stack[-1]
 
 
-# # -------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
 
 
 def findDuplicateparenthesis(string):
@@ -506,7 +506,7 @@ def findDuplicateparenthesis(string):
     return False
 
 
-# # -------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
 
 
 def validateOp(a, b):
@@ -536,7 +536,7 @@ def validateOp(a, b):
     return True
 
 
-# # -------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
 
 
 def countNumber(n):
@@ -547,7 +547,7 @@ def countNumber(n):
     approach 2 : deficult to understand
     """
 
-# # -------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
 
 def sortStack(stack):
     """
@@ -576,7 +576,7 @@ def insertTemp(stack, item):
     stack.append(temp)
     return stack
 
-# # -------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
 
 from collections import defaultdict
 
@@ -612,7 +612,7 @@ def FirstNonRepeating(string):
     # 
     return final_string
 
-# # -------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
 
 def celebrity(matrix):
         size = len(matrix)
@@ -641,7 +641,7 @@ def celebrity(matrix):
         print('index_list 2 : ', index_list)
         return index_list[0] if index_list else -1
 
-# # -------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
 
 def nextLargerElement(self, array):
     """
@@ -670,44 +670,86 @@ def nextLargerElement(self, array):
     # 
     return result
 
+# -------------------------------------------------------------------------------------------------
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-array = [20, 7, 15, 9, 7, 19, 8, 15, 19, 4, 6, 6, 11, 9, 13]
-
-
-def solution(array):
+def nearest(self, grid):
     """
+    https://www.geeksforgeeks.org/problems/distance-of-nearest-cell-having-1-1587115620/1
+    Graph, Dynamic Programing, Matrix, Queue
     """
-    print(array)
-    len_array = len(array)
-    final_array = [-1]*len_array
-    stack = []
+
+# -------------------------------------------------------------------------------------------------
+
+
+def nextSmallerEle(self, array):
+    """
+    Find the next greater element for each element in array.
+    If no greater element exists, return -1 for that position.
+    """
+    n = len(array)
+    if n == 0:
+        return []
     # 
-    for i in range(len_array-1, -1, -1):
-        # 
-        while stack and stack[-1] <= array[i]:
+    result = [-1] * n   # default answer is -1
+    stack = []          # will store indices
+    # 
+    # Traverse from right to left
+    for i in range(n - 1, -1, -1):
+        # Pop elements from stack which are <= current element
+        while stack and stack[-1] >= array[i]:
             stack.pop()
         # 
+        # If stack not empty, top is the next greater element
         if stack:
-            final_array[i] = stack[-1]
+            result[i] = stack[-1]
         # 
+        # Push current element onto stack
         stack.append(array[i])
     # 
-    return final_array
+    return result
+
+# -------------------------------------------------------------------------------------------------
+
+
+def startStation(gas, cost):
+    """
+    def startStation(self, gas, cost):
+    """
+    len_station = len(gas)
+    # 
+    j = 0
+    while j < len_station:
+        fuel_tank = 0
+        response = True
+        for i in range(j, len_station):
+            fuel_tank = gas[i] + fuel_tank - cost[i]
+            # 
+            if fuel_tank < 0:
+                j = i + 1
+                response = False
+                break
+        # 
+        if response == True:
+            for i in range(0, j):
+                fuel_tank = gas[i] + fuel_tank - cost[i]
+                # 
+                if fuel_tank < 0:
+                    j += 1
+                    response = False
+                    break
+        # 
+        if response == True:
+            return j
+    # 
+    return -1
 
 
 
-print(solution(array))
+
+gas = [3, 7, 5, 2, 6, 16, 5, 5, 38, 4, 4, 9, 7, 4, 3, 5, 7]
+cost = [6, 5, 9, 3, 14, 9, 13, 3, 1, 14, 11, 8, 10, 7, 4, 4, 9]
+
+
+
+
+print(startStation(gas, cost))
