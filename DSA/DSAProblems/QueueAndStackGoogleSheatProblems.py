@@ -743,13 +743,64 @@ def startStation(gas, cost):
     # 
     return -1
 
+# -------------------------------------------------------------------------------------------------
+
+
+class kStacks:
+    # 
+    def __init__(self, n, k):
+        self.stack_array = [None]*n
+        self.refrence_array = [None]*(n+k)
+        self.last_index_array = [None]*k
+        self.empty_index_list = [i for i in range(0, n)]
+    # 
+    def push(self, x, i):
+        empty_index = self.empty_index_list.pop(0)
+        self.stack_array[empty_index] = x
+        self.refrence_array[empty_index] = self.last_index_array[i]
+        self.last_index_array[i] = empty_index
+        return True
+    # 
+    def pop(self, i):
+        if self.last_index_array[i] is None:
+            return None
+        # 
+        pop_element = self.stack_array[]
+        temp_index = self.last_index_array[i]
+        temp_item = self.refrence_array[temp_index]
+        self.refrence_array[temp_index] = None
+        self.last_index_array[i] = temp_item
+        self.empty_index_list.append(temp_item)
+        return pop_element
 
 
 
-gas = [3, 7, 5, 2, 6, 16, 5, 5, 38, 4, 4, 9, 7, 4, 3, 5, 7]
-cost = [6, 5, 9, 3, 14, 9, 13, 3, 1, 14, 11, 8, 10, 7, 4, 4, 9]
 
 
 
 
-print(startStation(gas, cost))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# gas = [3, 7, 5, 2, 6, 16, 5, 5, 38, 4, 4, 9, 7, 4, 3, 5, 7]
+# cost = [6, 5, 9, 3, 14, 9, 13, 3, 1, 14, 11, 8, 10, 7, 4, 4, 9]
+
+
+
+
+# print(startStation(gas, cost))
