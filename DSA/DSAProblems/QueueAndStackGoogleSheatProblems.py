@@ -770,14 +770,39 @@ class kStacks:
         temp_item = self.refrence_array[temp_index]
         self.refrence_array[temp_index] = None
         self.last_index_array[i] = temp_item
-        self.empty_index_list.append(temp_item)
+        self.empty_index_list.append(temp_index)
         return pop_element
 
+# -------------------------------------------------------------------------------------------------
 
+arrangements = []
 
+def towerOfHanoi(self, n, fromm, to, aux):
+    """
+    """
+    towers = ''
+    for i in range(1, n+1):
+        towers = towers + str(i)
+    # 
+    self.result = '|'+'|' + towers
+    towers = towers + '|'+'|'
+    arrangements.append(towers)
+    recursionTowerOfHanoi(towers, move)
 
+merged_string = string1 + delimiter + string2 + delimiter + string3
+demerged_list = merged_string.split(delimiter)
 
-
+def recursionTowerOfHanoi(towers, move):
+    """
+    """
+    if tower == self.result:
+        return move
+    # 
+    tower_list = towers.split('|')
+    # 
+    # Tower 0 Move
+    if len(tower_list[0]) > 0:
+        if tower_list[0][0] < 
 
 
 
