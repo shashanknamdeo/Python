@@ -416,397 +416,436 @@
 #     return "".join(result)
 
 
-# -------------------------------------------------------------------------------------------------
+# # -------------------------------------------------------------------------------------------------
 
 
-def maxLength(string):
-    max_result = 0
-    stack = [-1]
+# def maxLength(string):
+#     max_result = 0
+#     stack = [-1]
+#     # 
+#     for i in range(len(string)):
+#         print(stack, max_result)
+#         if string[i] == '(':
+#             stack.append(i)
+#         # 
+#         elif string[i] == ')':
+#             stack.pop()
+#             if not stack:
+#                 stack.append(i)
+#             else:
+#                 max_result = max(max_result, i - stack[-1])
+#     # 
+#     return max_result
+
+
+# # -------------------------------------------------------------------------------------------------
+
+# # Special stack
+
+# def push(arr, ele):
+#     if len(arr) == 0:
+#         global min_stack 
+#         min_stack = [ele]
+#     else:
+#         min_stack.append(min(ele, min_stack[-1]))
+#     arr.append(ele)
+
+
+# def pop(arr):
+#     if not arr:  # stack empty
+#         return -1   # GFG expects -1 when stack is empty
+#     min_stack.pop()
+#     return arr.pop()
+
+
+# # function should return 1/0 or True/False
+# def isFull(n, arr):
+#     if len(arr) == n:
+#         return True
+#     return False
+
+
+# # function should return 1/0 or True/False
+# def isEmpty(arr):
+#     return len(arr) == 0
+
+
+# # function should return minimum element from the stack
+# def getMin(n, arr):
+#     if not arr:
+#         return -1
+#     return min_stack[-1]
+
+
+# # -------------------------------------------------------------------------------------------------
+
+
+# def findDuplicateparenthesis(string):
+#     print(string)
+#     stack = ['#']
+#     flag = False
+#     for char in string:
+#         if flag == False:
+#             if char != ')':
+#                 stack.append(char)
+#             else:
+#                 while stack[-1] != '(':
+#                     stack.pop()
+#                 # 
+#                 stack.pop()
+#                 if stack[-1] == '(':
+#                     flag = True
+#                     continue
+#         elif flag == True :
+#             if char == ')':
+#                 return True
+#             else:
+#                 flag = False
+#                 stack.append(char)
+#     # 
+#     return False
+
+
+# # -------------------------------------------------------------------------------------------------
+
+
+# def validateOp(a, b):
+#     """
+#     """
+#     print(a, b)
+#     len_a = len(a)
+#     len_b = len(b)
+#     if len_a != len_b:
+#         return False
+#     # 
+#     stack = ['temp_ele']
+#     index_b = 0
+#     index_a = 0
+#     while index_b < len_b:
+#         print(stack, b[index_b])
+#         if stack[-1] == b[index_b]:
+#             stack.pop()
+#             index_b += 1
+#         else:
+#             if a and index_a < len_a:
+#                 stack.append(a[index_a])
+#                 index_a += 1
+#             else:
+#                 return False
+#     # 
+#     return True
+
+
+# # -------------------------------------------------------------------------------------------------
+
+
+# def countNumber(n):
+#     """
+#     Count natural numbers whose all permutation are greater than that number
+#     # 
+#     approach 1 : simple
+#     approach 2 : deficult to understand
+#     """
+
+# # -------------------------------------------------------------------------------------------------
+
+# def sortStack(stack):
+#     """
+#     """
+#     if not stack:
+#         return stack
+#     # 
+#     temp = stack.pop()
+#     # 
+#     stack = sortStack(stack)
+#     # 
+#     stack = insertTemp(stack, temp)
+#     # 
+#     return stack
+
+
+# def insertTemp(stack, item):
+#     """
+#     """
+#     if not stack or stack[-1] <= item:
+#         stack.append(item)
+#         return stack
+#     # 
+#     temp = stack.pop()
+#     stack = insertTemp(stack, item)
+#     stack.append(temp)
+#     return stack
+
+# # -------------------------------------------------------------------------------------------------
+
+# from collections import defaultdict
+
+# def FirstNonRepeating(string):
+#     """
+#     """
+#     if not string:
+#         return string
+#     # 
+#     final_string = string[0]
+#     queue = [string[0]]
+#     # 
+#     char_dict = defaultdict(int)
+#     char_dict[string[0]] = 1
+#     # 
+#     print(string)
+#     for char in string[1:]:
+#         print(queue, char_dict, char_dict)
+#         if queue and queue[0] == char:
+#             queue.pop(0)
+#             while queue and char_dict[queue[0]] > 1:
+#                 queue.pop(0)
+#                 print('while : ', queue)
+#         # 
+#         if char_dict[char] == 0:
+#             queue.append(char)
+#             char_dict[char] += 1
+#         # 
+#         elif char_dict[char] == 1:
+#             char_dict[char] += 1
+#         # 
+#         final_string += queue[0] if queue else '#'
+#     # 
+#     return final_string
+
+# # -------------------------------------------------------------------------------------------------
+
+# def celebrity(matrix):
+#         size = len(matrix)
+#         index_list = []
+#         # 
+#         for i in range(0, size):
+#             if sum(matrix[i]) == 1:
+#                 index_list.append(i)
+#         # 
+#         if not index_list:
+#             return -1
+#         # 
+#         for i in list(index_list):
+#             print('index_list 1 : ', i)
+#             celebrity = True
+#             for row in matrix:
+#                 if row[i] == 0:
+#                     index_list.pop(0)
+#                     celebrity = False
+#                     print('celebrity False: ', i)
+#                     break
+#             if celebrity:
+#                 print('celebrity True: ', i)
+#                 break
+#             # 
+#         print('index_list 2 : ', index_list)
+#         return index_list[0] if index_list else -1
+
+# # -------------------------------------------------------------------------------------------------
+
+# def nextLargerElement(self, array):
+#     """
+#     Find the next greater element for each element in array.
+#     If no greater element exists, return -1 for that position.
+#     """
+#     n = len(array)
+#     if n == 0:
+#         return []
+#     # 
+#     result = [-1] * n   # default answer is -1
+#     stack = []          # will store indices
+#     # 
+#     # Traverse from right to left
+#     for i in range(n - 1, -1, -1):
+#         # Pop elements from stack which are <= current element
+#         while stack and stack[-1] <= array[i]:
+#             stack.pop()
+#         # 
+#         # If stack not empty, top is the next greater element
+#         if stack:
+#             result[i] = stack[-1]
+#         # 
+#         # Push current element onto stack
+#         stack.append(array[i])
+#     # 
+#     return result
+
+# # -------------------------------------------------------------------------------------------------
+
+# def nearest(self, grid):
+#     """
+#     https://www.geeksforgeeks.org/problems/distance-of-nearest-cell-having-1-1587115620/1
+#     Graph, Dynamic Programing, Matrix, Queue
+#     """
+
+# # -------------------------------------------------------------------------------------------------
+
+
+# def nextSmallerEle(self, array):
+#     """
+#     Find the next greater element for each element in array.
+#     If no greater element exists, return -1 for that position.
+#     """
+#     n = len(array)
+#     if n == 0:
+#         return []
+#     # 
+#     result = [-1] * n   # default answer is -1
+#     stack = []          # will store indices
+#     # 
+#     # Traverse from right to left
+#     for i in range(n - 1, -1, -1):
+#         # Pop elements from stack which are <= current element
+#         while stack and stack[-1] >= array[i]:
+#             stack.pop()
+#         # 
+#         # If stack not empty, top is the next greater element
+#         if stack:
+#             result[i] = stack[-1]
+#         # 
+#         # Push current element onto stack
+#         stack.append(array[i])
+#     # 
+#     return result
+
+# # -------------------------------------------------------------------------------------------------
+
+
+# def startStation(gas, cost):
+#     """
+#     def startStation(self, gas, cost):
+#     """
+#     len_station = len(gas)
+#     # 
+#     j = 0
+#     while j < len_station:
+#         fuel_tank = 0
+#         response = True
+#         for i in range(j, len_station):
+#             fuel_tank = gas[i] + fuel_tank - cost[i]
+#             # 
+#             if fuel_tank < 0:
+#                 j = i + 1
+#                 response = False
+#                 break
+#         # 
+#         if response == True:
+#             for i in range(0, j):
+#                 fuel_tank = gas[i] + fuel_tank - cost[i]
+#                 # 
+#                 if fuel_tank < 0:
+#                     j += 1
+#                     response = False
+#                     break
+#         # 
+#         if response == True:
+#             return j
+#     # 
+#     return -1
+
+# # -------------------------------------------------------------------------------------------------
+
+
+# class kStacks:
+#     # 
+#     def __init__(self, n, k):
+#         self.stack_array = [None]*n
+#         self.refrence_array = [None]*(n+k)
+#         self.last_index_array = [None]*k
+#         self.empty_index_list = [i for i in range(0, n)]
+#     # 
+#     def push(self, x, i):
+#         empty_index = self.empty_index_list.pop(0)
+#         self.stack_array[empty_index] = x
+#         self.refrence_array[empty_index] = self.last_index_array[i]
+#         self.last_index_array[i] = empty_index
+#         return True
+#     # 
+#     def pop(self, i):
+#         if self.last_index_array[i] is None:
+#             return None
+#         # 
+#         pop_element = self.stack_array[]
+#         temp_index = self.last_index_array[i]
+#         temp_item = self.refrence_array[temp_index]
+#         self.refrence_array[temp_index] = None
+#         self.last_index_array[i] = temp_item
+#         self.empty_index_list.append(temp_index)
+#         return pop_element
+
+# # -------------------------------------------------------------------------------------------------
+
+
+# def towerOfHanoi(self, n, fromm, to, aux):
+#     """
+#     https://www.geeksforgeeks.org/problems/tower-of-hanoi-1587115621/1
+#     """
+#     # moves = []
+#     # 
+#     def solve(n, source, dest, helper):
+#         # 
+#         if n == 1:
+#             # moves.append(f"move disk {n} from rod {src} to rod {dest}")
+#             return 1
+#         # 
+#         count = solve(n=n-1, source=source, dest=helper, helper=dest)
+#         # moves.append(f"move disk {n} from rod {src} to rod {dest}")
+#         count += 1
+#         count += solve(n=n-1, source=helper, dest=dest, helper=source)
+#         return count
+#     # 
+#     return solve(n=n, source=fromm, dest=to, helper=aux)
+
+
+def iterativeTowerOfHanoi(n):
+    """
+    https://www.geeksforgeeks.org/dsa/iterative-tower-of-hanoi/
+    """
+    a = [i for i in range(n, 0, -1)]
+    b = []
+    c = []
     # 
-    for i in range(len(string)):
-        print(stack, max_result)
-        if string[i] == '(':
-            stack.append(i)
+    count = 1
+    # 
+    while a or b:
+        temp = count%3
+        a, b, c = move(a, b, c, temp)
+        print(a, b, c)
+        count += 1
+    # 
+    return count - 1
+
+
+def move(a, b, c, temp):
+    """
+    """
+    print(temp)
+    if temp == 1:
+        if (a and not c) or (c and a and c[-1] > a[-1]):
+            c.append(a.pop())
+            return a, b, c
         # 
-        elif string[i] == ')':
-            stack.pop()
-            if not stack:
-                stack.append(i)
-            else:
-                max_result = max(max_result, i - stack[-1])
+        elif (c and not a) or (a and c and a[-1] > c[-1]):
+            a.append(c.pop())
+            return a, b, c
     # 
-    return max_result
-
-
-# -------------------------------------------------------------------------------------------------
-
-# Special stack
-
-def push(arr, ele):
-    if len(arr) == 0:
-        global min_stack 
-        min_stack = [ele]
-    else:
-        min_stack.append(min(ele, min_stack[-1]))
-    arr.append(ele)
-
-
-def pop(arr):
-    if not arr:  # stack empty
-        return -1   # GFG expects -1 when stack is empty
-    min_stack.pop()
-    return arr.pop()
-
-
-# function should return 1/0 or True/False
-def isFull(n, arr):
-    if len(arr) == n:
-        return True
-    return False
-
-
-# function should return 1/0 or True/False
-def isEmpty(arr):
-    return len(arr) == 0
-
-
-# function should return minimum element from the stack
-def getMin(n, arr):
-    if not arr:
-        return -1
-    return min_stack[-1]
-
-
-# -------------------------------------------------------------------------------------------------
-
-
-def findDuplicateparenthesis(string):
-    print(string)
-    stack = ['#']
-    flag = False
-    for char in string:
-        if flag == False:
-            if char != ')':
-                stack.append(char)
-            else:
-                while stack[-1] != '(':
-                    stack.pop()
-                # 
-                stack.pop()
-                if stack[-1] == '(':
-                    flag = True
-                    continue
-        elif flag == True :
-            if char == ')':
-                return True
-            else:
-                flag = False
-                stack.append(char)
-    # 
-    return False
-
-
-# -------------------------------------------------------------------------------------------------
-
-
-def validateOp(a, b):
-    """
-    """
-    print(a, b)
-    len_a = len(a)
-    len_b = len(b)
-    if len_a != len_b:
-        return False
-    # 
-    stack = ['temp_ele']
-    index_b = 0
-    index_a = 0
-    while index_b < len_b:
-        print(stack, b[index_b])
-        if stack[-1] == b[index_b]:
-            stack.pop()
-            index_b += 1
-        else:
-            if a and index_a < len_a:
-                stack.append(a[index_a])
-                index_a += 1
-            else:
-                return False
-    # 
-    return True
-
-
-# -------------------------------------------------------------------------------------------------
-
-
-def countNumber(n):
-    """
-    Count natural numbers whose all permutation are greater than that number
-    # 
-    approach 1 : simple
-    approach 2 : deficult to understand
-    """
-
-# -------------------------------------------------------------------------------------------------
-
-def sortStack(stack):
-    """
-    """
-    if not stack:
-        return stack
-    # 
-    temp = stack.pop()
-    # 
-    stack = sortStack(stack)
-    # 
-    stack = insertTemp(stack, temp)
-    # 
-    return stack
-
-
-def insertTemp(stack, item):
-    """
-    """
-    if not stack or stack[-1] <= item:
-        stack.append(item)
-        return stack
-    # 
-    temp = stack.pop()
-    stack = insertTemp(stack, item)
-    stack.append(temp)
-    return stack
-
-# -------------------------------------------------------------------------------------------------
-
-from collections import defaultdict
-
-def FirstNonRepeating(string):
-    """
-    """
-    if not string:
-        return string
-    # 
-    final_string = string[0]
-    queue = [string[0]]
-    # 
-    char_dict = defaultdict(int)
-    char_dict[string[0]] = 1
-    # 
-    print(string)
-    for char in string[1:]:
-        print(queue, char_dict, char_dict)
-        if queue and queue[0] == char:
-            queue.pop(0)
-            while queue and char_dict[queue[0]] > 1:
-                queue.pop(0)
-                print('while : ', queue)
+    elif temp == 2:
+        if (a and not b) or (a and b and b[-1] > a[-1]):
+            b.append(a.pop())
+            return a, b, c
         # 
-        if char_dict[char] == 0:
-            queue.append(char)
-            char_dict[char] += 1
+        elif (b and not a) or (a and b and a[-1] > b[-1]):
+            a.append(b.pop())
+            return a, b, c
+    # 
+    elif temp == 0:
+        if (b and not c) or (c and b and c[-1] > b[-1]):
+            c.append(b.pop())
+            return a, b, c
         # 
-        elif char_dict[char] == 1:
-            char_dict[char] += 1
-        # 
-        final_string += queue[0] if queue else '#'
-    # 
-    return final_string
-
-# -------------------------------------------------------------------------------------------------
-
-def celebrity(matrix):
-        size = len(matrix)
-        index_list = []
-        # 
-        for i in range(0, size):
-            if sum(matrix[i]) == 1:
-                index_list.append(i)
-        # 
-        if not index_list:
-            return -1
-        # 
-        for i in list(index_list):
-            print('index_list 1 : ', i)
-            celebrity = True
-            for row in matrix:
-                if row[i] == 0:
-                    index_list.pop(0)
-                    celebrity = False
-                    print('celebrity False: ', i)
-                    break
-            if celebrity:
-                print('celebrity True: ', i)
-                break
-            # 
-        print('index_list 2 : ', index_list)
-        return index_list[0] if index_list else -1
-
-# -------------------------------------------------------------------------------------------------
-
-def nextLargerElement(self, array):
-    """
-    Find the next greater element for each element in array.
-    If no greater element exists, return -1 for that position.
-    """
-    n = len(array)
-    if n == 0:
-        return []
-    # 
-    result = [-1] * n   # default answer is -1
-    stack = []          # will store indices
-    # 
-    # Traverse from right to left
-    for i in range(n - 1, -1, -1):
-        # Pop elements from stack which are <= current element
-        while stack and stack[-1] <= array[i]:
-            stack.pop()
-        # 
-        # If stack not empty, top is the next greater element
-        if stack:
-            result[i] = stack[-1]
-        # 
-        # Push current element onto stack
-        stack.append(array[i])
-    # 
-    return result
-
-# -------------------------------------------------------------------------------------------------
-
-def nearest(self, grid):
-    """
-    https://www.geeksforgeeks.org/problems/distance-of-nearest-cell-having-1-1587115620/1
-    Graph, Dynamic Programing, Matrix, Queue
-    """
-
-# -------------------------------------------------------------------------------------------------
-
-
-def nextSmallerEle(self, array):
-    """
-    Find the next greater element for each element in array.
-    If no greater element exists, return -1 for that position.
-    """
-    n = len(array)
-    if n == 0:
-        return []
-    # 
-    result = [-1] * n   # default answer is -1
-    stack = []          # will store indices
-    # 
-    # Traverse from right to left
-    for i in range(n - 1, -1, -1):
-        # Pop elements from stack which are <= current element
-        while stack and stack[-1] >= array[i]:
-            stack.pop()
-        # 
-        # If stack not empty, top is the next greater element
-        if stack:
-            result[i] = stack[-1]
-        # 
-        # Push current element onto stack
-        stack.append(array[i])
-    # 
-    return result
-
-# -------------------------------------------------------------------------------------------------
-
-
-def startStation(gas, cost):
-    """
-    def startStation(self, gas, cost):
-    """
-    len_station = len(gas)
-    # 
-    j = 0
-    while j < len_station:
-        fuel_tank = 0
-        response = True
-        for i in range(j, len_station):
-            fuel_tank = gas[i] + fuel_tank - cost[i]
-            # 
-            if fuel_tank < 0:
-                j = i + 1
-                response = False
-                break
-        # 
-        if response == True:
-            for i in range(0, j):
-                fuel_tank = gas[i] + fuel_tank - cost[i]
-                # 
-                if fuel_tank < 0:
-                    j += 1
-                    response = False
-                    break
-        # 
-        if response == True:
-            return j
-    # 
-    return -1
-
-# -------------------------------------------------------------------------------------------------
-
-
-class kStacks:
-    # 
-    def __init__(self, n, k):
-        self.stack_array = [None]*n
-        self.refrence_array = [None]*(n+k)
-        self.last_index_array = [None]*k
-        self.empty_index_list = [i for i in range(0, n)]
-    # 
-    def push(self, x, i):
-        empty_index = self.empty_index_list.pop(0)
-        self.stack_array[empty_index] = x
-        self.refrence_array[empty_index] = self.last_index_array[i]
-        self.last_index_array[i] = empty_index
-        return True
-    # 
-    def pop(self, i):
-        if self.last_index_array[i] is None:
-            return None
-        # 
-        pop_element = self.stack_array[]
-        temp_index = self.last_index_array[i]
-        temp_item = self.refrence_array[temp_index]
-        self.refrence_array[temp_index] = None
-        self.last_index_array[i] = temp_item
-        self.empty_index_list.append(temp_index)
-        return pop_element
-
-# -------------------------------------------------------------------------------------------------
-
-arrangements = []
-
-def towerOfHanoi(self, n, fromm, to, aux):
-    """
-    """
-    towers = ''
-    for i in range(1, n+1):
-        towers = towers + str(i)
-    # 
-    self.result = '|'+'|' + towers
-    towers = towers + '|'+'|'
-    arrangements.append(towers)
-    recursionTowerOfHanoi(towers, move)
-
-merged_string = string1 + delimiter + string2 + delimiter + string3
-demerged_list = merged_string.split(delimiter)
-
-def recursionTowerOfHanoi(towers, move):
-    """
-    """
-    if tower == self.result:
-        return move
-    # 
-    tower_list = towers.split('|')
-    # 
-    # Tower 0 Move
-    if len(tower_list[0]) > 0:
-        if tower_list[0][0] < 
-
-
-
-
+        elif (c and not b) or (b and c and b[-1] > c[-1]):
+            b.append(c.pop())
+            return a, b, c
 
 
 
@@ -826,4 +865,4 @@ def recursionTowerOfHanoi(towers, move):
 
 
 
-# print(startStation(gas, cost))
+print(iterativeTowerOfHanoi(5))
