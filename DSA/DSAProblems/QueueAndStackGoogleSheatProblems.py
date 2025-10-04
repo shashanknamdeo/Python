@@ -831,194 +831,165 @@
 
 # # -------------------------------------------------------------------------------------------------
 
-def maxOfMins(array):
-    # def maxOfMins(self, array):
-    """
-    """
-    print(array)
-    len_array = len(array)
-    max_array = [0 for _ in range(0, len_array)]
-    # 
-    for i in range(0, len_array):
-        current_num = array[i]
-        min_range = 1
-        # 
-        l = i
-        while l-1 >= 0 and array[l-1] >= current_num:
-            l -= 1
-            min_range += 1
-        # 
-        r = i
-        while r+1 < len_array and array[r+1] >= current_num:
-            r += 1
-            min_range += 1
-        # 
-        print(current_num, min_range, l, r)
-        for j in range(0, min_range):
-            if max_array[j] < current_num:
-                max_array[j] = current_num
-    # 
-    return max_array
+
+# def leftSmalller(array):
+#     """
+#     """
+#     len_array = len(array)
+#     left_smaller_array = [-1] * len_array
+#     stack = [0]
+#     # 
+#     for i in range(0, len_array):
+#         # 
+#         print(stack)
+#         while stack and array[stack[-1]] >= array[i]:
+#             stack.pop()
+#         # 
+#         if stack:
+#             left_smaller_array[i] = stack[-1]
+#         # 
+#         stack.append(i)
+#     # 
+#     return left_smaller_array
 
 
+# def rightSmalller(array):
+#     """
+#     """
+#     len_array = len(array)
+#     right_smaller_array = [len_array] * len_array
+#     stack = [len_array-1]
+#     # 
+#     for i in range(len_array-1, -1, -1):
+#         # 
+#         print(stack)
+#         while stack and array[stack[-1]] >= array[i]:
+#             stack.pop()
+#         # 
+#         if stack:
+#             right_smaller_array[i] = stack[-1]
+#         # 
+#         stack.append(i)
+#     # 
+#     return right_smaller_array
 
-def maxOfMins(array):
-    """
-    Calculates the maximum of minimums for every window size in O(N) time.
-    """
-    print(array)
-    n = len(array)
-    if n == 0:
-        return []
-    
-    # Step 1: Find the nearest smaller element indices
-    # left_smaller[i] = index of nearest element < array[i] to the left
-    left_smaller = get_nearest_smaller_elements(array, n, is_right_scan=False)
-    print('left_smaller : ', left_smaller)
-    
-    # right_smaller[i] = index of nearest element < array[i] to the right
-    right_smaller = get_nearest_smaller_elements(array, n, is_right_scan=True)
-    print('right_smaller : ', right_smaller)
-    
-    # Step 2: Populate the maximums array for the largest possible window size
-    # final_max_of_mins[k] stores the max-of-mins for window size k+1
-    final_max_of_mins = [0] * n 
-    # 
-    for i in range(n):
-        current_num = array[i]
+
+# def maxOfMins(array):
+#     # def maxOfMins(self, array):
+#     """
+#     """
+#     print(array)
+#     len_array = len(array)
+#     max_array = [0 for _ in range(0, len_array)]
+#     # 
+#     lsea = leftSmalller(array)
+#     rsea = rightSmalller(array)
+#     # 
+#     final_max_of_mins = [0] * len_array
+#     # 
+#     for i in range(len_array):
+#         current_num = array[i]
         
-        # The largest window size for which current_num is the minimum
-        w_len = right_smaller[i] - left_smaller[i] - 1
+#         # The largest window size for which current_num is the minimum
+#         w_len = rsea[i] - lsea[i] - 1
         
-        # Update the result array at the index corresponding to the window size w_len
-        # The value is the largest number that could be a minimum for a window of size w_len
-        final_max_of_mins[w_len - 1] = max(final_max_of_mins[w_len - 1], current_num)
-    # 
-    print(final_max_of_mins)
-    # Step 3: Propagate maximums from right to left
-    # If the answer for size k is X, the answer for size k-1 must be at least X.
-    for i in range(n - 2, -1, -1):
-        final_max_of_mins[i] = max(final_max_of_mins[i], final_max_of_mins[i + 1])
+#         # Update the result array at the index corresponding to the window size w_len
+#         # The value is the largest number that could be a minimum for a window of size w_len
+#         final_max_of_mins[w_len - 1] = max(final_max_of_mins[w_len - 1], current_num)
+#     # 
+#     print(final_max_of_mins)
+#     # Step 3: Propagate maximums from right to left
+#     # If the answer for size k is X, the answer for size k-1 must be at least X.
+#     for i in range(len_array - 2, -1, -1):
+#         final_max_of_mins[i] = max(final_max_of_mins[i], final_max_of_mins[i + 1])
         
-    return final_max_of_mins
+#     return final_max_of_mins
+
+# # -------------------------------------------------------------------------------------------------
 
 
-def get_nearest_smaller_elements(arr, n, is_right_scan):
-        """
-        Helper function using a Monotonic Stack to find NSE indices in O(N).
-        """
-        stack = []
-        result = [0] * n
-        # 
-        # Determine the iteration and boundary based on scan direction
-        if is_right_scan:
-            start, end, step = n - 1, -1, -1
-            default_boundary = n  # Right boundary is array size n
-        else:
-            start, end, step = 0, n, 1
-            default_boundary = -1 # Left boundary is -1
-        # 
-        for i in range(start, end, step):
-            # Pop elements that are >= current element, as they can't be NSE for later elements
-            while stack and arr[stack[-1]] >= arr[i]:
-                stack.pop()
-            # 
-            # The NSE index is now at the top of the stack, or the boundary if stack is empty
-            if not stack:
-                result[i] = default_boundary
-            else:
-                result[i] = stack[-1]
-            # 
-            # Push current index
-            stack.append(i)
-        # 
-        return result
-
-def leftSmalller(array):
-    """
-    """
-    len_array = len(array)
-    left_smaller_array = [-1] * len_array
-    stack = [0]
-    # 
-    for i in range(0, len_array):
-        # 
-        print(stack)
-        while stack and array[stack[-1]] >= array[i]:
-            stack.pop()
-        # 
-        if stack:
-            left_smaller_array[i] = stack[-1]
-        # 
-        stack.append(i)
-    # 
-    return left_smaller_array
-
-
-def rightSmalller(array):
-    """
-    """
-    len_array = len(array)
-    right_smaller_array = [len_array] * len_array
-    stack = [len_array-1]
-    # 
-    for i in range(len_array-1, -1, -1):
-        # 
-        print(stack)
-        while stack and array[stack[-1]] >= array[i]:
-            stack.pop()
-        # 
-        if stack:
-            right_smaller_array[i] = stack[-1]
-        # 
-        stack.append(i)
-    # 
-    return right_smaller_array
-
-
-def maxOfMins(array):
-    # def maxOfMins(self, array):
-    """
-    """
-    print(array)
-    len_array = len(array)
-    max_array = [0 for _ in range(0, len_array)]
-    # 
-    lsea = leftSmalller(array)
-    rsea = rightSmalller(array)
-    # 
-    final_max_of_mins = [0] * len_array
-    # 
-    for i in range(len_array):
-        current_num = array[i]
+# class LRUCache:
+#     def __init__(self, capacity: int):
+#         self.capacity = capacity
+#         # A dictionary to store key: Node pairs for O(1) lookup
+#         self.cache = {}
         
-        # The largest window size for which current_num is the minimum
-        w_len = rsea[i] - lsea[i] - 1
+#         # Dummy head and tail nodes to simplify edge cases
+#         self.head = Node(0, 0)
+#         self.tail = Node(0, 0)
+#         self.head.next = self.tail
+#         self.tail.prev = self.head
+
+#     # --- Doubly Linked List Utility Methods (O(1)) ---
+
+#     # Adds a node right after the dummy head (MRU position)
+#     def _add_node(self, node):
+#         node.prev = self.head
+#         node.next = self.head.next
+#         self.head.next.prev = node
+#         self.head.next = node
+
+#     # Removes a node from the list
+#     def _remove_node(self, node):
+#         prev_node = node.prev
+#         next_node = node.next
+#         prev_node.next = next_node
+#         next_node.prev = prev_node
+
+#     # Moves an existing node to the head (MRU)
+#     def _move_to_head(self, node):
+#         self._remove_node(node)
+#         self._add_node(node)
         
-        # Update the result array at the index corresponding to the window size w_len
-        # The value is the largest number that could be a minimum for a window of size w_len
-        final_max_of_mins[w_len - 1] = max(final_max_of_mins[w_len - 1], current_num)
-    # 
-    print(final_max_of_mins)
-    # Step 3: Propagate maximums from right to left
-    # If the answer for size k is X, the answer for size k-1 must be at least X.
-    for i in range(len_array - 2, -1, -1):
-        final_max_of_mins[i] = max(final_max_of_mins[i], final_max_of_mins[i + 1])
+#     # Removes the Least Recently Used (LRU) node (the one before the dummy tail)
+#     def _pop_tail(self):
+#         # The node to remove is the one just before the tail
+#         lru_node = self.tail.prev
+#         self._remove_node(lru_node)
+#         return lru_node
         
-    return final_max_of_mins
+#     # --- Public Cache Methods ---
 
+#     # 3. get() operation
+#     def get(self, key: int) -> int:
+#         if key in self.cache:
+#             node = self.cache[key]
+            
+#             # Step 1: Mark as most recently used (move to head)
+#             self._move_to_head(node)
+            
+#             # Step 2: Return the value
+#             return node.value
+#         else:
+#             # Cache miss
+#             return -1 # Matches your plan for cache miss
 
+#     # 2. push() operation (commonly named 'put')
+#     def put(self, key: int, value: int) -> None:
+#         if key in self.cache:
+#             # Case 1: Key exists (Cache Hit)
+#             node = self.cache[key]
+#             node.value = value # Update value
+#             self._move_to_head(node) # Mark as most recently used
+            
+#         else:
+#             # Case 2: Key does not exist (Cache Miss/New Insert)
+            
+#             # A. Check capacity and evict if full
+#             if len(self.cache) >= self.capacity:
+#                 lru_node = self._pop_tail() # Remove LRU node from list
+#                 del self.cache[lru_node.key] # Remove LRU entry from dictionary
+            
+#             # B. Create and insert new node
+#             new_node = Node(key, value)
+#             self._add_node(new_node) # Add new node to list head (MRU)
+#             self.cache[key] = new_node # Add new entry to dictionary
 
+# # -------------------------------------------------------------------------------------------------
 
-
-
-
-
-
-arr = [10, 20, 30, 50, 10, 70, 30]
-# Output: [70, 30, 20, 10, 10, 10, 10] 
-
-
-
-
-print(maxOfMins(array=arr))
+# def gasStation():
+#     """
+#     already solve
+#     # 
+#     def startStation():
+#     """
