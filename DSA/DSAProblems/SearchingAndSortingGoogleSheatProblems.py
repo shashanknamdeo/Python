@@ -221,32 +221,18 @@ class Solution:
         if not array:
             return False
         # 
+        len_array = len(array)
         array.sort()
         # print(array)
         # 
-        i = 0
-        j = len(array) - 1
+        j = 1
         # 
-        if x > array[j] - array[i]:
-            return False
-        # 
-        while i < j:
-            i1 = array[i]
-            i2 = array[i+1]
-            j1 = array[j]
-            j2 = array[j-1]
+        for i in range(0, len_array):
+            while j < len_array and array[j] - array[i] < x:
+                j += 1
             # 
-            # print(i1, i2, j1, j2)
-            diff = j1 - i1
-            if diff == x:
+            if j < len_array and i != j and array[j] - array[i] == x:
                 return True
-            elif diff < x:
-                return False
-            # 
-            if i2 - i1 <= j1 - j2:
-                i += 1
-            elif i2 - i1 > j1 - j2:
-                j -= 1
         # 
         return False
 
