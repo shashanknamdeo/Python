@@ -1,0 +1,87 @@
+OPPs (Object-Oriented Programming) 
+
+OPPs all about "objects".
+
+Instead of viewing a program as a sequence of logic or functions (procedural programming), 
+OOP models bundling data and the methods (functions) that operate on that data into single units called objects.
+
+Four Pillars of OOP:
+    1. Encapsulation
+    2. Abstraction
+    3. Inheritance
+    4. Polymorphism
+
+---------------------------------------------------------------------------------------------------
+
+1. Encapsulation:
+    Mechanism of bundling data (variables) and the methods (functions) that work on that data into a single unit called CLASS.
+    Data hiding, restricting direct access to some of an object's components.
+
+Access specifiers:
+    Control the visibility and accessibility of a class's members (variables, functions, and constructors)
+    Types: Public, Protected and Private
+
+Public:
+    Can be accessed from anywhere, including outside the class and from other classes. 
+
+Protected:
+    Accessible from within the class where it's declared and from classes that inherit from it (derived classes). 
+
+Private:
+    Can only be accessed from within the class that defines it.
+
+---------------------------------------------------------------------------------------------------
+
+2. Abstraction:
+    Abstraction is the act of showing only essential information to the user and hiding the complex background details. 
+    It focuses on what the object does rather than how it achieves it.
+    Using Abstract Classes and Interfaces (in languages that support them).
+
+Abstract Class
+    Abstract class is to defines a common interface for its subclasses, while possibly providing some common functionality that can be shared.
+    Can have CONCRETE METHODS
+    Can have ABSTRACT METHODS
+    Cannot be instantiated directly
+    Serves as a blueprint for other classes to inherit from
+
+Abstract Methods:
+    Functions in abstract class whose defination is not defined in abstract class they only have signature in abstract class
+    Class which inharit Abstract Class will define ABSTRACT METHODS
+
+Concrete Methods: An abstract class can also have concrete methods, which are methods that have an implementation.
+
+Interfaces:
+    Use to define Functions whose defination is not defined in Interfaces they only have signature in Interfaces
+    Class which inharit Interfaces will define these Functions
+
+---------------------------------------------------------------------------------------------------
+
+3. Inheritance:
+    It allows a class (child/subclass) to inherit properties and behaviors (fields and methods) from another class (parent/superclass).
+    Code Reusability : Reuse existing code from the parent class.
+    Extensibility    : Easily extend and override behaviors.
+    Hierarchy        : Build a class hierarchy and organize functionality.
+
+Types of Inheritance
+    Single       : One child inherits from one parent
+    Multilevel   : A class inherits from a class that inherits from another
+    Multiple     : A class inherits from more than one class
+    Hierarchical : Multiple classes inherit from one base class
+    Hybrid       : Combination of two or more types above
+
+---------------------------------------------------------------------------------------------------
+
+4. Polymorphism:
+    Means "many forms".
+    It allows objects to take on multiple forms depending on context
+    Enabling the same interface to be used for different underlying data types or behaviors.
+
+
+
+
+friend function
+constructor
+destructor
+Runtime polymorphism
+override
+parent, child and super class

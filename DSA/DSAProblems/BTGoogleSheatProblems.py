@@ -285,87 +285,176 @@ def longestPathRecursively(matrix, m, n, xs, ys, xd, yd):
 # # -------------------------------------------------------------------------------------------------
 
 
-def markQueenPath(row, col, matrix, size):
+# def markQueenPath(row, col, matrix, size):
+#     """
+#     """
+#     new_matrix = copy.deepcopy(matrix)
+#     # check row
+#     for i in range(0, size):
+#         new_matrix[i][col] = 1
+#     # 
+#     # check col
+#     for j in range(0, size):
+#         new_matrix[row][j] = 1
+#     # 
+#     # check diagnol
+#     temp_row = copy.deepcopy(row)
+#     temp_col = copy.deepcopy(col)
+#     while temp_row >= 0 and temp_col >= 0:
+#         new_matrix[temp_row][temp_col] = 1
+#         temp_row, temp_col = temp_row-1, temp_col-1
+#     # 
+#     temp_row = copy.deepcopy(row)
+#     temp_col = copy.deepcopy(col)
+#     while temp_row < size and temp_col < size:
+#         new_matrix[temp_row][temp_col] = 1
+#         temp_row, temp_col = temp_row+1, temp_col+1
+#     # 
+#     temp_row = copy.deepcopy(row)
+#     temp_col = copy.deepcopy(col)
+#     while temp_row >= 0 and temp_col < size:
+#         new_matrix[temp_row][temp_col] = 1
+#         temp_row, temp_col = temp_row-1, temp_col+1
+#     # 
+#     temp_row = copy.deepcopy(row)
+#     temp_col = copy.deepcopy(col)
+#     while temp_row < size and temp_col >= 0:
+#         new_matrix[temp_row][temp_col] = 1
+#         temp_row, temp_col = temp_row+1, temp_col-1
+#     # 
+#     return new_matrix
+
+
+# def nQueen(size):
+#     """
+#     """
+#     matrix = []
+#     for i in range(0, size):
+#         matrix.append([0 for _ in range(0, size)])
+#     # 
+#     response = findQueenPosition(matrix=matrix, size=size, queen=size)
+#     if response[0]:
+#         return response
+#     else:
+#         return []
+
+# def findQueenPosition(matrix, size, queen):
+#     """
+#     """
+#     if queen == 0:
+#         answer_matrix = []
+#         for i in range(0, size):
+#             answer_matrix.append([0 for _ in range(0, size)])
+#         return True, answer_matrix
+#     # 
+#     # 
+#     new_matrix = copy.deepcopy(matrix)
+#     # 
+#     for i in range(0, size):
+#         for j in range(0, size):
+#             if new_matrix[i][j] == 0:
+#                 filled_matrix = markQueenPath(row=i, col=j, matrix=new_matrix, size=size)
+#                 # print(queen-1, filled_matrix)
+#                 # 
+#                 response = findQueenPosition(matrix=filled_matrix, size=size, queen=queen-1)
+#                 if response[0]:
+#                     answer_matrix = response[1]
+#                     answer_matrix[i][j] = 1
+#                     return True, answer_matrix
+#     # 
+#     return False, None
+
+
+import copy
+
+def markQueenPath(row, col, size):
     """
+    Marks the attacked positions on the matrix after placing a queen at (row, col).
+    Instead of modifying the board, we return the attacked rows, columns, and diagonals.
     """
-    new_matrix = copy.deepcopy(matrix)
-    # check row
-    for i in range(0, size):
-        new_matrix[i][col] = 1
-    # 
-    # check col
-    for j in range(0, size):
-        new_matrix[row][j] = 1
-    # 
-    # check diagnol
-    temp_row = copy.deepcopy(row)
-    temp_col = copy.deepcopy(col)
-    while temp_row >= 0 and temp_col >= 0:
-        new_matrix[temp_row][temp_col] = 1
-        temp_row, temp_col = temp_row-1, temp_col-1
-    # 
-    temp_row = copy.deepcopy(row)
-    temp_col = copy.deepcopy(col)
-    while temp_row < size and temp_col < size:
-        new_matrix[temp_row][temp_col] = 1
-        temp_row, temp_col = temp_row+1, temp_col+1
-    # 
-    temp_row = copy.deepcopy(row)
-    temp_col = copy.deepcopy(col)
-    while temp_row >= 0 and temp_col < size:
-        new_matrix[temp_row][temp_col] == 1
-        temp_row, temp_col = temp_row-1, temp_col+1
-    # 
-    temp_row = copy.deepcopy(row)
-    temp_col = copy.deepcopy(col)
-    while temp_row < size and temp_col >= 0:
-        new_matrix[temp_row][temp_col] = 1
-        temp_row, temp_col = temp_row+1, temp_col-1
-    # 
-    return new_matrix
+    attacked = {
+        'rows': [False] * size,
+        'cols': [False] * size,
+        'diag1': [False] * (2 * size - 1),  # Left-to-right diagonal
+        'diag2': [False] * (2 * size - 1)   # Right-to-left diagonal
+    }
+
+    # Mark the row, column, and diagonals attacked by a queen at (row, col)
+    attacked['rows'][row] = True
+    attacked['cols'][col] = True
+    attacked['diag1'][row - col + (size - 1)] = True
+    attacked['diag2'][row + col] = True
+
+    return attacked
+
+def findAllQueenPositions(placed_queens, size, attacked, queen):
+    """
+    Recursively attempts to find all valid queen placements considering the attacks.
+    """
+    if queen == 0:
+        # When all queens are placed, return the current configuration of placed queens.
+        return [placed_queens]
+
+    solutions = []
+
+    # Try placing a queen in each available row for the current column
+    col = size - queen  # We're placing the queen in columns from 0 to size-1
+    for row in range(size):
+        # Skip if the row, column, or diagonal is under attack
+        if attacked['rows'][row] or attacked['cols'][col] or attacked['diag1'][row - col + (size - 1)] or attacked['diag2'][row + col]:
+            continue
+        
+        # Place the queen at (row, col) and mark the attacked positions
+        new_attacked = copy.deepcopy(attacked)
+        new_attacked['rows'][row] = True
+        new_attacked['cols'][col] = True
+        new_attacked['diag1'][row - col + (size - 1)] = True
+        new_attacked['diag2'][row + col] = True
+        
+        # Recurse to place the remaining queens
+        new_placed_queens = placed_queens + [(row, col)]
+        solutions += findAllQueenPositions(new_placed_queens, size, new_attacked, queen - 1)
+
+    return solutions
 
 
 def nQueen(size):
     """
+    Returns all unique solutions for the N-Queens problem.
     """
-    matrix = []
-    for i in range(0, size):
-        matrix.append([0 for _ in range(0, size)])
-    # 
-    response = findQueenPosition(matrix=matrix, size=size, queen=size)
-    if response[0]:
-        return response
-    else:
-        return []
+    # Initialize attack tracking and solution list
+    initial_attacked = {
+        'rows': [False] * size,
+        'cols': [False] * size,
+        'diag1': [False] * (2 * size - 1),  # Left-to-right diagonal
+        'diag2': [False] * (2 * size - 1)   # Right-to-left diagonal
+    }
 
-def findQueenPosition(matrix, size, queen):
-    """
-    """
-    if queen == 0:
-        answer_matrix = []
-        for i in range(0, size):
-            answer_matrix.append([0 for _ in range(0, size)])
-        return True, answer_matrix
-    # 
-    if queen == 1:
-        print(matrix)
-    # 
-    new_matrix = copy.deepcopy(matrix)
-    # 
-    for i in range(0, size):
-        for j in range(0, size):
-            if new_matrix[i][j] == 0:
-                new_matrix = markQueenPath(row=i, col=j, matrix=new_matrix, size=size)
-                # 
-                response = findQueenPosition(matrix=new_matrix, size=size, queen=queen-1)
-                if response[0]:
-                    answer_matrix = response[1]
-                    answer_matrix[i][j] = 1
-                    return True, answer_matrix
-                else:
-                    new_matrix = copy.deepcopy(matrix)
-    # 
-    return False, None
+    # Recursively find all solutions
+    solutions = findAllQueenPositions([], size, initial_attacked, size)
+
+    # Convert each solution to a matrix
+    result = []
+    for solution in solutions:
+        matrix = [[0] * size for _ in range(size)]
+        for (row, col) in solution:
+            matrix[row][col] = 1
+        result.append(matrix)
+
+    return result
+
+
+# Example usage:
+size = 4
+solutions = nQueen(size)
+
+# Printing the unique solutions:
+for idx, solution in enumerate(solutions):
+    print(f"Solution {idx + 1}:")
+    for row in solution:
+        print(row)
+    print()
+
 
 
 
@@ -407,7 +496,7 @@ def findQueenPosition(matrix, size, queen):
 
 
 
-print(nQueen(size=3))
+# print(nQueen(size=4))
 
 
 
