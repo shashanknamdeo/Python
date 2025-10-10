@@ -365,109 +365,34 @@ def longestPathRecursively(matrix, m, n, xs, ys, xd, yd):
 #     return False, None
 
 
-import copy
-
-def markQueenPath(row, col, size):
+def nQueen(n):
     """
-    Marks the attacked positions on the matrix after placing a queen at (row, col).
-    Instead of modifying the board, we return the attacked rows, columns, and diagonals.
     """
-    attacked = {
-        'rows': [False] * size,
-        'cols': [False] * size,
-        'diag1': [False] * (2 * size - 1),  # Left-to-right diagonal
-        'diag2': [False] * (2 * size - 1)   # Right-to-left diagonal
-    }
+    answer_list = []
+    answer = []
+    # 
+    row = [False]*(n+1)
+    diaginal_tl_br = [False]*(2*n+1)
+    diaginal_tr_bl = [False]*(2*n+1)
+    # 
+    nQueenRecursively(1, n, row, diaginal_tl_br, diaginal_tr_bl, answer, answer_list)
+    # 
+    return answer_list
 
-    # Mark the row, column, and diagonals attacked by a queen at (row, col)
-    attacked['rows'][row] = True
-    attacked['cols'][col] = True
-    attacked['diag1'][row - col + (size - 1)] = True
-    attacked['diag2'][row + col] = True
 
-    return attacked
-
-def findAllQueenPositions(placed_queens, size, attacked, queen):
+def nQueenRecursively(queen, n, row, diaginal_tl_br, diaginal_tr_bl, answer, answer_list):
     """
-    Recursively attempts to find all valid queen placements considering the attacks.
     """
-    if queen == 0:
-        # When all queens are placed, return the current configuration of placed queens.
-        return [placed_queens]
-
-    solutions = []
-
-    # Try placing a queen in each available row for the current column
-    col = size - queen  # We're placing the queen in columns from 0 to size-1
-    for row in range(size):
-        # Skip if the row, column, or diagonal is under attack
-        if attacked['rows'][row] or attacked['cols'][col] or attacked['diag1'][row - col + (size - 1)] or attacked['diag2'][row + col]:
-            continue
-        
-        # Place the queen at (row, col) and mark the attacked positions
-        new_attacked = copy.deepcopy(attacked)
-        new_attacked['rows'][row] = True
-        new_attacked['cols'][col] = True
-        new_attacked['diag1'][row - col + (size - 1)] = True
-        new_attacked['diag2'][row + col] = True
-        
-        # Recurse to place the remaining queens
-        new_placed_queens = placed_queens + [(row, col)]
-        solutions += findAllQueenPositions(new_placed_queens, size, new_attacked, queen - 1)
-
-    return solutions
-
-
-def nQueen(size):
-    """
-    Returns all unique solutions for the N-Queens problem.
-    """
-    # Initialize attack tracking and solution list
-    initial_attacked = {
-        'rows': [False] * size,
-        'cols': [False] * size,
-        'diag1': [False] * (2 * size - 1),  # Left-to-right diagonal
-        'diag2': [False] * (2 * size - 1)   # Right-to-left diagonal
-    }
-
-    # Recursively find all solutions
-    solutions = findAllQueenPositions([], size, initial_attacked, size)
-
-    # Convert each solution to a matrix
-    result = []
-    for solution in solutions:
-        matrix = [[0] * size for _ in range(size)]
-        for (row, col) in solution:
-            matrix[row][col] = 1
-        result.append(matrix)
-
-    return result
-
-
-# Example usage:
-size = 4
-solutions = nQueen(size)
-
-# Printing the unique solutions:
-for idx, solution in enumerate(solutions):
-    print(f"Solution {idx + 1}:")
-    for row in solution:
-        print(row)
-    print()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    print(queen)
+    if queen > n:
+        answer_list.append(answer)
+    # 
+    for col in range(1, n+1):
+        if not row[queen] and not diaginal_tl_br[queen + col] and not diaginal_tr_bl[queen-col+n]:
+            row[queen] = diaginal_tl_br[queen + col] = diaginal_tr_bl[queen-col+n] = True
+            answer.append(col)
+            nQueenRecursively(queen+1, n, row, diaginal_tl_br, diaginal_tr_bl, answer, answer_list)
+            answer.pop()
 
 
 
