@@ -422,8 +422,7 @@ def nQueenRecursively(queen, n, row, diaginal_tl_br, diaginal_tr_bl, answer, ans
 
 
 
-
-
+a
 
 
 
