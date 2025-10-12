@@ -1,4 +1,4 @@
-
+import time
 import copy
 
 # def ratInMaze(maze):
