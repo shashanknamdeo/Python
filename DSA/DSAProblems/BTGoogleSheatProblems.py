@@ -247,172 +247,212 @@ import copy
 # # -------------------------------------------------------------------------------------------------
 
 
-def longestPath(self, matrix, m, n, xs, ys, xd, yd):
-        """
-        """
-        if matrix[xs][ys] == 0 or matrix[xd][yd] == 0:
-            return -1
-        # 
-        response = longestPathRecursively(matrix=matrix, m=m, n=n, xs=xs, ys=ys, xd=xd, yd=yd)
-        # 
-        # print(response[0], response[1]-1)
-        return response[1]-1 
+# def longestPath(self, matrix, m, n, xs, ys, xd, yd):
+#         """
+#         """
+#         if matrix[xs][ys] == 0 or matrix[xd][yd] == 0:
+#             return -1
+#         # 
+#         response = longestPathRecursively(matrix=matrix, m=m, n=n, xs=xs, ys=ys, xd=xd, yd=yd)
+#         # 
+#         # print(response[0], response[1]-1)
+#         return response[1]-1 
 
 
-def longestPathRecursively(matrix, m, n, xs, ys, xd, yd):
-    """
-    """
-    if xs == xd and ys == yd:
-        return True, 1
-    # 
-    longest_path = 0
-    matrix[xs][ys] = 2
-    adjacent_block = [(xs-1, ys), (xs+1, ys), (xs, ys-1), (xs, ys+1)]
-    for x, y in adjacent_block:
-        if x >= 0 and x < m and y >= 0 and y < n and matrix[x][y] == 1:
-            response = longestPathRecursively(matrix=matrix, m=m, n=n, xs=x, ys=y, xd=xd, yd=yd)
-            if response[0]:
-                longest_path = max(longest_path, response[1])
-    # 
-    matrix[xs][ys] = 1
-    # 
-    if longest_path > 0:
-        return True, longest_path + 1
-    # 
-    return False, None
+# def longestPathRecursively(matrix, m, n, xs, ys, xd, yd):
+#     """
+#     """
+#     if xs == xd and ys == yd:
+#         return True, 1
+#     # 
+#     longest_path = 0
+#     matrix[xs][ys] = 2
+#     adjacent_block = [(xs-1, ys), (xs+1, ys), (xs, ys-1), (xs, ys+1)]
+#     for x, y in adjacent_block:
+#         if x >= 0 and x < m and y >= 0 and y < n and matrix[x][y] == 1:
+#             response = longestPathRecursively(matrix=matrix, m=m, n=n, xs=x, ys=y, xd=xd, yd=yd)
+#             if response[0]:
+#                 longest_path = max(longest_path, response[1])
+#     # 
+#     matrix[xs][ys] = 1
+#     # 
+#     if longest_path > 0:
+#         return True, longest_path + 1
+#     # 
+#     return False, None
 
 
 # # -------------------------------------------------------------------------------------------------
 
 
-# def markQueenPath(row, col, matrix, size):
+# def nQueen(n):
 #     """
 #     """
-#     new_matrix = copy.deepcopy(matrix)
-#     # check row
-#     for i in range(0, size):
-#         new_matrix[i][col] = 1
+#     answer_list = []
+#     answer = []
 #     # 
-#     # check col
-#     for j in range(0, size):
-#         new_matrix[row][j] = 1
+#     row = [False]*(n+1)
+#     diaginal_tl_br = [False]*(2*n+1)
+#     diaginal_tr_bl = [False]*(2*n+1)
 #     # 
-#     # check diagnol
-#     temp_row = copy.deepcopy(row)
-#     temp_col = copy.deepcopy(col)
-#     while temp_row >= 0 and temp_col >= 0:
-#         new_matrix[temp_row][temp_col] = 1
-#         temp_row, temp_col = temp_row-1, temp_col-1
+#     nQueenRecursively(1, n, row, diaginal_tl_br, diaginal_tr_bl, answer, answer_list)
 #     # 
-#     temp_row = copy.deepcopy(row)
-#     temp_col = copy.deepcopy(col)
-#     while temp_row < size and temp_col < size:
-#         new_matrix[temp_row][temp_col] = 1
-#         temp_row, temp_col = temp_row+1, temp_col+1
-#     # 
-#     temp_row = copy.deepcopy(row)
-#     temp_col = copy.deepcopy(col)
-#     while temp_row >= 0 and temp_col < size:
-#         new_matrix[temp_row][temp_col] = 1
-#         temp_row, temp_col = temp_row-1, temp_col+1
-#     # 
-#     temp_row = copy.deepcopy(row)
-#     temp_col = copy.deepcopy(col)
-#     while temp_row < size and temp_col >= 0:
-#         new_matrix[temp_row][temp_col] = 1
-#         temp_row, temp_col = temp_row+1, temp_col-1
-#     # 
-#     return new_matrix
+#     return answer_list
 
 
-# def nQueen(size):
+# def nQueenRecursively(queen, n, row, diaginal_tl_br, diaginal_tr_bl, answer, answer_list):
 #     """
 #     """
-#     matrix = []
-#     for i in range(0, size):
-#         matrix.append([0 for _ in range(0, size)])
+#     # print(queen)
+#     if queen > n:
+#         answer_list.append(answer[:])
+#         # print('answer_list : ', answer_list)
+#         return
 #     # 
-#     response = findQueenPosition(matrix=matrix, size=size, queen=size)
-#     if response[0]:
-#         return response
-#     else:
-#         return []
-
-# def findQueenPosition(matrix, size, queen):
-#     """
-#     """
-#     if queen == 0:
-#         answer_matrix = []
-#         for i in range(0, size):
-#             answer_matrix.append([0 for _ in range(0, size)])
-#         return True, answer_matrix
+#     for col in range(1, n+1):
+#         # print('queen : ', queen, 'col : ', col)
+#         if col not in answer and not row[queen] and not diaginal_tl_br[queen + col] and not diaginal_tr_bl[queen-col+n]:
+#             row[queen] = diaginal_tl_br[queen + col] = diaginal_tr_bl[queen-col+n] = True
+#             # print(col, row[queen], diaginal_tl_br[queen + col], diaginal_tr_bl[queen-col+n])
+#             answer.append(col)
+#             # print(answer)
+#             nQueenRecursively(queen+1, n, row, diaginal_tl_br, diaginal_tr_bl, answer, answer_list)
+#             row[queen] = diaginal_tl_br[queen + col] = diaginal_tr_bl[queen-col+n] = False
+#             answer.pop()
 #     # 
-#     # 
-#     new_matrix = copy.deepcopy(matrix)
-#     # 
-#     for i in range(0, size):
-#         for j in range(0, size):
-#             if new_matrix[i][j] == 0:
-#                 filled_matrix = markQueenPath(row=i, col=j, matrix=new_matrix, size=size)
-#                 # print(queen-1, filled_matrix)
-#                 # 
-#                 response = findQueenPosition(matrix=filled_matrix, size=size, queen=queen-1)
-#                 if response[0]:
-#                     answer_matrix = response[1]
-#                     answer_matrix[i][j] = 1
-#                     return True, answer_matrix
-#     # 
-#     return False, None
+#     return
 
 
-def nQueen(n):
+# # -------------------------------------------------------------------------------------------------
+
+
+def getBlockArray(row, col, matrix):
     """
     """
-    answer_list = []
-    answer = []
+    l = (row, col)
+    block_range = [None, None]
+    for i in [0,1]:
+        if l[i] <= 2:
+            block_range[i] = (0,3)
+        elif l[i] > 5:
+            block_range[i] = (6,9)
+        else:
+            block_range[i] = (3,6)
     # 
-    row = [False]*(n+1)
-    diaginal_tl_br = [False]*(2*n+1)
-    diaginal_tr_bl = [False]*(2*n+1)
+    block_array = []
+    for i in range(block_range[0][0], block_range[0][1]):
+        for j in range(block_range[1][0], block_range[1][1]):
+            block_array.append(matrix[i][j])
     # 
-    nQueenRecursively(1, n, row, diaginal_tl_br, diaginal_tr_bl, answer, answer_list)
-    # 
-    return answer_list
+    return block_array
 
 
-def nQueenRecursively(queen, n, row, diaginal_tl_br, diaginal_tr_bl, answer, answer_list):
+def getNotArray(row, col, matrix):
     """
     """
-    print(queen)
-    if queen > n:
-        answer_list.append(answer)
+    array = [9,8,7,6,5,4,3,2,1]
     # 
-    for col in range(1, n+1):
-        if not row[queen] and not diaginal_tl_br[queen + col] and not diaginal_tr_bl[queen-col+n]:
-            row[queen] = diaginal_tl_br[queen + col] = diaginal_tr_bl[queen-col+n] = True
-            answer.append(col)
-            nQueenRecursively(queen+1, n, row, diaginal_tl_br, diaginal_tr_bl, answer, answer_list)
-            answer.pop()
+    row_array = matrix[row]
+    # print(row_array)
+    col_array = [matrix[i][col] for i in range(0,9)]
+    # print(col_array)
+    block_array = getBlockArray(row=row, col=col, matrix=matrix)
+    # print(block_array)
+    # 
+    not_array = []
+    rsb_set = set(row_array + col_array + block_array)
+    # 
+    for item in array:
+        if item not in rsb_set:
+            not_array.append(item)
+    # 
+    return not_array
+
+
+def solveSudokuRecursively(start_row, matrix):
+    """
+    """
+    # sleep(1)
+    for row in range(start_row, 9):
+        for col in range(0, 9):
+            if matrix[row][col] == 0:
+                not_array = getNotArray(row=row, col=col, matrix=matrix)
+                if not not_array:
+                    # print(row, col, 'wrong ')
+                    return False
+                # 
+                for item in not_array:
+                    matrix[row][col] = item
+                    # print(row, col, 'r : ', item)
+                    if solveSudokuRecursively(start_row=row, matrix=matrix):
+                        return True
+                    matrix[row][col] = 0
+                # 
+                return False
+    # 
+    # print('matrix complete')
+    return True
+
+
+def solveSudoku(matrix):
+    """
+    """
+    if solveSudokuRecursively(start_row=0, matrix=matrix):
+        return matrix
+
+
+# # -------------------------------------------------------------------------------------------------
+
+
+def equalPartition(array):
+    """
+    """
+    response = equalPartitionRecursively(a=0, b=0, array=array)
+    return response[0]
+
+import copy
+
+def equalPartitionRecursively(a, b, array):
+    """
+    """
+    if not array and a == b:
+        return True, [], []
+    # 
+    elif not array and a != b:
+        # print(a, b, array)
+        return False, None, None
+    # 
+    def search(var, array):
+        for i in range(0, len(array)):
+            # new_array = copy.deepcopy(array)
+            item = array.pop(i)
+            if var == 1:
+                response = equalPartitionRecursively(a=a+item, b=b, array=new_array)
+            # 
+            if var == 2:
+                response = equalPartitionRecursively(a=a, b=b+item, array=new_array)
+            # 
+            # print(response, var)
+            if response[0]:
+                response[var].append(item)
+                return response
+            # 
+        return False, None, None
+    # 
+    if a <= b:
+        return search(var=1, array=array)
+    # 
+    else:
+        return search(var=2, array=array)
+
+
+array = [1, 3, 5]   
+
+print(equalPartitionRecursively(a=0, b=0, array=array))
 
 
 
 
-# matrix = [
-# [1, 0, 1, 0], 
-# [0, 1, 1, 0], 
-# [1, 1, 1, 1]
-# ] 
-
-# n=4
-# m=3
-# xs=1
-# ys=1
-# xd=2
-# yd=3
-
-
-
-# print(nQueen(size=4))
 
 
 
@@ -428,27 +468,3 @@ def nQueenRecursively(queen, n, row, diaginal_tl_br, diaginal_tr_bl, answer, ans
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# def exist(board, word):
-#     """
-#     https://leetcode.com/problems/word-search/
-#     """
