@@ -1,0 +1,52 @@
+
+Supervised model:
+    Linear regresion
+    Logistic regresion
+    Decision Tree
+    SVM
+    Naive Bayes
+
+
+Unsupervised model:
+    K-Means
+    Hierarchical Clustering
+    PCA
+
+
+Regression Model (Supervised Learning):
+    Linear Regression
+    Polynomial Regression
+    Decision Tree Regressor
+    Random Forest Regressor
+
+
+Classification Model (Supervised Learning):
+    Logistic Regression
+    Decision Tree Classifier
+    Support Vector Machine (SVM)
+    Naive Bayes
+    k-Nearest Neighbors (KNN)
+
+
+Clustering Model (Unsupervised Learning):
+    K-Means Clustering
+    Hierarchical Clustering
+    DBSCAN
+
+
+Decision Tree:
+
+Tree in which at every node (except leaf nodes) there is a YES or NO conditions. It splits the data into smaller parts until it reaches a final decision (leaf node).
+
+1. SELECT A FEATURE TO SPLIT (e.g., Weather, Temperature).
+    The goal is to split data so that each branch is as pure as possible (contains mostly one class).
+2. CALCULATE INFORMATION GAIN OR GINI INDEX for each feature.
+3. CHOOSE THE BEST FEATURE TO SPLIT.
+4. REPEAT RECURSIVELY on each branch until:
+    All samples belong to one class, or
+    No further improvement can be made.
+
+Important terms
+    PRUNING
+    INFORMATION GAIN OR GINI INDEX
+

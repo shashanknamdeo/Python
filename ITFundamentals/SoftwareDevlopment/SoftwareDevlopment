@@ -1,0 +1,16 @@
+Monolithic vs. Microservices Architecture
+
+-> "shrink screen to see table properly"
+
+| Feature              | Monolithic Architecture                                            | Microservices Architecture                                                                   |
+| -------------------- | -------------------------------------------------------------------| ---------------------------------------------------------------------------------------------|
+| Definition       | All functionality is built into a single, tightly-coupled application. | App is broken into independent, loosely-coupled services, each handling a specific function. |
+| Structure        | One codebase, one deployment unit (e.g., WAR/JAR file).                | Multiple services, each with its own codebase, deployed independently.                       |
+| Development      | Simple to develop initially, especially for small teams.               | Each team can develop, test, deploy their own service independently.                         |
+| Deployment       | Deployed as a single unit. Any change requires full redeployment.      | Each service can be deployed individually, enabling faster iterations.                       |
+| Scaling          | Scales as a whole — even if only one component needs resources.        | Services can be scaled independently based on their demand.                                  |
+| Technology Stack | Usually uses a single tech stack across the app.                       | Services can use different stacks (e.g., Python for one, Node.js for another).               |
+| Fault Isolation  | One bug can crash the entire app.                                      | Failures are isolated to individual services.                                                |
+| Complexity       | Lower complexity for small apps. Gets harder to manage as it grows.    | More complex infrastructure (service discovery, communication, etc.).                        |
+| Testing          | Easier to test as one application.                                     | Harder to test end-to-end due to distributed nature.                                         |
+| Examples         | Traditional web apps, legacy systems.                                  | Netflix, Amazon, Uber, etc.                                                                  |
