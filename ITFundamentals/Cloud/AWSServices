@@ -1,0 +1,398 @@
+
+
+IAM (Identity Access Management)
+    Group
+    User
+    Roles
+    Policies
+    MFA
+    Access key
+    AWS Management Console
+    CLI (command line interface)
+    SDK (Software Developer Kit)
+    security tools - credential report and access advisor
+    IAM Access Analyzer (from Security and Compliance Section)
+        Zone of Trust
+    IAM Identity Center (from Advanved Identity Section)
+
+
+EC2 (Elastic Cloud Computing)
+    SG  (Security Group)
+    SSH (Secure Shell)
+    EC2 instant connect
+    EC2 Instances Purchasing Options
+    Sheared Responsiblity Model for EC2
+    Instance Type - like T2.micro (1 VCPU and 1 GB RAM), t3a.2xlarge
+    EC2 User Data: Bootstrap script (configure at first launch)
+    IPAM    (IP Access Manager)
+    Elastic IP (from VPC and Networking Section)
+
+
+EC2 Instance Storage
+    EBS (Elastic Block Storage)
+    AMI (Amazon Machine Images)
+    EC2 Image Builder
+    EC2 Instance Store (also known as - Local EC2 Instance Store) (Ephemeral storage)
+    EFS (Elastic File System) - NFS (Network File System)
+        EFS-IA (EFS Infrequent Access)
+    Shared Responsiblity Model for EC2 Storage
+    Amazon FSx
+        FSx Windows
+        FSx Lusture
+
+
+ELB and ASG
+    ELB (Load Balancer)
+        ALB (Aplication Load Balancer)
+        NLB (Network Load Balancer)
+        GLB (Gateway Load Balancer)
+    Target Group
+    Launch Template
+    ASG (Auto Scaling Group)
+    ASG-scaling strategy
+        Manual Scaling
+        Dynamic Scaling
+            Simple/step  Scaling - we define rules 
+            Target tracking Scaling - we define Matrix like percentage of CPU utilization
+            Sheadule Scaling - use time
+        Predictive Scaling - use ML
+
+
+S3  (Simple Storage Service)
+    Buckets and Object
+    S3 security
+        IAM permission
+        Bucket Policy
+        Encryption
+    S3 versioning
+    S3 replication
+        CRR (cross region replication)
+        SRR (same region replication)
+    S3 Classes
+        S3 Standard  -   General Purpose
+        S3 Standard  -   Infrequent Access (IA)
+        S3 One Zone  -   Infrequent Access
+        S3 Glacier Instant Retrieval
+        S3 Glacier Flexible Retrieval
+            Expedited
+            Standard
+            Bulk
+        S3 Glacier Deep Archive
+            Standard
+            Bulk
+        S3 Intelligent Tiering
+    S3 encription
+        server side encription
+        client side encription
+    IAM access analyzer for S3
+    Sheared responsiblity model for S3
+    AWS snowball Type
+        storage optimised
+        compute optimised
+    OpsHub  
+    Storage gateway
+
+
+Database and Analytics
+    RDS (Relational Database Service)
+        Aurora
+        Aurora Serverless
+    Database Snapshort
+    RDS replicas
+        read replicas - performance improvement
+        multi AZ replicas - Failover
+        multi Region replicas - Disaster recovery
+    ElastiCache
+    DynamoDB
+        DAX (DynamoDB Accelerator)
+        DynamoDB Global Tables
+    Redshift
+        Redshift Serverless
+    EMR (Elastic MapReduce)
+    Athena
+    QuickSight
+    DocumentDB
+    Neptune
+    Timestream
+    QLDB    (Quantum Ledger Database)
+    Amazon Managed Blockchain
+    Glue 
+    DMS (Database Migration Service)
+        Homogeneous migrations
+        Heterogeneous migrations
+
+
+Other Compute Service
+    Docker Tools
+        ECS (Elastic Container Service)
+        Fargete
+        ECR (Elastic Container Registry)
+        EKS (Elastic Kubernetes Service)
+    Lambda
+    API Gateway
+    Batch
+    Lightsail
+
+
+Deployment and managing infrastructure at scale
+    CloudFormation
+        CloudFormation + Infrastructure Composer (from Other Services Section)
+    CDK (Cloud Development Kit)
+    Elastic Beanstalk
+        Health Monitoring
+    CodeDeploy
+    CodeCommit  (Discontinued)
+    CodeBuild
+    CodePipeline
+    CodeArtifact
+    CodeGuru (from Cloud Monitoring Section)
+        CodeGuru Reviewer
+        CodeGuru Profiler
+    Systems Manager (SSM)
+        SSM Agent
+        SSM Section Manager
+        SSM Parameter Store
+
+
+Leveraging AWS Global Infrastructure
+    Global Application
+        Improve Latency
+        Disaster Recovery
+        Attack protection
+    Route 53
+        Simple   Routing Policy
+        Failover Routing Policy
+        Weighted Routing Policy
+        Latency  Routing Policy
+    CloudFront
+    S3 Transfer Acceleration
+    Global Accelerator
+    Outpost
+    WaveLength
+    Local Zones
+    Global Applications Architecture
+        Single Region - Single AZ
+        Single Region - Multi AZ
+        Multi Region, Active-Passive
+        Multi Region, Active-Active
+
+
+Cloud Integration
+    SQS (Simple Queue Service)
+        Standard Queue
+        FIFO Queue
+    Kenises Data Streams
+        Data Firehose
+    SNS (Simple Notification Service)
+        publishers -> SNS topic -> subscribers
+    MQ
+
+
+Cloud Monitoring
+    Cloud Watch
+        Cloud Watch Matrics
+        Cloud Watch Alarms
+        Cloud Watch Logs
+            Logs Agent
+        EventBridge (Cloud Watch Event)
+    CloudTrail
+    X-Ray
+    CodeGuru
+        CodeGuru Reviewer
+        CodeGuru Profiler
+    Health Dashboard
+        Service Health Dashboard
+        Account Health Dashboard
+
+
+VPC and Networking Section
+    IP Addressess
+        Public
+        private
+        Elastic IP
+    Subnets
+        Public
+        Private
+    Internet Access to Subnest
+        Internet gateway
+        NAT gateway
+        NAT instance
+    Route Table
+    Security
+        Natwork Firewall (from Security and Compliance Section)
+        Network ACL (Access Control List)
+        Security Groups
+    VPC Flow Logs
+    VPC Endpoints
+        VPC Endpoint Gateway (S3 & DynamoDB)
+        VPC Endpoint Interface
+    VPC Connection
+        VPC Peering
+        PrivateLink
+    AWS and On-Primse connection
+        Site-to-Site VPN
+            CGW (Customer Gateway)
+            VGW (Virtual Private Gateway)
+        DX  (Direct Connect)
+    ClientVPN
+    Transit Gateway (Hub and Star Topology)
+
+
+Security and Compliance Section
+    DDOS    (Destributed Denail of Service) Attack
+    Shield
+        Shield Standard (Free)
+        Shield Advance  (Paid)
+    WAF (Web Application Firewall)
+    Natwork Firewall
+    Firewall Manager
+    Penetration Testing
+    CloudHSM    (cloud Hardware Security Module)
+    KMS (Key Management Service)
+        Customer Managed Keys
+        AWS Managed Keys
+        AWS Owned Keys
+        CloudHSM Keys
+    ACM (AWS Certificate Manager)
+    Secrets Manager
+    Artifact
+    GuardDuty
+    Inspector
+    Config
+    Macie
+    Security Hub
+    Detective
+    Abuse (Not a service)
+    Root user privileges (Not a service)
+    IAM Access Analyzer
+        Zone of Trust
+
+
+Machine Learning Section
+    Rekognition
+    Transcribe
+    Polly
+    Translate
+    lex
+    connect
+    Comprehend
+    SageMaker
+    Kendra
+    Personalize
+    Textract
+
+
+Account Management, Billing and Support
+    Organisation
+    SCP (Service Control Policy)
+    Consolidated billing
+    Control tower
+    RAM (Resource Access Manager)
+    Firewall Manager (from Security and Compliences)
+    Security Hub (from Security and Compliences)
+    Service Catalog
+    Pricing Models in AWS (Not a service)
+        Free Service and Free Tier
+        EC2
+        Lambda
+        ECS
+        Farget
+        S3
+        EFS
+        EBS
+        RDS
+        CloudFront
+        Networking Cost
+    Savings Plan (Not a service)
+        EC2 Savings Plan
+        Compute Savings Plan
+        Machine Learning Savings Plan
+    Compute Optimizer 
+    Billing and management
+        Pricing Calculator
+        Billing Dashboard
+        Free Tier Dashboard
+        Cost Allocation Tags
+        Cost and Usage Reports
+        Cost Explorer
+        Billing Alarms in CloudWatch 
+        Budgets
+    Cost Anomaly Detection
+    Service Quotas
+    Trusted Advisor
+    Support Plans Pricing (IMPORTANT)
+        Basic Support Plan
+            Basic Feature
+        Developer Support Plan
+            Business hours email access to Cloud Support Associates
+        Business Support Plan (24/7)
+            24x7 phone, email, and chat access to Cloud Support Engineers
+        Enterprise On-Ramp Support Plan (24/7)
+            a pool of Technical Account Managers (TAM)
+        Enterprise Support Plan (24/7)
+            Designated Technical Account Manager (TAM)
+
+
+Advanced Identity Section 
+    STS (Security Token Service)
+    Cognito
+    Directory Services
+    IAM Identity Center 
+
+
+Other Services Section
+    WorkSpaces
+    AppStream 2.0
+    IoT Core 
+    Elastic Transcoder
+    AppSync
+    Amplify
+    Infrastructure Composer
+    Device Farm
+    Backup
+    Disaster Recovery Strategies
+        DRS (Elastic Desaster Recovery)
+    DataSync
+    Cloud Migration Strategies: The 7Rs
+        Retire
+        Retain
+        Relocate
+        Rehost
+        Replatform
+        Repurchase
+        Refactor / Re-architect
+    Cloud Migration Services
+        Application Discovery Service
+        Application Migration Service (MGN)
+        Migration Evaluator
+        Migration Hub
+    Fault Injection Simulator (FIS)
+    Step Function
+    Ground Station
+    Pinpoint
+
+
+AWS Architecting and Ecosystem
+    General Guiding Principles
+    Design Principles
+    Well Architected Framework 6 Pillars
+        1. Operational Excellence
+        2. Security
+        3. Reliability
+        4. Performance Efficiency
+        5. Cost Optimization
+        6. Sustainability
+    Well-Architected Tool
+    Customer Carbon Footprint Tool
+    Cloud transformation value chain (IMP)
+    Right Sizing
+    AWS Ecosystem
+        Free resources
+        Support - learn in past
+        Marketplace
+        Training
+        Professional Services & Partner Network
+    IQ
+    re:Post 
+    re:Post – Knowledge Center
+    AMS (AWS Managed Services)

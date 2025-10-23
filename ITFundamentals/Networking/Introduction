@@ -1,0 +1,228 @@
+MODEM  - digital signal to analog signal
+router - routes the data packet to ip addresses
+
+surver - client
+
+ISP 
+
+WWW
+
+Internet socity
+
+ptotocols
+    TCP
+    UDP
+    HTTP
+    HTTPS
+    DHCP
+
+NAT - Network Address Translation
+
+IP adrees - global and local - IP address identifies the devices 
+
+Port numbers -  identifies the appication. it is a 16 bit numbers
+    ports number = 2^16 around 65,000
+    0-1023      reserve ports (like HTTP)
+    1024-around 49152       reserve for application (like SQL, MongoDB)
+    remaining we can use 
+
+
+KBPS - kilo BITS per second - 1,000
+MBPS - mega BITS per second - 1,000,000
+GBPS - giga BITS per second - 1,000,000,000
+# Bits not Bytes
+
+
+LAN
+MAN
+WAN
+
+sonit
+frame relay
+
+topologies
+    bus
+    star
+    tree
+    ring
+    mash
+    hybrid
+
+
+switch: Switches connect multiple devices within the same network, allowing them to communicate with each other.
+
+router: Routers act as a gateway, connecting your local network to other networks, like the internet
+        Routers often provide security features like firewalls to protect your network. 
+
+
+-----------------------------------------------------------------------------------------------------------------
+
+# structure of networks
+
+OSI model - Open Systems Interconnection (more conceptual)
+
+Application layer   -   contains software
+Presentation layer  -   translaion(charater - machine representable binary format), encription, encoding, abstraction, compressed, SSL protocol
+Session layer       -   authantiction, authoristion, section creation
+Transport layer     -   chunks, segmentation (ports number, sequence number, flow comtrol, eror control) checksome(TCP, UDP)
+Network layer       -   routers, assign ip address, smallest path, load balancing
+Data layer Link     -   add mack adress
+Physical layer      -   cables or optical wire
+
+
+TCP/IP model - Transmission Control Protocol / Internet Protocol (more practical)
+
+Application layer       -   Supports protocols like HTTP, FTP, SMTP     (normally Presentation and Session layer comes in this layer )
+Transport layer         -   Reliable communication using TCP or UDP
+Internet layer          -   Handles logical addressing, routing (IP)
+Network Access layer    -   Deals with physical transmission and hardware (Ethernet, MAC)
+
+
+------------------------------------------------------
+
+1. Application layer - on your devices (user intract, whatsapp, browser ), protocols, client - server architecture
+
+client - server architecture
+p2p architectre - every computer serves as client as well as surver
+
+repeater
+hub - active and passive hub
+bridge - transparent and source routing bridge
+switch
+router
+brouter
+gateway
+
+
+TCP/IP 
+    HTTP
+    DHCP
+    FTP
+    SMTP - for send emai
+    POP3 / IMAC - for recieve email
+    SSH
+    VNC
+TELNET : port 23
+UDP : stateless connection
+
+
+program -> process -> thread
+
+socket - interface between process and internet
+
+ports -> epharmals ports
+
+
+HTTP:
+    HTTP is a application layer protocol
+    HTTP uses TCP as transport layer
+    HTTP is a stateless protocol (server is not store any information about client)
+
+HTTP methord:
+    POST
+    GET
+    PUT
+    DELETE
+
+Status codes
+    100=199 : Informational purpose
+    200-299 : success purpose
+    300-399 : redirection purpose
+    400-499 : client error purpose
+    500-599 : server error purpose
+
+Cookie
+    cookies are string stored in client browser by the website to make browsing smother
+    it saves information like Login info, User preferences, Shopping cart data, etc
+
+Third-Party Cookies : Set by another domain that is not the website you are visiting.
+
+
+Email:
+    application layer : 
+        1. SMTP (simple mail transfer protocol)
+        2. POP3 (Post office protocol)
+        3. IMAP (internet Mail Access Protocol)
+    transport layer : TCP
+
+    sender -> sender's SMTP server -> receiver's SMTP server -> receiver
+
+DNS (Domain name system):
+    website name -> IP address
+    sub-domain
+    second level domain
+    top level domain
+        exampla : mil.google.com -> mail (sub-domain), google (second level domain), com (top level domain)
+    if client want to find IP address for name
+        -> clent first search it in browser cache
+        -> then local DNS (ex : internet service provider)
+        -> then in root server
+        -> then in top level domain (have all ip address)
+
+we can only rent a domain, can't buy it
+
+------------------------------------------------------
+
+2. Transport layer
+
+network layer transfers data from 1 divece to another while transport layar transfers data from network to application
+
+transport layer mutiplex and demultiplex : these are use to manage which data is trnsfer to which application using sockit port number
+
+transport also take care about trafic congestion control
+
+cheacksome : a perticular string/value which is use to cheak that all data is recieved or not
+    cheacksome is calulated in sender device and send with data then reciever also calculate cheacksome and equate it
+
+timer : when sender send data a timer is start and terminate when reciver responce is get else if timer time is out it will sent same packit again
+
+UDP (user datagram protocol)
+        data may or may not be delevered
+        data may change 
+        data may not be oredr
+        udp uses checksome but not do anything with it
+        connection less
+    UDP packet : it has header (sender port no. , reciever port no. , length of data dram , cheacksome) and data
+    UPD use cases :
+        fast
+        gaming
+        video confrensing
+        dns
+
+TCP(transport layer protocol)
+    when application layer send data it segments the data (divide in chunks, add header)
+    congestion control
+    takes care when data not arrive
+    maintains the order of data
+    features:
+        connection orented (first a connection is to establish)
+        error control
+        congection control
+        fuel duplex (A can sends to B, B can send to A, or both can send simultaniously)
+        1 TCP connection can be only between two devices
+        3 ways heand shake
+            1) A send sync flag to B
+            2) then B send acknowledgement to A
+            3) then A send acknowledgement to B
+
+------------------------------------------------------
+
+3. Network layer:
+    router is here
+    network layer tranports packet
+    control plane
+    in 128.0.3.1 -> 128.0.3 is network address and .1 is divice address
+    IP (internet protocol) - IPV4, IPV6
+    hop by hop forwarding (use algo like dijktra algo to find shortest path)
+    routing
+        static routing
+        dynamic routing
+
+------------------------------------------------------
+
+4. Datalink layer:
+    DHCP (dynamic host configuration protocol) is use to give local IP address
+    Datalink layer tranports frames
+
+middle box -> fire walls, NAT
+

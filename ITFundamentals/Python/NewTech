@@ -1,0 +1,62 @@
+Docker
+
+Hive
+
+Spark
+
+Hadoop
+
+NodeJS
+
+radis
+
+power BI
+
+data visualisation python library
+    matplotlib
+    sns
+    ggplot
+    pandas
+    altair  |   interactive, 
+    plotly  |   interactive, web integration
+    bokeh   |   interactive, 
+
+ETL Tools
+
+Hadoop Ecosystem
+    HDFS (Hadoop Distributed File System) – Storage
+    MapReduce – Batch processing
+    YARN – Resource management
+    Hive – SQL-like queries on Hadoop
+    Pig – High-level scripting for data transformation
+    HBase – NoSQL database for Hadoop
+
+Apache Spark
+    Spark SQL – For SQL queries
+    Spark Streaming – Real-time data processing
+    MLlib – Machine learning
+    GraphX – Graph processing
+
+Apache - Flink, Storm, Kafka, Sqoop, NiFi
+
+Data Querying and Analysis Tools
+    Hive – SQL for Hadoop
+    Presto – High-performance distributed SQL query engine
+    Impala – Real-time SQL queries on Hadoop
+
+Data Visualization Tools
+    Power BI
+    Tableau
+    QlikView
+    Grafana
+    Apache Superset
+
+Cloud-Based Big Data Tools
+    Google BigQuery
+    Amazon EMR (Elastic MapReduce)
+    Microsoft Azure HDInsight
+    Databricks – Unified data analytics platform built on Apache Spark
+
+
+
+Vulnerability Assessment Tools : Nessus, OpenVAS, Nmap, Nikto (for web servers), Burp Suite (for web apps)

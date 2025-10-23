@@ -1,0 +1,56 @@
+Step 1: Mathematical Concepts
+
+Linear Algebra: Vectors, matrices, determinants, fundamental for image recognition/self-driving cars.
+*Resource*: IIT Bombay's NPTEL course.
+
+Probability & Statistics: Mean, median, mode, standard deviation; vital for recommendation systems.
+*Resource*: Khan Academy on YouTube.
+
+Calculus: Understanding derivatives, integrals, gradients to train and optimize models.
+*Resource*: IIT Madras' NPTEL course.
+
+
+Step 2: Python Programming
+
+Language Choice: Python is preferred for ML due to its readability and community support.
+Libraries to Learn: numpy, pandas, matplotlib for data computation, handling, and visualization.
+*Resource*: Krishna Nayak's YouTube channel on ML basics.
+
+
+Step 3: Understanding Machine Learning
+
+Definition: Machine learning acts as a black box that takes inputs, applies algorithms, and produces outputs.
+Data Manipulation: Clean and preprocess input data.
+Libraries: numpy and pandas for input cleaning.
+Algorithms: Learn various algorithms (decision trees, linear regression, clustering methods).
+*Resource*: fast.ai's ML course.
+
+
+Step 4: Practical Projects
+
+Implementation: Execute projects for hands-on experience.
+Examples: Spam detection, house price prediction.
+Total data can be sourced from Kaggle.
+
+
+Step 5: Deep Learning
+
+Exciting Part of AI/ML: Creating complex models like image recognition and natural language processing.
+*Resource*: fast.ai's deep learning course.
+Types of Neural Networks: CNNs for image recognition; RNNs for text generation.
+
+
+Step 6: Advanced AI Concepts
+
+Additional Learning: Concepts such as NLP, computer vision, and reinforcement learning.
+*Resource*: IIT Delhi’s NPTEL course on NLP.
+
+
+Conclusion
+
+Timeline: Aim to complete the learning journey in 7-8 months with patience.
+Understanding deep learning will enhance interests and build better projects.
+Trust the roadmap to achieve success in AI. 
+
+Takeaway: Focus and persistence are key to navigating the complexities of AI & ML. 
+
