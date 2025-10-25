@@ -406,52 +406,8 @@ def solveSudoku(matrix):
 
 def equalPartition(array):
     """
+    BT and DP Problem
     """
-    response = equalPartitionRecursively(a=0, b=0, array=array)
-    return response[0]
-
-import copy
-
-def equalPartitionRecursively(a, b, array):
-    """
-    """
-    if not array and a == b:
-        return True, [], []
-    # 
-    elif not array and a != b:
-        # print(a, b, array)
-        return False, None, None
-    # 
-    def search(var, array):
-        for i in range(0, len(array)):
-            # new_array = copy.deepcopy(array)
-            item = array.pop(i)
-            if var == 1:
-                response = equalPartitionRecursively(a=a+item, b=b, array=new_array)
-            # 
-            if var == 2:
-                response = equalPartitionRecursively(a=a, b=b+item, array=new_array)
-            # 
-            # print(response, var)
-            if response[0]:
-                response[var].append(item)
-                return response
-            # 
-        return False, None, None
-    # 
-    if a <= b:
-        return search(var=1, array=array)
-    # 
-    else:
-        return search(var=2, array=array)
-
-
-array = [1, 3, 5]   
-
-print(equalPartitionRecursively(a=0, b=0, array=array))
-
-
-
 
 
 

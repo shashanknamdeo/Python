@@ -20,3 +20,9 @@ def orangesRotting(self, mat):
     https://www.geeksforgeeks.org/problems/rotten-oranges2536/1
     """
 
+def graphColoring(self, v, edges, m):
+    """
+    https://www.geeksforgeeks.org/problems/m-coloring-problem-1587115620/1
+    """
+
+
