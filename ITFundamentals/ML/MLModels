@@ -3,15 +3,16 @@ Supervised model:
     Linear regresion
     Logistic regresion
     Decision Tree
+    Random Forest
     SVM
     Naive Bayes
-
 
 Unsupervised model:
     K-Means
     Hierarchical Clustering
     PCA
 
+---------------------------------------------------------------------------------------------------
 
 Regression Model (Supervised Learning):
     Linear Regression
@@ -33,6 +34,24 @@ Clustering Model (Unsupervised Learning):
     Hierarchical Clustering
     DBSCAN
 
+---------------------------------------------------------------------------------------------------
+
+Linear Regression:
+
+Try to draw a line that is as close as possible to all the data points.
+It finds a best-fitting straight line through data points, showing the relationship between input (X) and output (Y).
+
+---------------------------------------------------------------------------------------------------
+
+Logistic Regression:
+
+Used for classification, not regression.
+It predicts categorical outcomes — like “Yes/No”, “Pass/Fail”, “Spam/Not Spam”, etc.
+
+Logistic Regression outputs probabilities,
+and then those probabilities are converted to class labels (using threshold or argmax).
+
+---------------------------------------------------------------------------------------------------
 
 Decision Tree:
 
@@ -46,7 +65,119 @@ Tree in which at every node (except leaf nodes) there is a YES or NO conditions.
     All samples belong to one class, or
     No further improvement can be made.
 
+Types
+    Decision Tree Classification
+    Decision Tree Regression
+
 Important terms
     PRUNING
     INFORMATION GAIN OR GINI INDEX
+
+---------------------------------------------------------------------------------------------------
+
+Random Forest:
+
+Random - Take random subset of data and feed it into Decision tree
+Forest - Combine Result of many Decision tree
+
+Types
+    Random Forest Classification    (use majority votes)
+    Random Forest Regression        (use Average of result)
+
+---------------------------------------------------------------------------------------------------
+
+SVM (Support Vector Machine):
+
+It tries to find the best boundary (or line/plane) that separates data points of different classes.
+    SVM Classification (main use)
+    SVM Regression (called SVR)
+
+Term        -   Meaning
+Hyperplane  -   The line (in 2D) or plane (in higher dimensions) that separates classes
+Support     -   Vectors The closest data points to the hyperplane; they “support” it
+Margin      -   The distance between the hyperplane and the nearest data points
+KERNEL      -   A mathematical function that helps SVM transform data into a higher-dimensional space, so that it can find a clear separating line (hyperplane) between different classes.
+
+Working of SVM
+    The algorithm looks at all possible lines (boundaries) that can separate data.
+    It chooses the one with the widest margin (maximum distance between both classes).
+    If data is not linearly separable, SVM uses a Kernel Trick to map it into a higher dimension where it can be separated.
+
+---------------------------------------------------------------------------------------------------
+
+Naive Bayes model:
+
+A probabilistic classifier based on Bayes’ Theorem (a fundamental concept in probability and statistics).
+Predicts probability of a class (eg., spam or not spam) given a set of features (eg., words in an email).
+
+Naive - Because it assumes all features are independent of each other, which isn’t true in real life
+But surprisingly, the model still performs very well.
+
+P(A/B) = P(A)*P(B/A)/P(B)
+
+---------------------------------------------------------------------------------------------------
+
+K-Means:
+
+clustering algorithm used in unsupervised learning.
+
+It groups similar data points together into K clusters, where each cluster has a center point called the centroid.
+
+Steps
+1.  Choose K →  the number of clusters you want (e.g., K = 3).
+2.  Initialize Centroids randomly (one for each cluster).
+3.  Assign Points → each data point goes to the nearest centroid (based on distance).
+4.  Recalculate Centroids → for each cluster, compute the mean of all points in that cluster.
+5.  Repeat steps 3–4 until centroids stop changing (convergence).
+
+To get best k, we use Elbow Method.
+
+---------------------------------------------------------------------------------------------------
+
+Hierarchical Clustering:
+
+Unsupervised learning algorithm that builds a hierarchy of clusters.
+
+It builds a tree structure (called a Dendrogram) that shows how points are grouped together step by step.
+
+Types:
+    Agglomerative (Bottom-Up)
+        Start with each data point as its own cluster → then keep merging the closest clusters until one big cluster remains. (Most common method)
+    Divisive (Top-Down)
+        Start with one large cluster → split it into smaller clusters recursively.
+
+IMP Terms:
+    Dendrogram - a tree-like diagram showing how clusters are merged step by step.
+
+Can also get 'n' number of clusters insted of 1 by cutting dandogram at specific level
+
+---------------------------------------------------------------------------------------------------
+
+PCA (Principal Component Analysis)L
+
+an unsupervised learning technique used to:
+
+Reduce the number of features (dimensions), While keeping as much important information (variance) as possible.
+
+When your dataset has many features (columns):
+    Some are correlated or redundant.
+    High-dimensional data is hard to visualize and slower to process.
+
+PCA helps by transforming data into fewer, uncorrelated dimensions that still capture most of the information.
+
+---------------------------------------------------------------------------------------------------
+
+ML Models
+🔹 Beginner ML (done!)   Linear, Logistic, Tree, Forest, KMeans, PCA
+🔹 Intermediate ML       Ridge, Lasso, Gradient Boosting, XGBoost, AdaBoost
+🔹 Advanced ML           SVM Kernels (deep dive), GMM, DBSCAN, t-SNE, LDA
+🔹 Deep Learning         ANN → CNN → RNN/LSTM → Transformers
+🔹 Applied AI            NLP, Computer Vision, Reinforcement Learning
+
+
+
+
+
+
+
 
