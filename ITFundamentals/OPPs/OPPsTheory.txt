@@ -73,15 +73,21 @@ Types of Inheritance
 
 4. Polymorphism:
     Means "many forms".
-    It allows objects to take on multiple forms depending on context
-    Enabling the same interface to be used for different underlying data types or behaviors.
+    Allows objects to take on multiple forms depending on context
+    Allows one interface to be used for different underlying data types or behaviors.
 
+Compile-Time Polymorphism (Method Overloading)
+    Same method name with different parameters (type, number, or order).
+    Resolved at compile time.
 
+Run-Time Polymorphism (Method Overriding)
+    A subclass provides a specific implementation of a method that is already defined in its superclass.
+    Resolved at runtime using the object's actual type.
+
+---------------------------------------------------------------------------------------------------
 
 
 friend function
 constructor
-destructor
-Runtime polymorphism
-override
+destructo
 parent, child and super class

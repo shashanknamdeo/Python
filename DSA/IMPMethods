@@ -1,4 +1,5 @@
 Array:
+prefix sum
 sliding windows
 
 String:
@@ -6,3 +7,6 @@ String:
 Linked List:
 slow-fast pointer approach
 Floyd’s Cycle Detection Movement - find the starting point of cycle
+
+Sorting:
+Counting Sort (When range of elements < len(array))
