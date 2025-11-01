@@ -19,3 +19,29 @@ steps of development
         IAM Service Account Credentials API
         Cloud Resource Manager API
     Create a Service Account and download keys
+
+
+sdk_http_response=HttpResponse(headers=<dict len=11>) candidates=[Candidate(
+  content=Content(
+    parts=[
+      Part(
+        text="""Hello Gossipy! It's nice to meet you. I'm an AI language model, ready to chat about anything that comes to mind. I'm excited to hear what you have in store for our conversation!
+
+So, what's on your mind today, Gossipy? Are you feeling particularly chatty, or do you have something specific you'd like to dive into? I'm all ears (or circuits, as the case may be!). 😊"""
+      ),
+    ],
+    role='model'
+  ),
+  finish_reason=<FinishReason.STOP: 'STOP'>,
+  index=0
+)] create_time=None model_version='gemini-2.5-flash-lite' prompt_feedback=None response_id='WAwCabqNMZCYvr0PqrHg4Ac' usage_metadata=GenerateContentResponseUsageMetadata(
+  candidates_token_count=96,
+  prompt_token_count=14,
+  prompt_tokens_details=[
+    ModalityTokenCount(
+      modality=<MediaModality.TEXT: 'TEXT'>,
+      token_count=14
+    ),
+  ],
+  total_token_count=110
+) automatic_function_calling_history=[] parsed=None
