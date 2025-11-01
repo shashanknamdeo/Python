@@ -36,3 +36,6 @@ from openai import OpenAI
 
 # print(response)
 
+
+
+
