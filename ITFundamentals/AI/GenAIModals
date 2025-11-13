@@ -1,0 +1,62 @@
+
+Model Name              -   Parent Company
+------------------------------------------
+ChatGPT, DALL-E 3, Sora -   OpenAI
+Claude                  -   Anthropic
+Gemini , Imagen, Veo    -   Google DeepMind
+Llama 3                 -   Meta AI (Meta Platforms)
+Mistral, Mixtral        -   Mistral AI
+Midjourney              -   Midjourney (independent company)
+Stable Diffusion, SDXL  -   Stability AI
+Adobe Firefly           -   Adobe
+Grok                    -   xAI
+Gemma                   -   Google DeepMind
+Command (R, R+)         -   Cohere
+Grok                    -   xAI
+RunwayML                -   Runway AI
+ElevenLabs              -   ElevenLabs
+Suno                    -   Suno AI
+GitHub Copilot          -   GitHub (Microsoft/OpenAI)
+StyleGAN                -   NVIDIA
+IBM watsonx             -   IBM
+
+
+Text Gen Modal
+--------------
+GPT-4o, GPT-4, GPT-3.5
+Claude (3.5 Sonnet, 3, etc.)
+Gemini (Pro, Ultra, Nano)
+Llama (Llama 3, Llama 2, etc.)
+Mixtral
+Mistral
+Gemma
+DeepSeek Coder
+StarCoder
+CodeT5
+
+Image Gen Modal
+---------------
+Midjourney
+DALL-E 3
+Stable Diffusion (especially SDXL and SD3)
+Adobe Firefly
+FLUX (or Ideogram for text integration) 
+
+Video Gen Modal
+---------------
+OpenAI Sora
+Google Veo
+Runway Gen-4
+Luma Dream Machine
+Kling AI 
+
+
+Audio Gen Modal
+---------------
+Voice and Speech Generation
+    ElevenLabs
+    Murf AI
+    WellSaid Labs
+Music and Song Generation
+    Suno AI
+    Udio
