@@ -1,0 +1,64 @@
+
+
+Artificial Intelligence     Broadest field
+Machine Learning            Subfield of AI
+Deep Learning               Subfield of ML
+
+
+The Major Branches of AI
+
+Machine Learning (ML)
+    Teaches computers to learn from data without being explicitly programmed.
+    Predicting stock prices or spam filtering
+Deep Learning (DL)
+    A subset of ML using neural networks to learn patterns from large datasets. 
+    Image recognition, speech recognition
+Natural Language Processing (NLP)   
+    Allows machines to understand, interpret, and respond to human language.    
+    Chatbots, translation apps
+Computer Vision 
+    Enables computers to “see” and interpret visual data.   
+    Face detection, object recognition
+Robotics    
+    Combines AI with hardware to perform tasks in the physical world.   
+    Drones, robotic arms, autonomous vehicles
+Expert Systems  
+    AI programs that mimic decision-making of human experts.    
+    Medical diagnosis systems
+
+
+RNN ()
+LLM (Large Language Modal) = A very large Transformer-based NLP model trained on massive text data.
+
+AI -> ML -> Deep Learning (Neural Network) -> NLP -> RNN, LSTM, Tranformers 
+
+Artificial Intelligence
+   └── Machine Learning
+         └── Deep Learning
+               └── NLP (Language Understanding)
+                     └── Transformer
+                           └── Large Language Model (LLM)
+
+
+dout
+--------------
+hidden state
+SELF-ATTENTION in transforms
+neural weights == Nural nodes (no. neural weights == no. Nural nodes) ?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
