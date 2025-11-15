@@ -1,0 +1,41 @@
+
+Docker
+
+https://www.youtube.com/watch?v=ftIS44dFS9U
+
+Docker Container
+Docker Image
+Docker Hub
+Docker Engine
+
+
+
+Image Vs Container
+
+| Feature          | Docker Image                     | Docker Container                            |
+| ---------------- | -------------------------------- | ------------------------------------------- |
+| Type             | Blueprint / template             | Running instance                            |
+| Mutability       | Immutable                        | Mutable (has a writable layer)              |
+| Purpose          | Defines environment and app      | Executes the app                            |
+| Storage          | Stored on disk                   | Lives in memory while running               |
+| Multiple copies? | Reused to create many containers | Yes, many containers can run from one image |
+
+
+---------------------------------------------------------------------------------------------------
+
+Kubernetes
+
+https://www.youtube.com/watch?v=7ZObcqEq7hU
+
+Master Node
+    API Server
+    Scheduler
+    ETCD
+    Control Manager
+
+Worker Node
+    Kuberlet
+    Kube-proxy
+    Container Runtime
+
+Pod
