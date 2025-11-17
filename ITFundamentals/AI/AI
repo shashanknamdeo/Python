@@ -27,8 +27,10 @@ Expert Systems
     Medical diagnosis systems
 
 
-RNN ()
-LLM (Large Language Modal) = A very large Transformer-based NLP model trained on massive text data.
+RNN (Recurrent Neural Network)  = model used within NLP for sequence tasks like text and speech.
+LSTM (Long Short Term Memory)   = advanced version of RNN (Store more History than RNN)
+Transformer model architecture  = relies solely on a self-attention mechanism
+LLM (Large Language Modal)      = A very large Transformer-based NLP model trained on massive text data.
 
 AI -> ML -> Deep Learning (Neural Network) -> NLP -> RNN, LSTM, Tranformers 
 
@@ -40,14 +42,147 @@ Artificial Intelligence
                            └── Large Language Model (LLM)
 
 
-dout
+Working of LLM
+----------------
+Input               -   User sends message (text or voice)
+Tokenization        -   Split into small language units
+Embedding           -   Convert tokens → vectors
+Transformer Layers  -   Apply self-attention to find relationships
+Output Prediction   -   Predict next token (word/subword)
+Detokenization      -   Convert model output → text
+Response Generation -   Return final output to the user
+
+
+Deterministic Modal     -   with same input give same answer (ex : path Find modal)
+Non-Deterministic Modal -   with same input give different answer (ex : LLM)
+
+
+---------------------------------------------------------------------------------------------------
+
+Agentic AI:
+    AI systems that can take actions on their own to achieve a goal
+    Not just answer questions or generate text like LLMs
+    Example :
+        "Book the cheapest Delhi–Bangalore flight tomorrow under ₹4,500 and email me the ticket"
+
+LLM = Brain (reasoning)
+Agent = Body (taking actions)
+
+
+---------------------------------------------------------------------------------------------------
+
+LRM (Large Reasoning Model)
+    A Large Reasoning Model is the next generation after LLMs.
+
+LLM = Large Language Model → good at language
+LRM = Large Reasoning Model → good at thinking, logic, and solving problems
+
+Analogy:
+-----------
+LLM = Student who speaks English fluently
+LRM = Student who solves problems, does math, gives proofs, then explains in English
+
+The Reasoning Engine is what makes it an LRM.
+
+Reasoning Engine: What’s Inside?
+
+LRMs use specialised reasoning techniques:
+
+Inside Reasoning Engine :
+----------------------------
+1.  Chain-of-Thought (CoT)   -   Step-by-step thinking.
+2.  Tree-of-Thought (ToT)    -   Considers multiple possibilities before choosing the best.
+3.  Graph-of-Thought         -   Handles complex relations like knowledge graphs.
+4.  Planning Modules         -   Used in agents to create task plans.
+5.  Structured Memory        -   Stores intermediate facts.
+6.  External Tools           -   Uses calculators, search, code execution, APIs.
+
+
+---------------------------------------------------------------------------------------------------
+
+AGI (Artificial General Intelligence)
+
+This is a future technology
+
+AGI means an AI that can think, learn, and understand anything that a human can.
+Do it across many domains.
+Not just language.
+
+Key Features of AGI
+---------------------
+1.  Generalization       -   Can learn one skill and apply it to another.(Humans do this naturally.)
+2.  Reasoning            -   Thinks step by step to solve new problems.
+3.  Autonomy             -   Works without constant instructions.
+4.  Learning Abilities   -   Learns from experience continuously.
+5.  Self-Improvement     -   Gets better over time by itself.
+
+LLM → LRM (Reasoning Models) → Agentic AI → AGI
+
+Agentic AI + LRMs are considered pre-AGI layers (pre-AGI Stage).
+
+
+---------------------------------------------------------------------------------------------------
+
+ASI (Artificial Super-Intelligence)
+
+This is a future technology
+
+ASI means an AI that is smarter than the best human minds in every domain.
+
+Power if ASI:
 --------------
-hidden state
+    Simulate the entire world
+    Improve itself continuously
+    Plan long-term global strategies
+    Understand every scientific domain
+    Create new technologies every minute
+    Design new drugs, machines, materials
+    Cure diseases faster than human scientists
+    Solve climate change with perfect optimization
+
+
+---------------------------------------------------------------------------------------------------
+
+MCP (Model Context Protocol)
+
+MCP is an standard protocol for connecting AI models (like LLMs) to external tools.
+AI Agent uses MCP to access data sources, or systems in a structured way.
+It uses a client–server architecture: AI applications (hosts) talk to MCP servers via MCP clients.
+
+AI applications <-> MCP Client <-> MCP Server <-> Resources (Data, Tools, etc )
+
+
+---------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+Dout
+--------------
+
+Vector Database
+MCP and MCP server
+MOE
+Multimodal AI.
+RAG (Retrival Augmented Genration)
+Context window
+Embadding Model
+Prompt
+Retriever
+Hidden state
 SELF-ATTENTION in transforms
-neural weights == Nural nodes (no. neural weights == no. Nural nodes) ?
-
-
-
+Neural weights == Nural nodes (no. neural weights == no. Nural nodes) ?
+Feed Forward Layers
+Multimodal model
+Converts each token ID → vector 
+agent frameworks like LangChain, AutoGPT, CrewAI
+hallucinations in LLM
+easoning Engine in Large Reasoning Model
 
 
 
