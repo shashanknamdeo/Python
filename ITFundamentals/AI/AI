@@ -154,6 +154,33 @@ AI applications <-> MCP Client <-> MCP Server <-> Resources (Data, Tools, etc )
 
 ---------------------------------------------------------------------------------------------------
 
+MOE (Mixture Of Experts)
+
+MOE is a neural network architecture where multiple “expert” models exist
+A “Gating Network” chooses which experts to activate for each input.
+
+Instead of one big model doing all the work…
+Many small specialized models ("experts") sit inside
+A "gate" selects the best experts for each token or task
+
+DeepSeek R1, Gemini 1.5, GPT-4/5 use MoE.
+
+
+---------------------------------------------------------------------------------------------------
+
+Multimodal AI
+
+AI systems that can understand, process, and generate information from multiple types of data (modalities) such as:
+Text
+Images
+Audio
+Video
+Sensors / 3D data
+Speech
+
+
+
+
 
 
 
@@ -166,8 +193,7 @@ Dout
 --------------
 
 Vector Database
-MCP and MCP server
-MOE
+
 Multimodal AI.
 RAG (Retrival Augmented Genration)
 Context window
