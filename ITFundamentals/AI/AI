@@ -209,7 +209,8 @@ Converts each token ID → vector
 agent frameworks like LangChain, AutoGPT, CrewAI
 hallucinations in LLM
 easoning Engine in Large Reasoning Model
-
+Vision Transformers (ViTs)
+Generative Adversarial Networks (GANs)
 
 
 
