@@ -1,11 +1,8 @@
 MODEM  - digital signal to analog signal
 router - routes the data packet to ip addresses
 
-surver - client
-
-ISP 
-
-WWW
+ISP (Internet Service Provider)
+    Like Jio, Airtel, BSNL, etc
 
 Internet socity
 
@@ -27,18 +24,17 @@ Port numbers -  identifies the appication. it is a 16 bit numbers
     remaining we can use 
 
 
-KBPS - kilo BITS per second - 1,000
-MBPS - mega BITS per second - 1,000,000
-GBPS - giga BITS per second - 1,000,000,000
-# Bits not Bytes
+KBps - kilo BITS per second - 1,000
+MBps - mega BITS per second - 1,000,000
+GBps - giga BITS per second - 1,000,000,000
+
+-> BITS NOT BYTES ( 1 Byte = 8 bits )
+
 
 
 LAN
 MAN
 WAN
-
-sonit
-frame relay
 
 topologies
     bus
@@ -111,31 +107,6 @@ program -> process -> thread
 socket - interface between process and internet
 
 ports -> epharmals ports
-
-
-HTTP:
-    HTTP is a application layer protocol
-    HTTP uses TCP as transport layer
-    HTTP is a stateless protocol (server is not store any information about client)
-
-HTTP methord:
-    POST
-    GET
-    PUT
-    DELETE
-
-Status codes
-    100=199 : Informational purpose
-    200-299 : success purpose
-    300-399 : redirection purpose
-    400-499 : client error purpose
-    500-599 : server error purpose
-
-Cookie
-    cookies are string stored in client browser by the website to make browsing smother
-    it saves information like Login info, User preferences, Shopping cart data, etc
-
-Third-Party Cookies : Set by another domain that is not the website you are visiting.
 
 
 Email:
@@ -226,3 +197,66 @@ TCP(transport layer protocol)
 
 middle box -> fire walls, NAT
 
+---------------------------------------------------------------------------------------------------
+
+
+Internet
+    A global network of computers connected together.
+
+
+WWW (World Wide Web)
+    Collection of interlinked web pages stored on web servers
+    Accessed through the Internet using web browsers.
+
+
+Web Browser (Client)
+    A Web Browser is a software application used to access and display web pages.
+    Examples: Chrome, Firefox, Safari, Edge
+
+
+Web Server
+    A Web Server is a computer program or system that stores, processes, and delivers web pages to clients.
+    Examples: Apache, Nginx, IIS
+
+
+HTTP:
+    HTTP is a application layer protocol
+    HTTP uses TCP as transport layer
+    HTTP is a stateless protocol (server is not store any information about client)
+
+HTTP methord:
+    POST
+    GET
+    PUT
+    DELETE
+
+Status codes
+    100-199 : Informational purpose
+    200-299 : success purpose
+    300-399 : redirection purpose
+    400-499 : client error purpose
+    500-599 : server error purpose
+
+
+Cookie
+    cookies are string stored in client browser by the website to make browsing smother
+    it saves information like Login info, User preferences, Shopping cart data, etc
+
+Third-Party Cookies : Set by another domain that is not the website you are visiting.
+
+
+Cache
+    Cache stores web page resources to speed up future visits
+    Website content like images, videos, JavaScript files, and CSS stylesheets.
+
+
+---------------------------------------------------------------------------------------------------
+
+
+
+Dout:
+
+sonit
+frame relay
+NAT vs Internet
+Socket vs Port
