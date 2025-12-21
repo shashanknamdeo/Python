@@ -1,0 +1,47 @@
+
+Graph Algorithms:
+------------------
+
+Graph Traversal Algorithms
+    Breadth-First Search (BFS)
+    Depth-First Search (DFS)
+
+Shortest Path Algorithms
+    Dijkstra’s Algorithm
+    Bellman–Ford Algorithm
+    Floyd–Warshall Algorithm
+
+Minimum Spanning Tree (MST) Algorithms
+    Kruskal’s Algorithm
+    Prim’s Algorithm
+
+Topological Sorting (Directed Acyclic Graphs – DAGs)
+
+Connectivity Algorithms
+    Connected Components
+        Find all groups of connected nodes.
+    Strongly Connected Components (SCCs)
+        Tarjan’s or Kosaraju’s algorithm.
+
+
+---------------------------------------------------------------------------------------------------
+
+
+dout
+applications
+    BFS
+    DFS
+    Dijkstra’s Algorithm
+    Bellman–Ford Algorithm
+    Floyd–Warshall Algorithm
+    Kruskal’s Algorithm
+    Prim’s Algorithm
+
+Bellman–Ford Algorithm
+Floyd–Warshall Algorithm
+heuristic
+Randomized Algorithm for Min-Cut (Karger’s Algorithm) use of graph partitioning.
+Connectivity Algorithms
+    Connected Components (Find all groups of connected nodes.)
+    Strongly Connected Components (SCCs) (Tarjan’s or Kosaraju’s algorithm.)
+Flow Network Algorithms
