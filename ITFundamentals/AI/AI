@@ -1,21 +1,23 @@
 
+Computer science : the study of how computers work and how we can use them to solve problems.
+
+Artificial Intelligence (AI) : a field of computer science that focuses on creating machines that can think, learn, and act in ways similar to humans.
 
 Artificial Intelligence     Broadest field
 Machine Learning            Subfield of AI
 Deep Learning               Subfield of ML
-
 
 The Major Branches of AI
 
 Machine Learning (ML)
     Teaches computers to learn from data without being explicitly programmed.
     Predicting stock prices or spam filtering
-Deep Learning (DL)
-    A subset of ML using neural networks to learn patterns from large datasets. 
-    Image recognition, speech recognition
 Natural Language Processing (NLP)   
     Allows machines to understand, interpret, and respond to human language.    
     Chatbots, translation apps
+Deep Learning (DL)
+    A subset of ML using neural networks to learn patterns from large datasets. 
+    Image recognition, speech recognition
 Computer Vision 
     Enables computers to “see” and interpret visual data.   
     Face detection, object recognition
@@ -32,15 +34,26 @@ LSTM (Long Short Term Memory)   = advanced version of RNN (Store more History th
 Transformer model architecture  = relies solely on a self-attention mechanism
 LLM (Large Language Modal)      = A very large Transformer-based NLP model trained on massive text data.
 
+RNN LSTM and LLM all can use to understanding and generating purpose
+
 AI -> ML -> Deep Learning (Neural Network) -> NLP -> RNN, LSTM, Tranformers 
 
 Artificial Intelligence
    └── Machine Learning
-         └── Deep Learning
-               └── NLP (Language Understanding)
-                     └── Transformer
-                           └── Large Language Model (LLM)
+         └── Neural Network
+               └── Deep Learning
+                     └── Computer Vision
+                     └── NLP (Language Understanding)
+                           └── Transformer
+                                 └── Large Language Model (LLM) {Use case - GenAI}
 
+
+---------------------------------------------------------------------------------------------------
+
+LLMs
+
+Large Data          → Trained on trillions of words from books, websites, code, and conversations.
+Large Parameters    → billions or even trillion of neural weights (the “knowledge” inside the model).
 
 Working of LLM
 ----------------
@@ -180,6 +193,7 @@ Speech
 
 
 
+
 Dout
 --------------
 
@@ -202,7 +216,7 @@ hallucinations in LLM
 easoning Engine in Large Reasoning Model
 Vision Transformers (ViTs)
 Generative Adversarial Networks (GANs)
-
+attention in memory in Transformers
 
 
 
