@@ -60,6 +60,7 @@ Working of LLM
 Input               -   User sends message (text or voice)
 Tokenization        -   Split into small language units
 Embedding           -   Convert tokens → vectors
+Positional Encoding -   Tells where each word is in the sentence.
 Transformer Layers  -   Apply self-attention to find relationships
 Output Prediction   -   Predict next token (word/subword)
 Detokenization      -   Convert model output → text
@@ -68,6 +69,16 @@ Response Generation -   Return final output to the user
 
 Deterministic Modal     -   with same input give same answer (ex : path Find modal)
 Non-Deterministic Modal -   with same input give different answer (ex : LLM)
+
+
+Embedding
+    Meaning compressed into numbers so machines can think.
+    An embedding is a dense numerical vector that represents the semantic meaning of data (text, image, audio, code).
+    Embeddings map high-dimensional semantic information into a dense vector space where similarity corresponds to meaning.
+
+Positional Encoding
+    Positional Encoding tells the model where each word is in the sentence.
+    Since transformers lack Sequencing (present in RNN/LSTM) and process all tokens in parallel, positional encoding provides sequence order information, enabling attention mechanisms to model word relationships correctly.
 
 
 ---------------------------------------------------------------------------------------------------
@@ -218,6 +229,9 @@ Vision Transformers (ViTs)
 Generative Adversarial Networks (GANs)
 attention in memory in Transformers
 
-
+Positional Encoding
+Attention mechanism
+Tokenization (BPE, WordPiece)
+Vector Databases (FAISS, Pinecone)
 
 
