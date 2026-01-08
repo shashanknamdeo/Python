@@ -50,6 +50,13 @@ Artificial Intelligence
 
 ---------------------------------------------------------------------------------------------------
 
+Transformers
+
+Transformers were introduced in the 2017 paper “Attention Is All You Need” and are now the foundation of models like GPT
+Transformers are a type of neural network architecture designed to handle sequence data (like text, audio, or time series) by relying on attention mechanisms
+
+---------------------------------------------------------------------------------------------------
+
 LLMs
 
 Large Data          → Trained on trillions of words from books, websites, code, and conversations.
@@ -80,6 +87,8 @@ Positional Encoding
     Positional Encoding tells the model where each word is in the sentence.
     Since transformers lack Sequencing (present in RNN/LSTM) and process all tokens in parallel, positional encoding provides sequence order information, enabling attention mechanisms to model word relationships correctly.
 
+Vector Database
+    Enables efficient similarity search over high-dimensional embeddings using approximate nearest neighbor (ANN) algorithms.
 
 ---------------------------------------------------------------------------------------------------
 
@@ -201,6 +210,8 @@ Audio
 Video
 Sensors / 3D data
 Speech
+
+
 
 
 
