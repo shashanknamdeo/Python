@@ -1,0 +1,1 @@
+D:\Material\Python\Projects\HireIQ\Implementation\Backend\PythonVirtualEnvironment\Scripts\activate

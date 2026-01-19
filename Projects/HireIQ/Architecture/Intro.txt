@@ -1,0 +1,44 @@
+
+HireIQ – AI-Powered Job Application Automation Platform
+-------------------------------------------------------
+
+
+Purpose / Why I Created It
+--------------------------
+
+HireIQ is designed to help job seekers automatically identify and apply to relevant job postings in real-time, giving them an early advantage and saving countless hours spent manually searching and applying for jobs. Using AI and automation, HireIQ ensures that users never miss high-potential opportunities by instantly matching job descriptions with their resume and submitting tailored applications.
+
+
+Key Features
+------------
+
+Real-Time Job Monitoring (IMMEDIATE)
+    Detects new job postings immediately
+    Reduces time-to-application, giving users a competitive edge
+    Continuously scans multiple job platforms (LinkedIn, Indeed, Naukri, etc.) (IN FUTURE)
+
+Resume–Job Matching Engine (IMMEDIATE)
+    AI-powered module compares user resume with job descriptions
+    Uses NLP and embeddings to calculate match scores
+    Only applies to jobs that exceed a configurable relevance threshold
+
+Automated Application Bot (NEXT STEP)
+    Auto-fills application forms using stored profile information
+    Uploads the resume and answers basic screening questions
+    Can optionally generate customized cover letters based on job description
+
+Resume Intelligence (IN FUTURE)
+    Search job for more than 1 resume
+    Select the best resume attach with job application
+
+Dashboard & Analytics (IN FUTURE)
+    Tracks applied jobs, platforms, match scores, and status
+    Provides insights on job trends, most in-demand skills, and application success rates 
+    Allows users to monitor performance and improve application strategy
+
+Alerts & Notifications (IN FUTURE)
+    Instant notifications via email or Telegram when a job is applied
+    Optional daily or weekly reports on job applications and opportunities
+
+___________________________________________________________________________________________________
+
