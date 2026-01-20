@@ -1,2 +1,8 @@
 
+# HireIQ Python Virtual Environment
 PythonVirtualEnvironment/
+
+
+# Python Cache
+__pycache__/
+*.pyc
