@@ -4,6 +4,7 @@ import time
 import random
 
 from NaukriFunctions import *
+from CompareResumeAndJobDescription import *
 
 
 # -----------------------------------------------
@@ -22,8 +23,11 @@ def main(verbose=False):
     driver = getDriver(verbose=verbose)
     DRIVER = driver
     # 
+    api_key = fetchGeminiAccessKey()
+    print('Gemini API Key : ', api_key)
+    # 
     email, password = getCredentials(profile_number=2, verbose=verbose)
-    autoLogin(driver=driver, email=email, password=password, verbose=verbose)
+    # autoLogin(driver=driver, email=email, password=password, verbose=verbose)
     time.sleep(random.uniform(4, 8))
     # 
     openJobsPage(driver=driver, verbose=verbose)
@@ -48,20 +52,24 @@ def main(verbose=False):
         for k, v in job_data.items():
             print(f"{k}: {v}")
         # 
-        input("\nPress ENTER to check apply type")
-        print(get_apply_type(driver))
+        input("\nPress ENTER to Compare Resume and Job description")
+        compare_score = generateGeminiResponse(api_key=api_key, job_description=str(job_data))
+        print('Compare Score : ', compare_score)
         # 
+        # input("\nPress ENTER to check apply type")
+        # print(get_apply_type(driver))
+        # # 
         input("\nPress ENTER to attempt apply")
         # 
         applied = click_apply_button(driver)
-        if applied is False:
-            if isChatbotPresent(driver):
-                print("➡️ Moving to next job")
-                continue
-            # 
-            elif isCaptchaPresent(driver):
-                print("🚨 CAPTCHA detected during job loop. Stopping.")
-                break
+        # if applied is False:
+        #     if isChatbotPresent(driver):
+        #         print("➡️ Moving to next job")
+        #         continue
+        #     # 
+        #     elif isCaptchaPresent(driver):
+        #         print("🚨 CAPTCHA detected during job loop. Stopping.")
+        #         break
         # 
         input("\nPress ENTER to open next job")
         # 

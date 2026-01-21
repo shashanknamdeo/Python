@@ -351,7 +351,7 @@ def click_apply_button(driver):
     """
     if isCaptchaPresent(driver):
         print("🚨 CAPTCHA detected before apply")
-        if not askUserInput() :
+        if not getUserInput() :
             return False
     # 
     apply_type = get_apply_type(driver)
@@ -385,7 +385,7 @@ def click_apply_button(driver):
         # Check for chatbot
         if isChatbotPresent(driver):
             print("🤖 Chatbot detected — skipping this job")
-            if not askUserInput():
+            if not getUserInput():
                 return False
         # 
         print("✅ Applied without chatbot")
@@ -399,7 +399,7 @@ def click_apply_button(driver):
 # -------------------------------------------------------------------------------------------------
 
 
-def askUserInput():
+def getUserInput():
     # 
     while True:
         choice = input("Press C to continue or Q to quit: ").strip().lower()
@@ -414,6 +414,114 @@ def askUserInput():
         # 
         else:
             print("Invalid input. Please press C or Q.")
+
+
+# -------------------------------------------------------------------------------------------------
+
+
+# import re
+
+# def parseJobDescription(driver):
+#     """
+#     Parse job description section and convert to structured JSON
+#     """
+#     data = {
+#         "overview": {},
+#         "description_summary": None,
+#         "responsibilities": [],
+#         "eligibility": [],
+#         "education": {},
+#         "skills": [],
+#         "raw_text": None
+#     }
+#     # 
+#     # 1️⃣ Extract RAW text safely
+#     try:
+#         jd_container = driver.find_element(
+#             By.CLASS_NAME, "styles_JDC__dang-inner-html__h0K4t"
+#         )
+#         raw_text = jd_container.text
+#     except:
+#         return data
+#     # 
+#     data["raw_text"] = raw_text
+#     # 
+#     lines = [l.strip() for l in raw_text.split("\n") if l.strip()]
+#     # 
+#     # 2️⃣ OVERVIEW extraction
+#     for line in lines:
+#         if "location" in line.lower():
+#             data["overview"]["location"] = line.split(":", 1)[-1].strip()
+#         # 
+#         if "duration" in line.lower():
+#             data["overview"]["duration"] = line.split(":", 1)[-1].strip()
+#         # 
+#         if "stipend" in line.lower() or "salary" in line.lower():
+#             data["overview"]["stipend"] = line.split(":", 1)[-1].strip()
+#         # 
+#         if "vacancies" in line.lower():
+#             nums = re.findall(r"\d+", line)
+#             if nums:
+#                 data["overview"]["vacancies"] = int(nums[0])
+#         # 
+#         if "intern" in line.lower() or "developer" in line.lower():
+#             if "overview_title" not in data["overview"]:
+#                 data["overview"]["title"] = line
+#     # 
+#     # 3️⃣ Responsibilities
+#     capture = False
+#     for line in lines:
+#         if "responsibilit" in line.lower():
+#             capture = True
+#             continue
+#         if capture:
+#             if line.lower().startswith(("eligibility", "required", "skills")):
+#                 capture = False
+#             else:
+#                 data["responsibilities"].append(line)
+#     # 
+#     # 4️⃣ Eligibility
+#     capture = False
+#     for line in lines:
+#         if "eligibility" in line.lower():
+#             capture = True
+#             continue
+#         if capture:
+#             if line.lower().startswith(("required", "skills", "benefits")):
+#                 capture = False
+#             else:
+#                 data["eligibility"].append(line)
+#     # 
+#     # 5️⃣ Description summary (first meaningful paragraph)
+#     for line in lines:
+#         if len(line) > 120:
+#             data["description_summary"] = line
+#             break
+#     # 
+#     # 6️⃣ Education (from structured section)
+#     try:
+#         edu_blocks = driver.find_elements(
+#             By.XPATH, "//div[contains(@class,'styles_education')]//span"
+#         )
+#         if edu_blocks:
+#             data["education"]["ug"] = edu_blocks[0].text
+#             if len(edu_blocks) > 1:
+#                 data["education"]["pg"] = edu_blocks[1].text
+#     except:
+#         pass
+#     # 
+#     # 7️⃣ Skills (most reliable)
+#     try:
+#         skill_elements = driver.find_elements(
+#             By.XPATH, "//div[contains(@class,'styles_key-skill')]//span"
+#         )
+#         skills = list(set([s.text.strip() for s in skill_elements if s.text.strip()]))
+#         data["skills"] = skills
+#     except:
+#         pass
+#     # 
+#     return data
+
 
 # _________________________________________________________________________________________________
 
