@@ -1,8 +1,10 @@
 
 
 import os
+import sys
 import time
 import random
+import requests
 
 from dotenv import load_dotenv
 
@@ -13,9 +15,16 @@ from selenium.webdriver.chrome.options import Options
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import InvalidSessionIdException, WebDriverException
 
+
+# -------------------------------------------------------------------------------------------------
+
+from Core.Logger import get_logger
+
+logger = get_logger("hireiq.naukri")
 
 # -------------------------------------------------------------------------------------------------
 
@@ -24,10 +33,11 @@ def getCredentials(profile_number=2, verbose=False):
     """
     Load Naukri credentials from env file
     """
-    print("Initialize Function - getCredentials") if verbose else None
+    logger.info("Initialize Function - getCredentials") if verbose else None
     # 
     secrets_path = os.getenv("SECRETS_FILE")
     if not secrets_path:
+        logger.critical("SECRETS_FILE environment variable is not set.")
         raise SystemExit("SECRETS_FILE environment variable is not set.")
     # 
     load_dotenv(dotenv_path=secrets_path, override=True)
@@ -36,9 +46,12 @@ def getCredentials(profile_number=2, verbose=False):
     password = os.getenv("NAUKRI_PASSWORD_" + str(profile_number))
     # 
     if not email or not password:
+        logger.critical("Naukri credentials not found in env file.")
         raise SystemExit("Naukri credentials not found in env file.")
     # 
+    logger.info("Credentials loaded successfully") if verbose else None
     return email, password
+
 
 
 
@@ -50,31 +63,32 @@ def getDriver(verbose=False):
     """
     Initialize Chrome WebDriver
     """
-    print("Initialize Function - getDriver") if verbose else None
+    logger.info("Initialize Function - getDriver") if verbose else None
     # 
-    options = Options()
+    try:
+        options = Options()
+        options.add_argument("--start-maximized")
+        options.add_argument("--disable-blink-features=AutomationControlled")
+        options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        options.add_experimental_option("useAutomationExtension", False)
+        # 
+        options.add_argument(
+            "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/120.0.0.0 Safari/537.36"
+        )
+        # 
+        driver = webdriver.Chrome(
+            service=Service(ChromeDriverManager().install()),
+            options=options
+        )
+        # 
+        logger.info("Chrome WebDriver initialized")
+        return driver
     # 
-    # Window behavior
-    options.add_argument("--start-maximized")
-    # 
-    # 🔒 Anti-bot flags
-    options.add_argument("--disable-blink-features=AutomationControlled")
-    options.add_experimental_option("excludeSwitches", ["enable-automation"])
-    options.add_experimental_option("useAutomationExtension", False)
-    # 
-    # 🧠 Real browser user-agent
-    options.add_argument(
-        "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/120.0.0.0 Safari/537.36"
-    )
-    # 
-    # 
-    driver = webdriver.Chrome(
-        service=Service(ChromeDriverManager().install()),
-        options=options
-    )
-    return driver
+    except Exception as e:
+        logger.error(f"Error - getDriver | {e}", exc_info=True)
+        sys.exit(1)
 
 
 # -------------------------------------------------------------------------------------------------
@@ -84,46 +98,45 @@ def autoLogin(driver, email, password, verbose=False):
     """
     Login to Naukri
     """
-    print("Initialize Function - autoLogin") if verbose else None
+    logger.info("Initialize Function - autoLogin") if verbose else None
     # 
-    driver.get("https://www.naukri.com/nlogin/login")
-    # 
-    wait = WebDriverWait(driver, 15)
-    wait.until(EC.presence_of_element_located((By.ID, "usernameField")))
-    # 
-    email_input = driver.find_element(By.ID, "usernameField")
-    password_input = driver.find_element(By.ID, "passwordField")
-    # 
-    email_input.clear()
-    for ch in email:
-        email_input.send_keys(ch)
-        time.sleep(0.05)   # human typing
-    # 
-    password_input.clear()
-    for ch in password:
-        password_input.send_keys(ch)
-        time.sleep(0.05)   # human typing
-    # 
-    driver.find_element(By.XPATH, "//button[contains(text(),'Login')]").click()
-    # 
-    # wait for dashboard/home load
-    wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
-    # 
-    print("TITLE AFTER LOGIN:", driver.title)
     try:
+        driver.get("https://www.naukri.com/nlogin/login")
+        logger.debug("Login page opened")
+        # 
+        wait = WebDriverWait(driver, 15)
+        wait.until(EC.presence_of_element_located((By.ID, "usernameField")))
+        # 
+        email_input = driver.find_element(By.ID, "usernameField")
+        password_input = driver.find_element(By.ID, "passwordField")
+        # 
+        email_input.clear()
+        for ch in email:
+            email_input.send_keys(ch)
+            time.sleep(0.1)
+        # 
+        password_input.clear()
+        for ch in password:
+            password_input.send_keys(ch)
+            time.sleep(0.1)
+        # 
+        driver.find_element(By.XPATH, "//button[contains(text(),'Login')]").click()
+        logger.debug("Login button clicked")
+        # 
         WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.CLASS_NAME, "nI-gNb-drawer"))
         )
-        print("✅ Login successful")
-    except:
-        print("❌ Login failed or CAPTCHA triggered")
+        # 
+        logger.info("Login successful")
+        # 
+        if isCaptchaPresent(driver):
+            logger.warning("CAPTCHA detected after login")
+            driver.quit()
+            raise SystemExit("Stopping bot due to CAPTCHA")
     # 
-    if isCaptchaPresent(driver):
-        print("🚨 CAPTCHA detected after login")
-        driver.quit()
-        raise SystemExit("Stopping bot due to CAPTCHA")
-
-
+    except Exception as e:
+        logger.error(f"Error - autoLogin | {e}", exc_info=True)
+        sys.exit(1)
 
 
 # -------------------------------------------------------------------------------------------------
@@ -133,24 +146,30 @@ def openJobsPage(driver, verbose=False):
     """
     Open job listing page
     """
-    print("Initialize Function - openJobsPage") if verbose else None
+    logger.info("Initialize Function - openJobsPage") if verbose else None
     # 
-    url = (
-        "https://www.naukri.com/jobs-in-india"
-        "?experience=0"
-        "&jobAge=1"
-        "&functionAreaIdGid=3"
-        "&functionAreaIdGid=5"
-        "&functionAreaIdGid=8"
-    )
+    try:
+        url = (
+            "https://www.naukri.com/jobs-in-india"
+            "?experience=0"
+            "&jobAge=1"
+            "&functionAreaIdGid=3"
+            "&functionAreaIdGid=5"
+            "&functionAreaIdGid=8"
+        )
+        # 
+        driver.get(url)
+        # 
+        WebDriverWait(driver, 15).until(
+            EC.presence_of_element_located((By.TAG_NAME, "body"))
+        )
+        # 
+        logger.info(f"Jobs page opened | Title: {driver.title}")
     # 
-    driver.get(url)
-    # 
-    WebDriverWait(driver, 15).until(
-        EC.presence_of_element_located((By.TAG_NAME, "body"))
-    )
-    # 
-    print("PAGE TITLE:", driver.title)
+    except Exception as e:
+        logger.error(f"Error - openJobsPage | {e}", exc_info=True)
+        sys.exit(1)
+
 
 
 # -------------------------------------------------------------------------------------------------
@@ -160,7 +179,7 @@ def sortJobs(driver, verbose=False):
     """
     Sort jobs by Date
     """
-    print("Initialize Function - sortJobs") if verbose else None
+    logger.info("Initialize Function - sortJobs") if verbose else None
     # 
     wait = WebDriverWait(driver, 15)
     # 
@@ -187,11 +206,9 @@ def getJobLinks(driver, verbose=False):
     """
     Collect job URLs from listing page
     """
-    print("Initialize Function - getJobLinks") if verbose else None
+    logger.info("Initialize Function - getJobLinks") if verbose else None
     # 
-    jobs = driver.find_elements(
-        By.XPATH, "//a[contains(@class,'title')]"
-    )
+    jobs = driver.find_elements(By.XPATH, "//a[contains(@class,'title')]")
     # 
     links = []
     for job in jobs:
@@ -199,8 +216,9 @@ def getJobLinks(driver, verbose=False):
         if link:
             links.append(link)
     # 
-    print("JOBS FOUND:", len(links))
+    logger.info(f"Jobs found: {len(links)}")
     return links
+
 
 
 # -------------------------------------------------------------------------------------------------
@@ -261,18 +279,18 @@ def scrapeJobDetail(driver, url, verbose=False):
     """
     Scrape individual job details
     """
-    print("Initialize Function - scrapeJobDetail") if verbose else None
+    logger.info("Initialize Function - scrapeJobDetail") if verbose else None
+    logger.debug(f"Scraping job URL: {url}")
     # 
     driver.get(url)
     # 
     wait = WebDriverWait(driver, 15)
     wait.until(EC.presence_of_element_located((By.TAG_NAME, "h1")))
     # 
-    # scroll to ensure lazy-loaded content
     driver.execute_script("window.scrollTo(0, document.body.scrollHeight/3)")
     time.sleep(2)
     # 
-    job = {
+    job_data_dict = {
         "url": url,
         "title": None,
         "company": None,
@@ -283,33 +301,36 @@ def scrapeJobDetail(driver, url, verbose=False):
     }
     # 
     try:
-        job["title"] = driver.find_element(By.TAG_NAME, "h1").text
+        job_data_dict["title"] = driver.find_element(By.TAG_NAME, "h1").text
     except:
-        pass
+        logger.warning("Job title not found")
     # 
-    job["company"] = getCompany(driver)
-    job["experience"] = getExperience(driver)
-    job["salary"] = getSalary(driver)
-    job["location"] = getLocation(driver)
+    job_data_dict["company"] = getCompany(driver)
+    job_data_dict["experience"] = getExperience(driver)
+    job_data_dict["salary"] = getSalary(driver)
+    job_data_dict["location"] = getLocation(driver)
     # 
     try:
-        job["description"] = driver.find_element(
-            By.XPATH,
-            "//section[contains(@class,'job-desc')]"
+        job_data_dict["description"] = driver.find_element(
+            By.XPATH, "//section[contains(@class,'job-desc')]"
         ).text
     except:
-        pass
+        logger.warning("Job description not found")
     # 
-    return job
+    logger.info("Job scraped successfully")
+    return job_data_dict
+
 
 
 # -------------------------------------------------------------------------------------------------
 
 
-def get_apply_type(driver):
+def get_apply_type(driver, verbose=False):
     """
     Detect apply button type on job page
     """
+    logger.info("Initialize Function - get_apply_type") if verbose else None
+    # 
     mapping = {
         "already-applied": "APPLIED",
         "login-apply-button": "LOGIN_REQUIRED",
@@ -331,10 +352,12 @@ def get_apply_type(driver):
 # -------------------------------------------------------------------------------------------------
 
 
-def isChatbotPresent(driver):
+def isChatbotPresent(driver, verbose=False):
     """
     Detect Naukri application chatbot popup
     """
+    logger.info("Initialize Function - isChatbotPresent") if verbose else None
+    # 
     try:
         chatbot = driver.find_element(By.CLASS_NAME, "_chatBotContainer")
         return chatbot.is_displayed()
@@ -345,20 +368,22 @@ def isChatbotPresent(driver):
 # -------------------------------------------------------------------------------------------------
 
 
-def click_apply_button(driver):
+def click_apply_button(driver, verbose=False):
     """
     Click apply button if allowed
     """
+    logger.info("Initialize Function - click_apply_button") if verbose else None
+    # 
     if isCaptchaPresent(driver):
-        print("🚨 CAPTCHA detected before apply")
-        if not getUserInput() :
+        logger.warning("CAPTCHA detected before apply")
+        if not getUserInput():
             return False
     # 
     apply_type = get_apply_type(driver)
-    print("APPLY TYPE:", apply_type)
+    logger.info(f"Apply type detected: {apply_type}")
     # 
     if apply_type in ["APPLIED", "LOGIN_REQUIRED", "UNKNOWN"]:
-        print("Skipping apply")
+        logger.info("Skipping apply")
         return False
     # 
     try:
@@ -366,11 +391,9 @@ def click_apply_button(driver):
             btn = WebDriverWait(driver, 10).until(
                 EC.element_to_be_clickable((By.ID, "apply-button"))
             )
-        # 
         elif apply_type in ["APPLY_ON_COMPANY_SITE", "WALKIN_INTERESTED"]:
-            print("Manual apply required. Skipping.")
+            logger.info("Manual apply required. Skipping.")
             return False
-        # 
         else:
             return False
         # 
@@ -380,26 +403,29 @@ def click_apply_button(driver):
         time.sleep(random.uniform(4, 9))
         # 
         btn.click()
-        time.sleep(4)  # allow chatbot to load
+        time.sleep(4)
         # 
-        # Check for chatbot
         if isChatbotPresent(driver):
-            print("🤖 Chatbot detected — skipping this job")
+            logger.warning("Chatbot detected — skipping this job")
             if not getUserInput():
                 return False
         # 
-        print("✅ Applied without chatbot")
+        logger.info("Applied successfully without chatbot")
         return True
     # 
     except Exception as e:
-        print("❌ Failed to click apply:", e)
+        logger.error(f"Failed to click apply | {e}", exc_info=True)
         return False
+
 
 
 # -------------------------------------------------------------------------------------------------
 
 
-def getUserInput():
+def getUserInput(verbose=False):
+    """
+    """
+    logger.info("Initialize Function - getUserInput") if verbose else None
     # 
     while True:
         choice = input("Press C to continue or Q to quit: ").strip().lower()

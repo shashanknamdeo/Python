@@ -1,11 +1,14 @@
 
-
 import time
 import random
 
 from NaukriFunctions import *
 from CompareResumeAndJobDescription import *
 
+# -----------------------------------------------
+
+from Core.Logger import get_logger
+logger = get_logger("hireiq.naukri.main")
 
 # -----------------------------------------------
 
@@ -18,74 +21,101 @@ def main(verbose=False):
     """
     Main execution flow
     """
-    print("Initialize Function - main") if verbose else None
+    logger.info("Initialize Function - main") if verbose else None
     # 
     driver = getDriver(verbose=verbose)
+    logger.info("WebDriver initialized")
     DRIVER = driver
     # 
-    api_key = fetchGeminiAccessKey()
-    print('Gemini API Key : ', api_key)
+    api_key = fetchGeminiAccessKey(verbose=verbose)
+    logger.info(f"Gemini API key fetched    | API Key : {api_key}")
     # 
     email, password = getCredentials(profile_number=2, verbose=verbose)
+    logger.info("User credentials fetched")
     # autoLogin(driver=driver, email=email, password=password, verbose=verbose)
     time.sleep(random.uniform(4, 8))
     # 
     openJobsPage(driver=driver, verbose=verbose)
+    logger.info("Jobs page opened")
     time.sleep(random.uniform(1, 3))
     # 
     sortJobs(driver=driver, verbose=verbose)
+    logger.info("Jobs sorted")
     time.sleep(random.uniform(1, 3))
     # 
     input("\nPress ENTER to see jobs")
+    logger.info("User requested to view job listings")
     # 
     job_links = getJobLinks(driver=driver, verbose=verbose)
+    logger.info(f"Job links fetched | Count: {len(job_links) if job_links else 0}")
     # 
     if not job_links:
-        print("No jobs found")
+        logger.warning("No jobs found")
         driver.quit()
+        logger.info("WebDriver closed")
         return
     # 
     for link in job_links:
-        job_data = scrapeJobDetail(driver=driver, url=link, verbose=verbose)
+        logger.info(f"Processing job link: {link}")
+        job_data_dict = scrapeJobDetail(driver=driver, url=link, verbose=verbose)
+        logger.info("Job details scraped successfully")
         # 
-        print("\nSCRAPED JOB DATA:")
-        for k, v in job_data.items():
-            print(f"{k}: {v}")
+        # for k, v in job_data_dict.items():
+        #     print(f"{k}: {v}")
         # 
-        input("\nPress ENTER to Compare Resume and Job description")
-        compare_score = generateGeminiResponse(api_key=api_key, job_description=str(job_data))
-        print('Compare Score : ', compare_score)
-        # 
-        # input("\nPress ENTER to check apply type")
-        # print(get_apply_type(driver))
-        # # 
-        input("\nPress ENTER to attempt apply")
-        # 
-        applied = click_apply_button(driver)
-        # if applied is False:
-        #     if isChatbotPresent(driver):
-        #         print("➡️ Moving to next job")
-        #         continue
-        #     # 
-        #     elif isCaptchaPresent(driver):
-        #         print("🚨 CAPTCHA detected during job loop. Stopping.")
-        #         break
+        logger.info("Comparing Resume and Job ......................................")
+        comparison_result = generateGeminiResponse(api_key=api_key, job_description=str(job_data_dict), verbose=verbose)
+        logger.info(f"Comparison result received: {comparison_result}")
+        if comparison_result == 'True':
+            logger.info("Similar")
         # 
         input("\nPress ENTER to open next job")
+        logger.info("Moving to next job")
+        # 
+        driver.back()
+        logger.debug("Navigated back to job list")
+        sortJobs(driver=driver, verbose=verbose)
+        logger.debug("Jobs re-sorted after navigation")
         # 
         time.sleep(random.uniform(8, 15))  # human reading time
     # 
     driver.quit()
+    logger.info("WebDriver closed | Main execution completed")
 
 
 # -----------------------------------------------
 
 
 if __name__ == "__main__":
-    main(verbose=True)
+    try:
+        main(verbose=True)
+    except SystemExit:
+        pass
+
+
+# applied = click_apply_button(driver)
+#         if applied is False:
+#             if isChatbotPresent(driver):
+#                 print("➡️ Moving to next job")
+#                 continue
+#             # 
+#             elif isCaptchaPresent(driver):
+#                 print("🚨 CAPTCHA detected during job loop. Stopping.")
+#                 break
+        
 
 
 # _________________________________________________________________________________________________
+
+# Key skill HTML (star for essential skills)
+# <div class="styles_key-skill__GIPn_">
+# <div class="styles_heading__veHpg">Key Skills</div>
+# <div class="styles_legend__DVbef">Skills highlighted with ‘<i class="ni-icon-jd-save"></i>‘ are preferred keyskills</div>
+# <div><a href="https://www.naukri.com/php-jobs" target="_blank" class="styles_chip__7YCfG styles_clickable__dUW8S">
+# <i class="ni-icon-jd-save"></i><span>PHP</span></a><a href="https://www.naukri.com/laravel-jobs" target="_blank" class="styles_chip__7YCfG styles_clickable__dUW8S">
+# <i class="ni-icon-jd-save"></i><span>Laravel</span></a></div>
+# <div><a href="https://www.naukri.com/css-jobs" target="_blank" class="styles_chip__7YCfG styles_clickable__dUW8S"><span>CSS</span></a>
+# <a href="https://www.naukri.com/html-jobs" target="_blank" class="styles_chip__7YCfG styles_clickable__dUW8S"><span>HTML</span></a></div></div>
 
 
 # <div id="_3i3hoibi1Footer" class="footerWrapper">
@@ -141,9 +171,9 @@ if __name__ == "__main__":
 #     # 
 #     # Scrape first job (for testing)
 #     for link in job_links:
-#         job_data = scrapeJobDetail(driver=driver, url=link, verbose=verbose)
+#         job_data_dict = scrapeJobDetail(driver=driver, url=link, verbose=verbose)
 #         print("\nSCRAPED JOB DATA:") if verbose == True else None
-#         for k, v in job_data.items():
+#         for k, v in job_data_dict.items():
 #             print(f"{k}: {v}") if verbose == True else None
 #         # 
 #         DRIVER = driver
