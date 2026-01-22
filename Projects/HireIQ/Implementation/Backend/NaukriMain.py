@@ -28,7 +28,7 @@ def main(verbose=False):
     DRIVER = driver
     # 
     api_key = fetchGeminiAccessKey(verbose=verbose)
-    logger.info(f"Gemini API key fetched    | API Key : {api_key}")
+    logger.info(f"Gemini API key fetched    | API Key : {api_key[-5:]}")
     # 
     email, password = getCredentials(profile_number=2, verbose=verbose)
     logger.info("User credentials fetched")

@@ -49,7 +49,7 @@ OUTPUT RULES:
 INPUTS:
 1. Resume :
 
-SHASHANK KUMAR NAMDEO
+SHASHANK KUMAR NAMDEO | Gender : Male 
 shashanknamdeo28@gmail.com | +91 9981325976
 linkedin.com/in/shashanknamdeo28 | github.com/shashanknamdeo
 Bhopal, India
