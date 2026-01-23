@@ -6,3 +6,6 @@ PythonVirtualEnvironment/
 # Python Cache
 __pycache__/
 *.pyc
+
+*.log
+.env

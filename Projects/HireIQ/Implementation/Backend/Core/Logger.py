@@ -18,7 +18,7 @@ def get_logger(name: str) -> logging.Logger:
     logger.propagate = False
     # 
     formatter = logging.Formatter(
-        "%(asctime)s | %(levelname)s | %(funcName)-25s | %(message)s",
+        "%(asctime)s | %(levelname)-8s | %(funcName)-25s | %(message)s",
         datefmt="%Y-%m-%d %H:%M:%S"
     )
     # 
@@ -31,7 +31,7 @@ def get_logger(name: str) -> logging.Logger:
     file_handler.setFormatter(formatter)
     # 
     console_handler = logging.StreamHandler()
-    console_handler.setLevel(logging.INFO)
+    console_handler.setLevel(logging.DEBUG)
     console_handler.setFormatter(formatter)
     # 
     logger.addHandler(file_handler)

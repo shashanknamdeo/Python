@@ -13,61 +13,87 @@ from PromptFunction import *
 # --------------------------------------------------------------------------
 
 from Core.Logger import get_logger
-logger = get_logger("hireiq.compare.resume.and.job.description")
+logger = get_logger("__name__")
 
 # --------------------------------------------------------------------------
 
-def fetchGeminiAccessKey(verbose=False):
+def fetchGeminiAccessKey():
     """
     """
-    logger.info("Initialize Function - fetchGeminiAccessKey") if verbose else None
-    # get path from environment variable (Windows)
-    secrets_path = os.getenv("SECRETS_FILE")
-    if not secrets_path:
-        raise SystemExit("SECRETS_FILE environment variable is not set.")
+    logger.debug("Function Initialized")
     # 
-    # load the file into the process environment
-    load_dotenv(dotenv_path=secrets_path, override=False)
-    # 
-    # now access secrets via os.getenv
-    api_key = os.getenv("GOSSIPY_API_KEY")
-    # print('api_key : ', api_key)
-    return api_key
-
-# --------------------------------------------------------------------------
-
-def generateGeminiResponse(api_key, job_description, verbose=False):
-    """
-    """
-    logger.info("Initialize Function - generateGeminiResponse") if verbose else None
-    # 
-    max_retries = 5
-    retry_delay = 30
-    # 
-    # 1. Create client with API key
-    client = genai.Client(api_key=api_key)
-    # 
-    # 2. Use supported model
-    model = "models/gemini-2.5-flash"
-    # 
-    # 3. Simple prompt
-    prompt = generatePrompt(job_description=job_description, verbose=verbose)
-    # print(prompt)
-    # 
-    for attempt in range(1, max_retries + 1):
-        try:
-            response = client.models.generate_content(
-                model=model,
-                contents=prompt
-            )
-            # print('response : ', response)
-            return response.text
+    try:
+        # Get path from environment variable (Windows)
+        secrets_path = os.getenv("SECRETS_FILE")
+        if not secrets_path:
+            raise SystemExit("SECRETS_FILE environment variable is not set.")
         # 
-        except ServerError as e:
-            logger.info(f"Attempt {attempt} failed    |    Exception - 503 (Model is overloaded)    |    Retrying in 30 seconds.....")
-            time.sleep(retry_delay)
+        # Load the file into the process environment
+        load_dotenv(dotenv_path=secrets_path, override=False)
+        # 
+        # Access secrets via os.getenv
+        api_key = os.getenv("Gemini_GenAI_API_Key")
+        # print('api_key : ', api_key)
+        return api_key
     # 
-    logger.info("All retries failed.")
+    except Exception as e:
+        logger.error(f"Error - fetchGeminiAccessKey | {e}", exc_info=True)
+        sys.exit(1)
+
+
+# --------------------------------------------------------------------------
+
+
+def generateGeminiResponse(api_key, prompt):
+    """
+    """
+    try:
+        logger.debug("Function Initialized")
+        # 
+        max_retries = 5
+        retry_delay = 30
+        # 
+        # Create client with API key
+        client = genai.Client(api_key=api_key)
+        # 
+        # Use supported model
+        model = "models/gemini-2.5-flash"
+        # 
+        for attempt in range(1, max_retries + 1):
+            try:
+                response = client.models.generate_content(
+                    model=model,
+                    contents=prompt
+                )
+                logger.info(f"Gemini Response Generated    |    Response : {response.text}")
+                return response.text
+            # 
+            except ServerError as e:
+                logger.info(f"Attempt {attempt} failed    |    Exception - 503 (Model is overloaded)    |    Retrying in 30 seconds.....")
+                time.sleep(retry_delay)
+        # 
+        logger.info("All retries failed.")
+    # 
+    except Exception as e:
+        logger.error(f"Error - generateGeminiResponse | {e}", exc_info=True)
+        sys.exit(1)
+
+
+def compareJob(api_key, job_description):
+    """
+    """
+    logger.debug("Function Initialized")
+    # 
+    try:
+        prompt = generatePrompt(job_description=job_description)
+        # 
+        response = generateGeminiResponse(api_key=api_key, prompt=prompt)
+        # 
+        return response
+    # 
+    except Exception as e:
+        logger.error(f"Error - compareJob | {e}", exc_info=True)
+        sys.exit(1)
 
 
 # --------------------------------------------------------------------------
@@ -83,4 +109,4 @@ if __name__ == "__main__":
     print(api_key)
     # 
     print(job_description)
-    generateGeminiResponse(api_key=api_key, job_description=job_description)
+    compareJob(api_key=api_key, job_description=job_description)

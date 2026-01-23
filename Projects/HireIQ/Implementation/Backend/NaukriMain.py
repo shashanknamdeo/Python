@@ -1,9 +1,10 @@
 
+import sys
 import time
 import random
 
-from NaukriFunctions import *
-from CompareResumeAndJobDescription import *
+from Functions.Driver1Functions import getRelevantJobLinks
+from Functions.CommonFunctions import getDriver
 
 # -----------------------------------------------
 
@@ -12,83 +13,32 @@ logger = get_logger("hireiq.naukri.main")
 
 # -----------------------------------------------
 
-DRIVER = None
+DRIVER_1 = None
 
 # -----------------------------------------------
 
 
-def main(verbose=False):
+def main():
     """
-    Main execution flow
     """
-    logger.info("Initialize Function - main") if verbose else None
+    logger.debug("Initialize Function - main")
     # 
-    driver = getDriver(verbose=verbose)
-    logger.info("WebDriver initialized")
-    DRIVER = driver
+    try:
+        driver_1 = getDriver()
+        DRIVER_1 = driver_1
+        logger.info("driver_1 Initialized")
+        getRelevantJobLinks(driver=driver_1)
     # 
-    api_key = fetchGeminiAccessKey(verbose=verbose)
-    logger.info(f"Gemini API key fetched    | API Key : {api_key[-5:]}")
-    # 
-    email, password = getCredentials(profile_number=2, verbose=verbose)
-    logger.info("User credentials fetched")
-    # autoLogin(driver=driver, email=email, password=password, verbose=verbose)
-    time.sleep(random.uniform(4, 8))
-    # 
-    openJobsPage(driver=driver, verbose=verbose)
-    logger.info("Jobs page opened")
-    time.sleep(random.uniform(1, 3))
-    # 
-    sortJobs(driver=driver, verbose=verbose)
-    logger.info("Jobs sorted")
-    time.sleep(random.uniform(1, 3))
-    # 
-    input("\nPress ENTER to see jobs")
-    logger.info("User requested to view job listings")
-    # 
-    job_links = getJobLinks(driver=driver, verbose=verbose)
-    logger.info(f"Job links fetched | Count: {len(job_links) if job_links else 0}")
-    # 
-    if not job_links:
-        logger.warning("No jobs found")
-        driver.quit()
-        logger.info("WebDriver closed")
-        return
-    # 
-    for link in job_links:
-        logger.info(f"Processing job link: {link}")
-        job_data_dict = scrapeJobDetail(driver=driver, url=link, verbose=verbose)
-        logger.info("Job details scraped successfully")
-        # 
-        # for k, v in job_data_dict.items():
-        #     print(f"{k}: {v}")
-        # 
-        logger.info("Comparing Resume and Job ......................................")
-        comparison_result = generateGeminiResponse(api_key=api_key, job_description=str(job_data_dict), verbose=verbose)
-        logger.info(f"Comparison result received: {comparison_result}")
-        if comparison_result == 'True':
-            logger.info("Similar")
-        # 
-        input("\nPress ENTER to open next job")
-        logger.info("Moving to next job")
-        # 
-        driver.back()
-        logger.debug("Navigated back to job list")
-        sortJobs(driver=driver, verbose=verbose)
-        logger.debug("Jobs re-sorted after navigation")
-        # 
-        time.sleep(random.uniform(8, 15))  # human reading time
-    # 
-    driver.quit()
-    logger.info("WebDriver closed | Main execution completed")
-
+    except Exception as e:
+        logger.error(f"Error - main | {e}", exc_info=True)
+        sys.exit(1)
 
 # -----------------------------------------------
 
 
 if __name__ == "__main__":
     try:
-        main(verbose=True)
+        main()
     except SystemExit:
         pass
 
