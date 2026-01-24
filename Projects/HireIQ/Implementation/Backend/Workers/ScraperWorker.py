@@ -7,15 +7,22 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
-
 from CompareResumeAndJobDescription import compareJob
 from CompareResumeAndJobDescription import fetchGeminiAccessKey
 
-from Functions.CommonFunctions import getCredentials
+from Functions.CommonFunctions import getDriver
 
 # -------------------------------------------------------------------------------------------------
 
-from Core.Logger import get_logger
+import os
+import django
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
+django.setup()
+
+# -------------------------------------------------------------------------------------------------
+
+from core.Logger import get_logger
 logger = get_logger("__name__")
 
 # -------------------------------------------------------------------------------------------------
@@ -190,7 +197,7 @@ def scrapeJobDetail(driver, url):
 # -------------------------------------------------------------------------------------------------
 
 
-def processJobLinks(driver, job_links, api_key):
+def processJobLinks(driver, job_links, api_key, relevant_job_queue):
     """
     Scrap and Compare job links
     """
@@ -198,6 +205,7 @@ def processJobLinks(driver, job_links, api_key):
     # 
     try:
         for link in job_links:
+            print()
             logger.info(f"Processing job link : {link}")
             job_data_dict = scrapeJobDetail(driver=driver, url=link)
             logger.info("Job details scraped successfully")
@@ -209,14 +217,16 @@ def processJobLinks(driver, job_links, api_key):
             comparison_result = compareJob(api_key=api_key, job_description=str(job_data_dict))
             if comparison_result == 'True':
                 logger.info("Similar")
+                relevant_job_queue.put(link)
             # 
-            input("\nPress ENTER to open next job")
+            # input("\nPress ENTER to open next job")
+            print()
             logger.info("Moving to next job")
             # 
-            driver.back()
-            logger.info("Navigated back to job list")
-            sortJobs(driver=driver)
-            logger.info("Jobs re-sorted after navigation")
+            # driver.back()
+            # logger.info("Navigated back to job list")
+            # sortJobs(driver=driver)
+            # logger.info("Jobs re-sorted after navigation")
             # 
             time.sleep(random.uniform(8, 15))  # human reading time
         # 
@@ -231,7 +241,7 @@ def processJobLinks(driver, job_links, api_key):
 # -------------------------------------------------------------------------------------------------
 
 
-def getRelevantJobLinks(driver):
+def getRelevantJobLinks(driver, relevant_job_queue):
     """
     Driver 1 Task
     """
@@ -241,11 +251,6 @@ def getRelevantJobLinks(driver):
         api_key = fetchGeminiAccessKey()
         logger.info(f"Gemini API key fetched    |    API Key : {api_key[-4:]}")
         # 
-        email, password = getCredentials(profile_number=2)
-        logger.info("User credentials fetched")
-        # autoLogin(driver=driver, email=email, password=password)
-        time.sleep(random.uniform(4, 8))
-        # 
         openJobsPage(driver=driver)
         logger.info("Jobs page opened")
         time.sleep(random.uniform(1, 3))
@@ -254,19 +259,15 @@ def getRelevantJobLinks(driver):
         logger.info("Jobs sorted")
         time.sleep(random.uniform(1, 3))
         # 
-        input("\nPress ENTER to see jobs")
-        logger.info("User requested to view job listings")
-        # 
         job_links = getJobLinks(driver=driver)
         logger.info(f"Job links fetched    |    Count : {len(job_links) if job_links else 0}")
         # 
         if not job_links:
-            logger.warning("No jobs found")
+            logger.critical("NO JOBS FOUND    |    Closing WebDriver")
             driver.quit()
-            logger.info("WebDriver closed")
             return
         # 
-        processJobLinks(driver=driver, job_links=job_links, api_key=api_key)
+        processJobLinks(driver=driver, job_links=job_links, api_key=api_key, relevant_job_queue=relevant_job_queue)
         driver.quit()
         logger.info("WebDriver closed | Main execution completed")
     # 
@@ -274,3 +275,25 @@ def getRelevantJobLinks(driver):
         logger.error(f"Error - getRelevantJobLinks | {e}", exc_info=True)
         sys.exit(1)
 
+
+# -------------------------------------------------------------------------------------------------
+
+
+def relevantJobWorker(relevant_job_queue):
+    """
+    fix issue - only i get job of page no 1
+    """
+    logger.debug("Function Initialized")
+    # 
+    driver = getDriver()
+    # 
+    while True:
+        try:
+            getRelevantJobLinks(driver=driver, relevant_job_queue=relevant_job_queue)
+            time.sleep(15)
+        except Exception as e:
+            logger.error(f"Relevant Job Worker Error | {e}", exc_info=True)
+            time.sleep(5)
+
+
+# fix issue - only i get job of page no 1

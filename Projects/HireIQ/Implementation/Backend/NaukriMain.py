@@ -1,37 +1,73 @@
 
 import sys
 import time
-import random
+import threading
 
-from Functions.Driver1Functions import getRelevantJobLinks
+from queue import Queue
+
 from Functions.CommonFunctions import getDriver
+# from Functions.Driver1Functions import relevantJobWorker
+# from Functions.Driver2Functions import applyLinkCheckerWorker
+# from Functions.Driver3Functions import applyJobWorker
+from Workers.JobFinderWorker import jobFinderWorker
 
 # -----------------------------------------------
 
-from Core.Logger import get_logger
+from core.Logger import get_logger
 logger = get_logger("hireiq.naukri.main")
 
 # -----------------------------------------------
 
-DRIVER_1 = None
+RELEVANT_JOB_QUEUE  = Queue(maxsize=200)
+APPLY_JOB_QUEUE     = Queue(maxsize=50)
 
 # -----------------------------------------------
 
 
+# def main():
+#     logger.debug("Function Initialized")
+#     # 
+#     try:
+#         threads = []
+#         # 
+#         # Thread-1: Fetch relevant jobs (anonymous)
+#         t1 = threading.Thread( target=relevantJobWorker, args=(RELEVANT_JOB_QUEUE), name="RelevantJobThread", daemon=True )
+#         threads.append(t1)
+#         # 
+#         # Thread-2: Check apply + chatbot (secondary ID)
+#         t2 = threading.Thread( target=apply_link_checker_worker, args=(RELEVANT_JOB_QUEUE, APPLY_JOB_QUEUE), name="ApplyCheckerThread", daemon=True )
+#         threads.append(t2)
+#         # 
+#         # Thread-3: Apply jobs (primary ID)
+#         t3 = threading.Thread( target=apply_job_worker, arg=(APPLY_JOB_QUEUE), name="ApplyJobThread", daemon=True )
+#         threads.append(t3)
+#         # 
+#         for t in threads:
+#             t.start()
+#         # 
+#         # Keep main thread alive
+#         while True:
+#             time.sleep(1)
+#         # 
+#     except KeyboardInterrupt:
+#         logger.warning("Shutting down system...")
+#         sys.exit(0)
+#     # 
+#     except Exception as e:
+#         logger.error(f"Fatal Error | {e}", exc_info=True)
+#         sys.exit(1)
+
 def main():
-    """
-    """
-    logger.debug("Initialize Function - main")
-    # 
-    try:
-        driver_1 = getDriver()
-        DRIVER_1 = driver_1
-        logger.info("driver_1 Initialized")
-        getRelevantJobLinks(driver=driver_1)
-    # 
-    except Exception as e:
-        logger.error(f"Error - main | {e}", exc_info=True)
-        sys.exit(1)
+    logger.debug("Function Initialized")
+    # RELEVANT_JOB_QUEUE.put('https://www.naukri.com/job-listings-gtm-operations-associate-valorega-talentedge-greater-noida-0-to-5-years-261225027985?src=cluster&sid=17691567362867212_1&xp=1&px=1&nignbevent_src=jobsearchDeskGNB')
+    # RELEVANT_JOB_QUEUE.put('https://www.naukri.com/job-listings-sr-mis-executive-amcc-new-delhi-3-to-5-years-130126914636?src=simjobsjd_bottom')
+    # relevantJobWorker(relevant_job_queue=RELEVANT_JOB_QUEUE)
+    # input('Press Enter to check Chatbot')
+    # applyLinkCheckerWorker(relevant_job_queue=RELEVANT_JOB_QUEUE, apply_job_queue=APPLY_JOB_QUEUE)
+    # input('Press Enter to Apply')
+    # APPLY_JOB_QUEUE.put('https://www.naukri.com/job-listings-cloud-engineer-alactic-inc-gurugram-0-to-2-years-230126025875')
+    # applyJobWorker(apply_job_queue=APPLY_JOB_QUEUE)
+    jobFinderWorker()
 
 # -----------------------------------------------
 

@@ -22,7 +22,7 @@ from selenium.common.exceptions import InvalidSessionIdException, WebDriverExcep
 
 # -------------------------------------------------------------------------------------------------
 
-from Core.Logger import get_logger
+from core.Logger import get_logger
 logger = get_logger("__name__")
 
 # -------------------------------------------------------------------------------------------------
@@ -129,23 +129,12 @@ def autoLogin(driver, email, password):
             logger.warning("CAPTCHA detected after login")
             driver.quit()
             raise SystemExit("Stopping bot due to CAPTCHA")
+        # 
+        return True
     # 
     except Exception as e:
         logger.error(f"Error - autoLogin | {e}", exc_info=True)
         sys.exit(1)
-
-
-# -------------------------------------------------------------------------------------------------
-
-
-def safeText(driver, xpath):
-    """
-    Safely extract text
-    """
-    try:
-        return driver.find_element(By.XPATH, xpath).text.strip()
-    except NoSuchElementException:
-        return None
 
 
 # -------------------------------------------------------------------------------------------------
@@ -161,42 +150,63 @@ def isCaptchaPresent(driver):
 # -------------------------------------------------------------------------------------------------
 
 
-
-
-
-# -------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-# -------------------------------------------------------------------------------------------------
-
-
-def getUserInput():
+def getApplyType(driver):
     """
+    Detect apply button type on job page
     """
-    logger.info("Function Initialized")
+    logger.debug("Function Initialized")
     # 
-    while True:
-        choice = input("Press C to continue or Q to quit: ").strip().lower()
-        # 
-        if choice == "c":
-            print("Continuing the process...")
-            return True
-        # 
-        elif choice == "q":
-            print("Quitting the program. Goodbye!")
-            return False
-        # 
-        else:
-            print("Invalid input. Please press C or Q.")
+    mapping = {
+        "already-applied": "APPLIED",
+        "login-apply-button": "LOGIN_REQUIRED",
+        "company-site-button": "APPLY_ON_COMPANY_SITE",
+        "walkin-button": "WALKIN_INTERESTED",
+        "apply-button": "APPLY"
+    }
+    # 
+    for element_id, status in mapping.items():
+        try:
+            driver.find_element(By.ID, element_id)
+            return status
+        except NoSuchElementException:
+            continue
+    # 
+    return "UNKNOWN"
 
 
 # -------------------------------------------------------------------------------------------------
+
+
+def clickApplyButton(driver):
+    """
+    Click apply button if allowed
+    """
+    logger.debug("Function Initialized")
+    # 
+    try:
+        btn = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.ID, "apply-button"))
+        )
+        # 
+        driver.execute_script(
+            "arguments[0].scrollIntoView({block:'center'});", btn
+        )
+        time.sleep(random.uniform(4, 9))
+        # 
+        btn.click()
+        # 
+        logger.info("Applied Clicked")
+        return True
+    # 
+    except Exception as e:
+        logger.error(f"Error - processJobLinks | {e}", exc_info=True)
+        sys.exit(1)
+
+
+# -------------------------------------------------------------------------------------------------
+
+import re
+
+def extract_naukri_job_id(url: str) -> int:
+    match = re.search(r"-([0-9]{12})\?", url)
+    return int(match.group(1)) if match else None
