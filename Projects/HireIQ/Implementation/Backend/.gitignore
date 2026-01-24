@@ -1,11 +1,59 @@
 
-# HireIQ Python Virtual Environment
-PythonVirtualEnvironment/
-
-
-# Python Cache
+# =========================
+# Python cache
+# =========================
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
 
-*.log
+# =========================
+# Python Virtual Environment
+# =========================
+PythonVirtualEnvironment/
+
+# =========================
+# Django
+# =========================
+db.sqlite3
+*.sqlite3
+media/
+staticfiles/
+
+# =========================
+# Django Migrations
+# (keep __init__.py)
+# =========================
+migrations/
+!migrations/__init__.py
+
+# =========================
+# Environment variables
+# =========================
 .env
+.env.*
+*.env
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# Testing / Coverage
+# =========================
+.coverage
+htmlcov/
+pytest_cache/
+
+# =========================
+# AWS / Elastic Beanstalk
+# =========================
+.elasticbeanstalk/
+.ebextensions/*.config.local
+
+# =========================
+# Celery / Async (future-proof)
+# =========================
+celerybeat-schedule
+celerybeat.pid
