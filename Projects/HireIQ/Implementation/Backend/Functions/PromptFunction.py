@@ -1,5 +1,5 @@
 
-from Core.Logger import get_logger
+from core.Logger import get_logger
 logger = get_logger("hireiq.prompt.function")
 
 # -----------------------------------------------

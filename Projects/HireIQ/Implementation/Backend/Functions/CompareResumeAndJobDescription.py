@@ -1,6 +1,7 @@
 
 
 import os
+import sys
 import time
 
 from dotenv import load_dotenv
@@ -8,11 +9,11 @@ from dotenv import load_dotenv
 from google import genai
 from google.genai.errors import ServerError
 
-from PromptFunction import *
+from Functions.PromptFunction import generatePrompt
 
 # --------------------------------------------------------------------------
 
-from Core.Logger import get_logger
+from core.Logger import get_logger
 logger = get_logger("__name__")
 
 # --------------------------------------------------------------------------

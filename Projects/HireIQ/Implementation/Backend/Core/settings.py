@@ -83,6 +83,11 @@ DATABASES = {
         "PASSWORD": "hireiq123",    # Your DB password
         "HOST": "localhost",
         "PORT": "5432",
+        # 
+        # 👇 ADD THIS PART
+        "OPTIONS": {
+            "connect_timeout": 5,   # seconds
+        }
     }
 }
 

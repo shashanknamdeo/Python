@@ -1,0 +1,24 @@
+
+CREATE TABLE jobs (
+    id                  INTEGER PRIMARY KEY AUTOINCREMENT,
+
+    -- Naukri identifiers
+    naukri_job_id        BIGINT NOT NULL,        -- e.g. 230126029300
+    job_url              TEXT NOT NULL,
+
+    -- Resume matching
+    resume_match         BOOLEAN,                -- TRUE / FALSE
+    resume_score         INTEGER,                -- optional (0–100)
+
+    -- Pipeline states
+    scrape_status        TEXT NOT NULL DEFAULT 'pending',
+    chatbot_status       TEXT NOT NULL DEFAULT 'unknown',
+    apply_status         TEXT NOT NULL DEFAULT 'pending',
+
+    -- Error tracking
+    last_error           TEXT,
+
+    -- Timestamps
+    created_at           TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at           TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

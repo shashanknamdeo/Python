@@ -7,7 +7,7 @@ class Job(models.Model):
     resume_match = models.BooleanField(null=True)
     # 
     scrape_status = models.CharField(max_length=20, default="pending")
-    chatbot_status = models.CharField(max_length=20, default="unknown")
+    job_status = models.CharField(max_length=20, default="unknown")
     apply_status = models.CharField(max_length=20, default="pending")
     # 
     last_error = models.TextField(null=True, blank=True)
@@ -18,7 +18,7 @@ class Job(models.Model):
     class Meta:
         indexes = [
             models.Index(fields=["scrape_status"]),
-            models.Index(fields=["chatbot_status"]),
+            models.Index(fields=["job_status"]),
             models.Index(fields=["apply_status"]),
         ]
     # 

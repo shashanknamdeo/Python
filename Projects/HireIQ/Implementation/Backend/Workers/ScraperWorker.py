@@ -1,4 +1,5 @@
 
+import os
 import sys
 import time
 import random
@@ -7,18 +8,22 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
-from CompareResumeAndJobDescription import compareJob
-from CompareResumeAndJobDescription import fetchGeminiAccessKey
+# -------------------------------------------------------------------------------------------------
 
-from Functions.CommonFunctions import getDriver
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(BASE_DIR)
+
+print("BASE_DIR =", BASE_DIR)
 
 # -------------------------------------------------------------------------------------------------
 
-import os
 import django
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
 django.setup()
+
+from django.db import transaction
+from jobs.models import Job
 
 # -------------------------------------------------------------------------------------------------
 
@@ -27,81 +32,37 @@ logger = get_logger("__name__")
 
 # -------------------------------------------------------------------------------------------------
 
-def openJobsPage(driver):
-    """
-    Open job listing page
-    """
-    logger.debug("Function Initialized")
-    # 
-    try:
-        url = (
-            "https://www.naukri.com/jobs-in-india"
-            "?experience=0"
-            "&jobAge=1"
-            "&functionAreaIdGid=3"
-            "&functionAreaIdGid=5"
-            "&functionAreaIdGid=8"
-        )
-        # 
-        driver.get(url)
-        # 
-        WebDriverWait(driver, 15).until(
-            EC.presence_of_element_located((By.TAG_NAME, "body"))
-        )
-        # 
-        logger.info(f"Jobs page opened    |    Title : {driver.title}")
-    # 
-    except Exception as e:
-        logger.error(f"Error - openJobsPage | {e}", exc_info=True)
-        sys.exit(1)
-
+from Functions.CommonFunctions import getDriver
+from Functions.CompareResumeAndJobDescription import compareJob
+from Functions.CompareResumeAndJobDescription import fetchGeminiAccessKey
 
 # -------------------------------------------------------------------------------------------------
 
 
-def sortJobs(driver):
+def fetch_job_for_scraping(job_pick_order="new_to_old"):
     """
-    Sort jobs by Date
+    Fetch ONE job safely from DB based on order.
+    # 
+    job_pick_order = "new_to_old" / "old_to_new"
     """
-    logger.debug("Function Initialized")
+    logger.debug('Function Initialized')
     # 
-    wait = WebDriverWait(driver, 15)
+    order_by_field = "-created_at" if job_pick_order == "new_to_old" else "created_at"
     # 
-    sort_btn = wait.until(
-        EC.element_to_be_clickable((By.ID, "filter-sort"))
-    )
-    sort_btn.click()
-    time.sleep(random.uniform(1,3))
-    # 
-    date_option = wait.until(
-        EC.element_to_be_clickable(
-            (By.XPATH, "//a[@data-id='filter-sort-f']")
+    with transaction.atomic():
+        job = (
+            Job.objects
+            .select_for_update(skip_locked=True)
+            .filter(scrape_status="pending")
+            .order_by(order_by_field)
+            .first()
         )
-    )
-    date_option.click()
-    # 
-    wait.until(EC.presence_of_element_located((By.TAG_NAME, "body")))
-
-
-# -------------------------------------------------------------------------------------------------
-
-
-def getJobLinks(driver):
-    """
-    Collect job URLs from listing page
-    """
-    logger.debug("Function Initialized")
-    # 
-    jobs = driver.find_elements(By.XPATH, "//a[contains(@class,'title')]")
-    # 
-    links = []
-    for job in jobs:
-        link = job.get_attribute("href")
-        if link:
-            links.append(link)
-    # 
-    logger.info(f"Jobs found: {len(links)}")
-    return links
+        # 
+        if job:
+            job.scrape_status = "processing"
+            job.save(update_fields=["scrape_status"])
+        # 
+        return job
 
 
 # -------------------------------------------------------------------------------------------------
@@ -193,107 +154,94 @@ def scrapeJobDetail(driver, url):
     return job_data_dict
 
 
-
 # -------------------------------------------------------------------------------------------------
 
 
-def processJobLinks(driver, job_links, api_key, relevant_job_queue):
+def save_scrape_result(job, resume_match, error=None):
     """
-    Scrap and Compare job links
+    Update job after scraping & comparison
     """
-    logger.debug("Function Initialized")
+    logger.debug('Function Initialized')
     # 
-    try:
-        for link in job_links:
-            print()
-            logger.info(f"Processing job link : {link}")
-            job_data_dict = scrapeJobDetail(driver=driver, url=link)
-            logger.info("Job details scraped successfully")
-            # 
-            # for k, v in job_data_dict.items():
-            #     print(f"{k}: {v}")
-            # 
-            logger.info("Comparing Resume and Job ......................................")
-            comparison_result = compareJob(api_key=api_key, job_description=str(job_data_dict))
-            if comparison_result == 'True':
-                logger.info("Similar")
-                relevant_job_queue.put(link)
-            # 
-            # input("\nPress ENTER to open next job")
-            print()
-            logger.info("Moving to next job")
-            # 
-            # driver.back()
-            # logger.info("Navigated back to job list")
-            # sortJobs(driver=driver)
-            # logger.info("Jobs re-sorted after navigation")
-            # 
-            time.sleep(random.uniform(8, 15))  # human reading time
-        # 
-        logger.info("All Jobs processed")
-        return driver
-    # 
-    except Exception as e:
-        logger.error(f"Error - processJobLinks | {e}", exc_info=True)
-        sys.exit(1)
+    job.resume_match = resume_match
+    job.scrape_status = "done"
+    job.last_error = error
+    job.save(
+        update_fields=[
+            "resume_match",
+            "scrape_status",
+            "last_error",
+            "updated_at",
+        ]
+    )
 
 
 # -------------------------------------------------------------------------------------------------
 
 
-def getRelevantJobLinks(driver, relevant_job_queue):
+def mark_job_failed(job, error):
     """
-    Driver 1 Task
     """
-    logger.debug("Function Initialized")
+    logger.debug('Function Initialized')
     # 
-    try:
-        api_key = fetchGeminiAccessKey()
-        logger.info(f"Gemini API key fetched    |    API Key : {api_key[-4:]}")
-        # 
-        openJobsPage(driver=driver)
-        logger.info("Jobs page opened")
-        time.sleep(random.uniform(1, 3))
-        # 
-        sortJobs(driver=driver)
-        logger.info("Jobs sorted")
-        time.sleep(random.uniform(1, 3))
-        # 
-        job_links = getJobLinks(driver=driver)
-        logger.info(f"Job links fetched    |    Count : {len(job_links) if job_links else 0}")
-        # 
-        if not job_links:
-            logger.critical("NO JOBS FOUND    |    Closing WebDriver")
-            driver.quit()
-            return
-        # 
-        processJobLinks(driver=driver, job_links=job_links, api_key=api_key, relevant_job_queue=relevant_job_queue)
-        driver.quit()
-        logger.info("WebDriver closed | Main execution completed")
-    # 
-    except Exception as e:
-        logger.error(f"Error - getRelevantJobLinks | {e}", exc_info=True)
-        sys.exit(1)
+    job.scrape_status = "failed"
+    job.last_error = str(error)
+    job.save(update_fields=["scrape_status", "last_error", "updated_at"])
 
 
 # -------------------------------------------------------------------------------------------------
 
 
-def relevantJobWorker(relevant_job_queue):
-    """
-    fix issue - only i get job of page no 1
-    """
-    logger.debug("Function Initialized")
+def scraper_worker():
+    logger.debug("Scraper worker started")
+    # 
+    job_idle_sleep_minutes = 5
+    scrap_gap_seconds = 60
+    # 
+    idle_sleep_seconds = job_idle_sleep_minutes * 60
     # 
     driver = getDriver()
+    api_key = fetchGeminiAccessKey()
+    # 
     # 
     while True:
+        job = None
+        # 
         try:
-            getRelevantJobLinks(driver=driver, relevant_job_queue=relevant_job_queue)
-            time.sleep(15)
+            job = fetch_job_for_scraping()
+            # 
+            if not job:
+                logger.info(f"No pending jobs. Sleeping for {job_idle_sleep_minutes} minutes...")
+                time.sleep(idle_sleep_seconds)
+                continue
+            # 
+            print()
+            logger.info(f"Processing job    |    ID : {job.naukri_job_id}    |    Link : {job.job_url}")
+            # 
+            job_data = scrapeJobDetail(driver=driver, url=job.job_url)
+            # 
+            logger.info("Comparing resume...")
+            comparison_result = compareJob(api_key=api_key, job_description=str(job_data))
+            # 
+            resume_match = comparison_result == "True"
+            # 
+            save_scrape_result(job=job, resume_match=resume_match)
+            # 
+            logger.info(f"Job completed    |    ID={job.naukri_job_id}    |    resume_match={resume_match}")
+            # 
+            time.sleep(scrap_gap_seconds)
+        # 
         except Exception as e:
-            logger.error(f"Relevant Job Worker Error | {e}", exc_info=True)
-            time.sleep(5)
+            logger.error(f"Scraper error | {e}", exc_info=True)
+            # 
+            if job:
+                mark_job_failed(job, e)
+            # 
+            time.sleep(10)
 
 
-# fix issue - only i get job of page no 1
+# -------------------------------------------------------------------------------------------------
+
+
+if __name__ == "__main__":
+    scraper_worker()
