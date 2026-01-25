@@ -96,8 +96,13 @@ def applyJob(driver, job_link):
             else:
                 logger.warning(f'Apply Status not change to APPLIED    |    Job Link : {job_link}')
                 return False
+        # 
+        elif apply_type == 'APPLIED':
+            logger.warning(f'Job Apply Button is APPLIED    |    Job Link : {job_link}')
+            return True
+        # 
         else:
-            logger.error(f'Job Apply Button is not APPLY    |    Button Type : {apply_type}    |    Job Link : {job_link}')
+            logger.error(f'Job Apply Button is not APPLY / APPLIED    |    Button Type : {apply_type}    |    Job Link : {job_link}')
             sys.exit(1)
     # 
     except Exception as e:

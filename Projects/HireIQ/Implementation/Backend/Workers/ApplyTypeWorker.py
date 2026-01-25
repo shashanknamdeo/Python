@@ -177,7 +177,7 @@ def save_chatbot_result(job, result, error=None):
     )
 
 
-def chatbot_worker():
+def applyTypeWorker():
     """
     """
     logger.info("Chatbot worker started")
@@ -223,7 +223,7 @@ def chatbot_worker():
 
 
 if __name__ == "__main__":
-    chatbot_worker()
+    applyTypeWorker()
 
 
 # def checkApplyButton(driver, job_link, apply_job_queue):
