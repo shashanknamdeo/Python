@@ -57,3 +57,5 @@ pytest_cache/
 # =========================
 celerybeat-schedule
 celerybeat.pid
+
+.ebextensions/
