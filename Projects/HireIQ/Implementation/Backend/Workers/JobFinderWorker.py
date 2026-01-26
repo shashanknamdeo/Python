@@ -26,9 +26,9 @@ from jobs.models import Job   # adjust app name if different
 
 # -----------------------------------------------
 
-from core.Logger import get_logger
+# from core.Logger import get_logger
 
-logger = get_logger("__name__")
+# logger = get_logger("__name__")
 
 # -----------------------------------------------
 

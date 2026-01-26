@@ -5,7 +5,9 @@ from logging.handlers import RotatingFileHandler
 
 IS_PROD = os.environ.get("DJANGO_SETTINGS_MODULE") == "core.settings.prod"
 
-LOG_DIR = "logs"
+LOG_DIR = "logs"                # For Dev
+# LOG_DIR = "/var/log/hireiq"     # For Prod
+
 LOG_FILE = os.path.join(LOG_DIR, "hireiq.log")
 
 
