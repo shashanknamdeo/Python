@@ -4,6 +4,8 @@ import sys
 import time
 import random
 
+from google import genai
+
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -22,7 +24,7 @@ import django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
 django.setup()
 
-from django.db import transaction
+from django.db import transaction, close_old_connections
 from jobs.models import Job
 
 # -------------------------------------------------------------------------------------------------
@@ -42,13 +44,15 @@ from Functions.CompareResumeAndJobDescription import fetchGeminiAccessKey
 def fetch_job_for_scraping(job_pick_order="new_to_old"):
     """
     Fetch ONE job safely from DB based on order.
-    # 
     job_pick_order = "new_to_old" / "old_to_new"
     """
     logger.debug('Function Initialized')
-    # 
+
+    # 🔹 CHANGE: Ensure fresh DB connection
+    close_old_connections()
+
     order_by_field = "-created_at" if job_pick_order == "new_to_old" else "created_at"
-    # 
+
     with transaction.atomic():
         job = (
             Job.objects
@@ -57,11 +61,11 @@ def fetch_job_for_scraping(job_pick_order="new_to_old"):
             .order_by(order_by_field)
             .first()
         )
-        # 
+
         if job:
             job.scrape_status = "processing"
             job.save(update_fields=["scrape_status"])
-        # 
+
         return job
 
 
@@ -102,7 +106,7 @@ def safeText(driver, xpath):
     """
     try:
         return driver.find_element(By.XPATH, xpath).text.strip()
-    except NoSuchElementException:
+    except:
         return None
 
 
@@ -114,15 +118,15 @@ def scrapeJobDetail(driver, url):
     Scrape individual job details
     """
     logger.debug("Function Initialized")
-    # 
+
     driver.get(url)
-    # 
+
     wait = WebDriverWait(driver, 15)
     wait.until(EC.presence_of_element_located((By.TAG_NAME, "h1")))
-    # 
+
     driver.execute_script("window.scrollTo(0, document.body.scrollHeight/3)")
     time.sleep(2)
-    # 
+
     job_data_dict = {
         "url": url,
         "title": None,
@@ -132,24 +136,24 @@ def scrapeJobDetail(driver, url):
         "location": None,
         "description": None,
     }
-    # 
+
     try:
         job_data_dict["title"] = driver.find_element(By.TAG_NAME, "h1").text
     except:
         logger.warning("Job title not found")
-    # 
+
     job_data_dict["company"] = getCompany(driver)
     job_data_dict["experience"] = getExperience(driver)
     job_data_dict["salary"] = getSalary(driver)
     job_data_dict["location"] = getLocation(driver)
-    # 
+
     try:
         job_data_dict["description"] = driver.find_element(
             By.XPATH, "//section[contains(@class,'job-desc')]"
         ).text
     except:
         logger.warning("Job description not found")
-    # 
+
     logger.info("Job scraped successfully")
     return job_data_dict
 
@@ -162,7 +166,10 @@ def save_scrape_result(job, resume_match, error=None):
     Update job after scraping & comparison
     """
     logger.debug('Function Initialized')
-    # 
+
+    # 🔹 CHANGE: Ensure fresh DB connection
+    close_old_connections()
+
     job.resume_match = resume_match
     job.scrape_status = "done"
     job.last_error = error
@@ -183,7 +190,10 @@ def mark_job_failed(job, error):
     """
     """
     logger.debug('Function Initialized')
-    # 
+
+    # 🔹 CHANGE: Ensure fresh DB connection
+    close_old_connections()
+
     job.scrape_status = "failed"
     job.last_error = str(error)
     job.save(update_fields=["scrape_status", "last_error", "updated_at"])
@@ -194,49 +204,57 @@ def mark_job_failed(job, error):
 
 def scraper_worker():
     logger.debug("Scraper worker started")
-    # 
+
     job_idle_sleep_minutes = 5
     scrap_gap_seconds = 60
-    # 
+
     idle_sleep_seconds = job_idle_sleep_minutes * 60
-    # 
+
     driver = getDriver()
     api_key = fetchGeminiAccessKey()
-    # 
-    # 
+    client = genai.Client(api_key=api_key)
+
     while True:
         job = None
-        # 
+
         try:
             job = fetch_job_for_scraping()
-            # 
+
             if not job:
-                logger.info(f"No pending jobs. Sleeping for {job_idle_sleep_minutes} minutes...")
+                logger.info(
+                    f"No pending jobs. Sleeping for {job_idle_sleep_minutes} minutes..."
+                )
                 time.sleep(idle_sleep_seconds)
                 continue
-            # 
-            print()
-            logger.info(f"Processing job    |    ID : {job.naukri_job_id}    |    Link : {job.job_url}")
-            # 
+
+            logger.info(
+                f"Processing job | ID : {job.naukri_job_id} | Link : {job.job_url}"
+            )
+
             job_data = scrapeJobDetail(driver=driver, url=job.job_url)
-            # 
+
             logger.info("Comparing resume...")
-            comparison_result = compareJob(api_key=api_key, job_description=str(job_data))
-            # 
+            comparison_result = compareJob(
+                client=client,
+                job_description=str(job_data)
+            )
+
             resume_match = comparison_result == "True"
-            # 
+
             save_scrape_result(job=job, resume_match=resume_match)
-            # 
-            logger.info(f"Job completed    |    ID={job.naukri_job_id}    |    resume_match={resume_match}")
-            # 
+
+            logger.info(
+                f"Job completed | ID={job.naukri_job_id} | resume_match={resume_match}"
+            )
+
             time.sleep(scrap_gap_seconds)
-        # 
+
         except Exception as e:
             logger.error(f"Scraper error | {e}", exc_info=True)
-            # 
+
             if job:
                 mark_job_failed(job, e)
-            # 
+
             time.sleep(10)
 
 

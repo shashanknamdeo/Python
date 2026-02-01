@@ -134,7 +134,11 @@ def checkApplyButton(driver, job_link):
             logger.warning('Apply Type : APPLIED')
             return 'APPLIED'
         # 
-        raise Exception("Unknown apply type")
+        if apply_type == "UNKNOWN" or apply_type == "LOGIN_REQUIRED" :
+            logger.error(f'Error    |    Apply Type : {apply_type}')
+            return 'ERROR'
+        # 
+        raise Exception(f"Error    |    Apply Type    |    getApplyType() - returns : {apply_type}")
     # 
     except Exception as e:
         logger.error(f"Error - checkApplyButton | {e}", exc_info=True)
@@ -219,7 +223,7 @@ def applyTypeWorker():
             if job:
                 save_chatbot_result(job=job, result="FAILED", error=str(e))
             # 
-            time.sleep(10)
+            time.sleep(check_gap_seconds)
 
 
 if __name__ == "__main__":

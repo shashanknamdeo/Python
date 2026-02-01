@@ -1,0 +1,90 @@
+Sure — here’s a **clean, professional system description** for **Intellitrade**, written so you can use it in docs, a README, or even an architecture review. I’ll keep it clear and not overly marketing-fluffy.
+
+---
+
+## Intellitrade — System Description
+
+**Intellitrade** is an automated algorithmic trading system designed to execute predefined trading strategies at fixed time intervals. The system continuously evaluates market conditions and current order states, and automatically places or skips trades based on strategy logic and risk rules.
+
+The primary goal of Intellitrade is to provide a **reliable, modular, and cloud-native trading engine** that can be extended from simple scheduled strategies to more advanced automated trading workflows.
+
+---
+
+## Core Functionality
+
+Intellitrade operates in a scheduled execution cycle:
+
+1. **Scheduled Trigger**
+   The system is triggered at a fixed interval (e.g., every 10 minutes) using a cloud scheduler.
+
+2. **Market & Order Data Fetching**
+   On each execution, Intellitrade retrieves:
+
+   * Current market prices from the broker’s REST API
+   * Existing order and position status from the broker
+   * Strategy state and historical order data from persistent storage
+
+3. **Strategy Evaluation**
+   Trading strategies are evaluated using the latest market data and current positions. Each strategy determines whether to:
+
+   * Place a new order
+   * Modify or exit an existing position
+   * Take no action
+
+4. **Order Execution**
+   If strategy conditions are satisfied and risk checks pass, Intellitrade places orders through the broker API. All executions are designed to be idempotent to prevent duplicate trades.
+
+5. **State & Ledger Update**
+   After execution, the system updates:
+
+   * Strategy state
+   * Order history
+   * Position and PnL records
+     These records are stored persistently for consistency and auditability.
+
+6. **Logging & Monitoring**
+   Each execution cycle is fully logged, including “no-action” decisions, enabling traceability, debugging, and performance analysis.
+
+---
+
+## Architecture Overview
+
+* **Execution Model:** Event-driven, interval-based automation
+* **Compute:** AWS Lambda (MVP)
+* **Scheduling:** Amazon EventBridge
+* **Broker Integration:** REST-based broker APIs
+* **State Storage:** DynamoDB / S3
+* **Logging & Monitoring:** Amazon CloudWatch
+
+The system is intentionally designed to be **stateless at runtime**, with all critical state persisted externally. This ensures reliability, fault tolerance, and easy scalability.
+
+---
+
+## Design Principles
+
+* **Modular Strategy Design** – Each strategy is isolated and independently executable
+* **Idempotent Order Handling** – Prevents duplicate or unintended trades
+* **Cloud-Native & Cost-Efficient** – Uses serverless infrastructure for early-stage deployment
+* **Extensible Architecture** – Can evolve to EC2/ECS, WebSocket feeds, and real-time execution without rewriting core strategy logic
+* **Safety First** – Emphasis on controlled execution, observability, and risk awareness
+
+---
+
+## Future Enhancements
+
+* WebSocket-based live market feeds
+* Multi-strategy and multi-instrument support
+* Advanced risk management and position netting
+* Backtesting and paper trading engine
+* Web dashboard for monitoring and configuration
+
+---
+
+If you want, I can also:
+
+* Rewrite this as a **README.md**
+* Make a **one-page architecture overview**
+* Create a **non-technical description** for stakeholders
+* Tighten it into a **formal design document**
+
+Just tell me where you’ll use it.

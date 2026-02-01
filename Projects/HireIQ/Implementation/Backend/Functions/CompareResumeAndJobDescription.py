@@ -6,7 +6,6 @@ import time
 
 from dotenv import load_dotenv
 
-from google import genai
 from google.genai.errors import ServerError
 
 from Functions.PromptFunction import generatePrompt
@@ -45,17 +44,14 @@ def fetchGeminiAccessKey():
 # --------------------------------------------------------------------------
 
 
-def generateGeminiResponse(api_key, prompt):
+def generateGeminiResponse(client, prompt):
     """
     """
     try:
         logger.debug("Function Initialized")
         # 
         max_retries = 5
-        retry_delay = 30
-        # 
-        # Create client with API key
-        client = genai.Client(api_key=api_key)
+        retry_delay = 1     # In minutes
         # 
         # Use supported model
         model = "models/gemini-2.5-flash"
@@ -70,8 +66,8 @@ def generateGeminiResponse(api_key, prompt):
                 return response.text
             # 
             except ServerError as e:
-                logger.info(f"Attempt {attempt} failed    |    Exception - 503 (Model is overloaded)    |    Retrying in 30 seconds.....")
-                time.sleep(retry_delay)
+                logger.info(f"Attempt {attempt} failed    |    Exception - 503 (Model is overloaded)    |    Retrying in {retry_delay} Minutes .....")
+                time.sleep(retry_delay*60)
         # 
         logger.info("All retries failed.")
     # 
@@ -80,7 +76,7 @@ def generateGeminiResponse(api_key, prompt):
         sys.exit(1)
 
 
-def compareJob(api_key, job_description):
+def compareJob(client, job_description):
     """
     """
     logger.debug("Function Initialized")
@@ -88,7 +84,7 @@ def compareJob(api_key, job_description):
     try:
         prompt = generatePrompt(job_description=job_description)
         # 
-        response = generateGeminiResponse(api_key=api_key, prompt=prompt)
+        response = generateGeminiResponse(client=client, prompt=prompt)
         # 
         return response
     # 

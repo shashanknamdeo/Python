@@ -1,0 +1,158 @@
+
+Lambda :
+
+Create Function
+    Name - IntelliTrade
+    Runtime - Python 3.11
+    Architecture - x86_64 (For simplification)
+    Click Create Functions
+
+Save and Run Function
+    Click Deploy to Save Changes
+    Click Test to run the function
+    Select Private Save Events (Where u want to save run logs)
+
+
+-------------------------------------------------
+
+
+Create EventBridge
+    Select Schedular -> Schedules in left menu
+    Create Schedule
+    Name - TestEventBridge
+    Schedule pattern
+        Recurring schedule
+        Time zone - UTC + 05:30 (Asia/Calcutta)
+        Rate-based schedule
+        Rate expression - 1 minute (Desired recurring time)
+        Flexible time window - OFF
+        Click Next
+        #
+        Templated targets - AWS Lambda
+        Invoke - Lambda function - Select Target Lambda Function
+        Payload - {
+        "source": "eventbridge-scheduler",
+        "schedule": "every-1-minute",
+        "timezone": "IST"
+        }
+        This payload will appear as the event inside your Lambda.
+        Click Next
+        #
+        Permissions - Execution role (Select if created in past else create new)
+        Click Next
+        #
+        Review Details
+        Click Create Schedule
+
+
+-------------------------------------------------
+
+Read and Write in S3 file
+
+
+1. Create S3 bucket & file
+    Create bucket
+        Go to S3 → Create bucket
+        Name: lambda-date-time-demo
+        Region: same as Lambda
+        Keep defaults → Create
+    #
+    Create a file
+        Open bucket
+        Click Create folder → logs
+        Inside logs/ → Create object
+        File name: datetime.txt
+        Content (optional) : Lambda execution log:
+        Save it.
+
+2. Give Lambda permission to write S3 (VERY IMPORTANT)
+    Go to IAM → Roles
+    Open your Lambda execution role
+    Add this policy
+
+Attach Inline Policy → JSON:
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject"
+      ],
+      "Resource": "arn:aws:s3:::lambda-date-time-demo/*"
+    }
+  ]
+}
+
+
+Note : Without this, Lambda will fail.
+
+3. Write Lambda code (Python)
+    Go to Lambda → Your function → Code
+    Replace code with this:
+
+import boto3
+from datetime import datetime
+
+s3 = boto3.client("s3")
+
+BUCKET_NAME = "lambda-date-time-demo"
+FILE_KEY = "logs/datetime.txt"
+
+def lambda_handler(event, context):
+    # Get current date & time
+    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    # Read existing file from S3
+    try:
+        response = s3.get_object(Bucket=BUCKET_NAME, Key=FILE_KEY)
+        existing_content = response["Body"].read().decode("utf-8")
+    except s3.exceptions.NoSuchKey:
+        existing_content = ""
+
+    # Append new date-time
+    updated_content = existing_content + f"\n{now}"
+
+    # Write back to S3
+    s3.put_object(
+        Bucket=BUCKET_NAME,
+        Key=FILE_KEY,
+        Body=updated_content.encode("utf-8")
+    )
+
+    return {
+        "status": "success",
+        "written_time": now
+    }
+
+
+    Click Deploy.
+    Test Lambda manually
+    Click Test
+
+    Optional
+        Create new test event (empty JSON {})
+        Click Test
+
+    Expected result:
+        Status: success
+
+4. Verify in S3 (IMPORTANT)
+    Go to S3 → logs/datetime.txt
+    Download or open file
+    You should see:
+    Lambda execution log:
+        2026-01-28 10:41:02
+    Run Lambda again → new time added
+
+
+-------------------------------------------------
+
+
+i learned 
+1. aws lambda
+2. eventbridge and connect them and test
+3. i access s3  in lambda and edit/update it
+ now i want to use api keys in lambda using 
