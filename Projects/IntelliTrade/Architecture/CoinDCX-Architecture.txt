@@ -1,0 +1,390 @@
+===============================================================================
+                    GRID TRADING STRATEGY — SPECIFICATION
+===============================================================================
+
+
+===============================================================================
+1. SCOPE & APPLICABILITY
+===============================================================================
+
+Instrument Type
+---------------
+• Applies per instrument (e.g. B-XRP_USDT, B-SOL_USDT)
+• Each instrument is managed independently
+
+Market Type
+-----------
+• Perpetual Futures (using leverage)
+
+
+===============================================================================
+2. STRATEGY STATE REQUIREMENTS
+===============================================================================
+
+The system MUST maintain the following state at all times:
+
+• Active BUY orders (strategy-owned)
+• Active SELL orders (strategy-owned)
+• Filled BUY trades
+    - price
+    - quantity
+    - timestamp
+• Mapping between BUY trades and SELL orders
+• Available balance
+• Total exposure per instrument
+
+State Guarantees
+----------------
+• The system always knows:
+    - how many trades are open
+    - their prices
+    - sizes
+    - pending vs filled state
+• NO trading decision is allowed without validating current state
+
+
+===============================================================================
+3. STRATEGY OVERVIEW — GRID ACCUMULATION
+===============================================================================
+
+A grid-based accumulation strategy that places multiple BUY orders
+below the current market price at fixed intervals.
+
+GRID_CONFIG (per instrument)
+----------------------------
+• open_trade_count
+• buy_step_price_diff
+• notional_value
+• quantity
+
+
+Execution Model
+---------------
+• One execution engine, many symbols
+• Each symbol has:
+    - its own grid config
+    - its own state
+• Shared across symbols:
+    - order fetch
+    - cache
+    - execution loop
+
+Symbols can be added or removed dynamically without engine changes.
+
+
+Restart-Safe Symbol State
+-------------------------
+Orders are NOT stored permanently in memory.
+The exchange is the single source of truth.
+
+symbol_state = {
+    'B-XRP_USDT': {
+        'last_updated_at': None
+    },
+    'B-BTC_USDT': {
+        'last_updated_at': None
+    }
+}
+
+Purpose:
+• Prevent missed fills
+• Allow clean restarts
+
+
+Manual Trading Isolation
+------------------------
+• Manual orders are completely isolated
+• Invisible to grid logic
+• Invisible to exposure calculation
+• Protected from emergency cancels
+
+
+===============================================================================
+4. BUY-SIDE STRATEGY RULES
+===============================================================================
+
+B1 — Buy Order Count Rule
+------------------------
+• Strategy-owned BUY orders below LTP MUST equal OPEN_TRADE_COUNT
+• If count is lower, missing orders MUST be placed
+
+
+B2 — Buy Price Level Calculation
+--------------------------------
+BuyPrice[i] = LTP − (i × BUY_STEP_PRICE_DIFF)
+where:
+    i = 1 .. OPEN_TRADE_COUNT
+
+
+B3 — Existing Order Validation
+------------------------------
+• Check if a BUY order already exists at the price level
+• ALL prices MUST be normalized using BUY_STEP_PRICE_DIFF
+
+
+B4 — Buy Order Placement
+------------------------
+• Missing BUY levels MUST be filled
+• Placement starts from level closest to LTP
+
+
+B5 — Buy Quantity Rule
+---------------------
+• Quantity is fixed OR notional-based
+• Final quantity =
+      min(config_quantity, notional_value_converted)
+• Conversion may use:
+      USDT_INR_RATE and instrument LTP
+• Quantity MUST be verified against available balance
+
+
+B6 — Balance Sufficiency
+-----------------------
+• BUY orders MUST NOT be placed if balance + fees are insufficient
+
+
+B7 — Price Validity
+------------------
+• BUY price MUST be strictly below LTP
+
+
+B8 — Duplicate Prevention
+------------------------
+• No two strategy BUY orders at same price level
+• Manual orders DO NOT block grid logic
+
+
+===============================================================================
+5. SELL-SIDE STRATEGY RULES
+===============================================================================
+
+S1 — Sell Creation Trigger
+-------------------------
+• When a strategy-owned BUY order is FULLY filled,
+  a SELL order MUST be created for total filled quantity
+
+
+S2 — Sell Price Calculation
+---------------------------
+SellPrice = BuyFillPrice + SELL_STEP_PRICE_DIFF
+
+
+S3 — One-to-One Mapping
+----------------------
+• Each BUY fill MUST map to exactly ONE SELL order
+
+
+S4 — Sell Placement Timing
+-------------------------
+• SELL orders MUST be placed immediately after fill confirmation
+
+
+S5 — Duplicate Sell Prevention
+------------------------------
+• No more than one SELL order per BUY fill
+
+
+===============================================================================
+6. ORDER LIFECYCLE RULES
+===============================================================================
+
+O1 — Order Confirmation
+----------------------
+• Orders are valid ONLY after exchange order ID is received
+
+
+O2 — Partial Fill Handling
+-------------------------
+• Partially filled BUY orders MUST NOT generate SELL orders
+• Only FULLY filled BUY orders generate SELL orders
+
+
+O3 — Cancellation Safety
+-----------------------
+• Orders MUST NOT be cancelled unless confirmed OPEN on exchange
+
+
+===============================================================================
+7. RISK MANAGEMENT RULES
+===============================================================================
+
+R1 — Maximum Exposure
+--------------------
+Exposure = Σ (filled_quantity × entry_price)
+
+• Exposure per instrument MUST NOT exceed configured limits
+
+
+R2 — Trading Pause Conditions
+-----------------------------
+Strategy status changes to PAUSED if:
+• Unrealized loss exceeds threshold
+• Exchange API retry limit exceeded
+• Market volatility exceeds limits
+
+
+R3 — Emergency Stop
+------------------
+Strategy status changes to EMERGENCY_STOP if:
+• Balance drops below critical threshold
+• Exchange rejects risk-related orders
+• Inconsistent state is detected
+
+
+R4 — Emergency Actions
+---------------------
+In EMERGENCY_STOP, the system MUST:
+• Cancel ONLY strategy-owned open orders
+• Optionally close strategy-generated positions
+• Stop all further trading actions
+
+
+===============================================================================
+8. DETERMINISTIC EXECUTION ORDER
+===============================================================================
+
+Execution sequence MUST be strictly followed:
+
+1. Fetch latest market data
+2. Sync open orders from exchange
+3. Update filled trades
+4. Validate risk rules
+5. Evaluate BUY-side rules
+6. Place missing BUY orders
+7. Evaluate SELL-side rules
+8. Place required SELL orders
+9. Log all actions
+
+
+===============================================================================
+9. LOGGING & AUDIT RULES
+===============================================================================
+
+L1 — Decision Logging
+--------------------
+Every decision MUST log:
+• Timestamp
+• Instrument
+• Rule ID (e.g. B4, S2)
+• Reason for action or skip
+
+
+L2 — Error Logging
+-----------------
+• All exchange errors MUST log full request/response metadata
+
+
+===============================================================================
+10. STRATEGY INVARIANTS (ALWAYS TRUE)
+===============================================================================
+
+• No BUY order exists above LTP
+• No duplicate BUY price levels
+• No SELL exists without a BUY fill
+• No SELL exists for a partially filled BUY
+• Exposure never exceeds limits
+• Strategy state is always known
+• All prices are normalized before comparison
+• Every strategy-owned order has a valid ownership identifier
+  (client_order_id / tag)
+
+
+===============================================================================
+11. ORDER OWNERSHIP & ISOLATION
+===============================================================================
+
+OI1 — Strategy Order Identification
+----------------------------------
+Strategy orders MUST be identifiable using:
+• client_order_id (preferred)
+• order tag / label / comment
+• deterministic metadata in client ID
+
+
+OI2 — Ownership Enforcement
+--------------------------
+The strategy may ONLY:
+• track
+• count
+• modify
+• cancel
+• create SELL orders for
+
+orders that are explicitly strategy-owned
+
+
+OI3 — Manual Order Ignorance
+---------------------------
+Manual orders MUST:
+• be ignored during buy/sell evaluation
+• be excluded from exposure calculations
+• never generate SELL orders
+• never be cancelled by risk or emergency logic
+
+
+OI4 — Emergency Scope
+--------------------
+• ONLY strategy-owned orders and positions are affected
+• Manual positions are never touched unless explicitly configured
+
+
+===============================================================================
+12. RULE → CODE RESPONSIBILITY MAPPING
+===============================================================================
+
+Rule Group Ownership
+--------------------
+B1–B8   → BuyGridPlanner
+S1–S5   → SellPlanner
+O1–O3   → OrderTracker
+R1–R4   → RiskManager
+L1–L2   → AuditLogger
+INV     → StrategyValidator
+
+
+Component Responsibilities
+--------------------------
+OrderBuilder     → Create client_order_id
+OrderClassifier  → Identify strategy orders
+StateRebuilder   → Ignore manual orders
+RiskManager      → Strategy-only exposure
+EmergencyHandler → Cancel only owned orders
+
+
+===============================================================================
+13. CODE DIR/FILES STRUCTURE
+===============================================================================
+
+coindcx_grid/
+│
+├── engine/
+│   ├── execution_engine.py
+│   ├── symbol_engine.py
+│
+├── planners/
+│   ├── buy_grid_planner.py
+│   ├── sell_planner.py
+│
+├── state/
+│   ├── state_rebuilder.py
+│   ├── order_tracker.py
+│
+├── risk/
+│   ├── risk_manager.py
+│   ├── emergency_handler.py
+│
+├── exchange/
+│   ├── exchange_client.py
+│
+├── utils/
+│   ├── price_utils.py
+│   ├── order_utils.py
+│   ├── audit_logger.py
+│
+├── config.py
+└── main.py
+
+
+===============================================================================
+END OF SPECIFICATION
+===============================================================================
