@@ -87,3 +87,9 @@ Thumbs.db
 # AWS Lambda artifacts (optional but recommended)
 # =========================
 requests-layer.zip
+
+# =========================
+# RemotePackage
+# =========================
+
+Others/RemotePythonLibAdditional/
