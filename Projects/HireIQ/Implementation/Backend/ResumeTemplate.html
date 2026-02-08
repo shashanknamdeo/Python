@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<style>
+body {
+    font-family: "Georgia", serif;
+    margin: 24pt 16pt 14pt 16pt;
+    line-height: 1.2;
+    font-size: 11pt;
+    color: #000;
+}
+
+.title {
+    font-size: 22pt;
+    font-weight: bold;
+    color: #2681D8;
+    margin-bottom: 8pt;
+}
+
+.header {
+  padding-top: 0pt;
+  margin-top: 0pt;
+  font-size: 13pt; 
+  margin-left: 18pt;
+}
+
+.section {
+    margin-top: 12pt;
+}
+
+.section-title {
+    font-size: 13pt;
+    font-weight: bold;
+    margin-bottom: 4pt;
+}
+
+.sub-title {
+    font-size: 10pt;
+    font-weight: bold;
+}
+
+.italic {
+    font-style: italic;
+    font-size: 9pt;
+}
+
+.summary, .project, .education, .certifications{
+  margin-left: 18pt;
+}
+
+.project ul {
+  margin-left: -15pt;
+}
+
+ul {
+    margin-top: 4pt;
+    margin-left: 5pt;
+}
+
+li {
+    margin-bottom: 3pt;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= HEADER (STATIC) ================= -->
+<p class="title">SHASHANK KUMAR NAMDEO</p>
+
+<p class="header">
+  shashanknamdeo28@gmail.com | +91 9981325976
+  <br>
+  github.com/shashanknamdeo | linkedin.com/in/shashanknamdeo28
+  <br>
+  Bhopal, India
+</p>
+
+<hr>
+
+<!-- ================= PROFILE SUMMARY (DYNAMIC) ================= -->
+<div class="section">
+  <div class="section-title">PROFILE SUMMARY</div>
+  <div class="summary"><p>{{ profile_summary }}</p></div>
+</div>
+
+<!-- ================= SKILLS (DYNAMIC) ================= -->
+<div class="section">
+  <div class="section-title">SKILLS &amp; COMPETENCIES</div>
+
+  <ul>
+  {% for category, items in skills.items() %}
+    <li>
+      <b>{{ category.replace("_", " ") }} -</b>
+      {{ items | join(", ") }}
+    </li>
+  {% endfor %}
+  </ul>
+</div>
+
+<!-- ================= PROJECTS (PARTIALLY DYNAMIC) ================= -->
+<div class="section">
+  <div class="section-title">EXPERIENCE</div>
+
+  <div class="project">
+      
+
+    <p class="italic">Software Engineer – Project Experience | Independent & Academic Projects | Bhopal, India | During B.Tech (2022 – Present)</p>
+
+    {% for project in experience.projects %}
+
+      <!-- Project name (STATIC text source, but looped) -->
+      <p class="sub-title">{{ project.name }}</p>
+
+      <!-- Technologies (DYNAMIC) -->
+      <p class="italic">
+        {{ project.technologies | join(", ") }}
+      </p>
+
+      <!-- Highlights (DYNAMIC) -->
+      <ul>
+        {% for point in project.highlights %}
+          <li>{{ point }}</li>
+        {% endfor %}
+      </ul>
+
+    {% endfor %}
+  </div>
+
+</div>
+
+<!-- ================= EDUCATION (STATIC) ================= -->
+<div class="section">
+  <div class="section-title">EDUCATION</div>
+  <div class="education">
+    <p><b>Bachelor of Technology – Artificial Intelligence &amp; Machine Learning</b></p>
+    <p>LNCT Group of Colleges, Bhopal | 2022 – 2026</p>
+  </div>
+</div>
+
+<!-- ================= CERTIFICATIONS (STATIC) ================= -->
+<div class="section">
+  <div class="section-title">CERTIFICATIONS</div>
+  <ul class="certifications">
+    <li><b>AWS Certified Cloud Practitioner</b> – Amazon Web Services</li>
+    <li><b>Wipro TalentNext – .NET Full Stack Developer</b> – Wipro Limited</li>
+  </ul>
+</div>
+
+</body>
+</html>
