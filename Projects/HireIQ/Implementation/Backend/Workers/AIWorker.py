@@ -78,17 +78,17 @@ print("BASE_DIR =", BASE_DIR)
 #     raise Exception("Send button not found")
 
 
-# def read_multiline_input(end_word="END"):
-#     print(f"Enter your prompt (type '{end_word}' on a new line to finish):")
-#     lines = []
-#     # 
-#     while True:
-#         line = input()
-#         if line.strip() == end_word:
-#             break
-#         lines.append(line)
-#     # 
-#     return "\n".join(lines)
+def read_multiline_input(end_word="END"):
+    print(f"Enter your prompt (type '{end_word}' on a new line to finish):")
+    lines = []
+    # 
+    while True:
+        line = input()
+        if line.strip() == end_word:
+            break
+        lines.append(line)
+    # 
+    return "\n".join(lines)
 
 
 # def ask_question_on_search(driver, typing_delay=0.08):
@@ -179,9 +179,9 @@ client = gen_ai_client()
 
 while True:
     try:
-        prompt = input("Ask anything : ")
-        print(prompt)
-        response = client.generate(prompt)
+        question = read_multiline_input()
+        print(question)
+        response = client.generate(question)
         print(response)
     except Exception as e:
         print(Exception)
