@@ -12,4 +12,8 @@ ASP.NET
 LangChain
 
 
-
+n8n         → factory conveyor belt
+LangGraph   → workflow engine with memory
+CrewAI      → team of workers with roles
+AutoGen     → group chat of experts
+ADK         → enterprise AI operating system
