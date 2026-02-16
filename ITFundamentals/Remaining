@@ -11,9 +11,76 @@ Spring Boot
 ASP.NET
 LangChain
 
+Postman or curl
 
 n8n         → factory conveyor belt
 LangGraph   → workflow engine with memory
 CrewAI      → team of workers with roles
 AutoGen     → group chat of experts
 ADK         → enterprise AI operating system
+
+
+Backend Engineer Requirements
+1. Programming Languages
+    A backend engineer must be strong in at least one server-side language:
+    Python (Django, Flask) ✅ Good for you
+    Java (Spring Boot)
+    JavaScript (Node.js)
+    Go, Ruby, PHP (depending on company)
+    👉 For you: Focus on Python + Django since you’re already using it.
+
+2. Understanding of APIs
+    Backend engineers build APIs to connect frontend and database.
+    Must know:
+        RESTful APIs
+        HTTP methods (GET, POST, PUT, DELETE)
+        JSON format
+        Authentication (JWT, OAuth)
+    📌 Interview tip:
+        “I have experience designing RESTful APIs using Django REST Framework.”
+
+3. Database Knowledge
+    Backend systems store and retrieve data efficiently.
+    Required:
+        SQL databases: MySQL, PostgreSQL
+        NoSQL: MongoDB (optional but good)
+        Writing queries & joins
+        Database design & normalization
+
+4. Server & Hosting Knowledge
+    Understanding how backend runs in production.
+    Important concepts:
+        Linux basics
+        AWS / Cloud deployment ☁️ (You are preparing for AWS — great advantage)
+        Docker (bonus skill)
+        Nginx / Gunicorn
+
+5. Data Structures & Algorithms
+    Companies test problem-solving ability.
+    Must know:
+        Arrays, Linked Lists
+        Stacks, Queues
+        Trees, Graphs
+        Time complexity (Big-O)
+
+6. Version Control
+    Collaboration requires Git.
+    Required:
+        Git basics
+        GitHub workflows
+        Pull requests & branching
+
+7. Security Basics
+    Backend engineers protect data.
+    Concepts:
+        Authentication & Authorization
+        Password hashing (bcrypt)
+        HTTPS & encryption
+        Preventing SQL injection & XSS
+
+8. System Design Basics (for growth)
+    Even freshers should know basics:
+        Client–server architecture
+        Load balancing
+        Caching (Redis)
+        Microservices vs Monolith
