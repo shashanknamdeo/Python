@@ -105,10 +105,11 @@ def main(prompt):
     """
     """
     while True:
+        print('\n\n\n\n\n\n\n----------------------------------------------------------------------------------------------------')
         jd = read_multiline_input()
-        prompt = prompt + jd
-        print(prompt)
-        pyperclip.copy(prompt)
+        temp_prompt = prompt + jd
+        print(temp_prompt)
+        pyperclip.copy(temp_prompt)
         # 
         resume_json = read_multiline_input()
         print(type(resume_json))
@@ -149,37 +150,3 @@ and this is the JD
 
 
 main(prompt)
-
-"""
-Job Role -
-
-Provide excellent customer service to ensure great shopping experiences
-Maintain product knowledge to assist customers with inquiries and product selections
-Engage with customers to understand needs and recommend suitable products or solutions.
-Handle customer issues, returns, and exchanges effectively while maintaining a positive demeanor.
-Collaborate with team members to achieve store sales targets and customer service goals.
-Ensure compliance with store policies and uphold company standards in retail operations.
-
-
-
-
-Work days -
-
-6 days a week – weekly off will be between Mon to Fri – 1 day off
-
-Saturday and Sunday will be working days
-
-
-
-Qualifications -
-
-10+2 minimum
-
-Role: Customer Service
-Industry Type: Retail
-Department: Customer Success, Service & Operations
-Employment Type: Full Time, Permanent
-Role Category: Customer Success, Service & Operations - Other
-Education
-UG: Any Graduate
-"""
