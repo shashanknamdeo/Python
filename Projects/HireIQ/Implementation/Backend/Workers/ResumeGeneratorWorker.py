@@ -210,15 +210,15 @@ and this is the JD
 main(prompt)
 
 
-# Use the RTCIFA Prompt Engineering framework to generate a **New_Resume_JSON** by intelligently tweaking my existing resume JSON based on the JD provided. Follow these guidelines:
+Use the RTCIFA Prompt Engineering framework to generate a **New_Resume_JSON** by intelligently tweaking my existing resume JSON based on the JD provided. Follow these guidelines:
 
-# 1. **Role Alignment:** Highlight skills, projects, and experience that match the JD’s required skills, emphasizing **AI, Python, and .NET** wherever applicable.
-# 2. **Profile Summary Enhancement:** Tailor the summary to reflect alignment with the position (Developer Intern / Fresher), including keywords like **AI, Python, .NET, Angular, and full-stack development**.
-# 3. **Skills Mapping:** Prioritize JD-relevant skills in the JSON, keep other strong technical skills but categorize them appropriately under **Development, Cloud_DevOps, Databases, AI_ML_Analytics, Tools_Practices**.
-# 4. **Experience Tweaks:** Update project highlights and technologies to emphasize **Python, AI, .NET familiarity**, and cloud deployment skills while retaining achievements.
-# 5. **Certifications & Education:** Keep all existing certifications, highlighting those relevant to **AI, Python, .NET, or cloud technologies**.
-# 6. **JSON Output:**  
-#    - Only output JSON.  
-#    - Follow the same structure as the input JSON.  
-#    - Ensure **ATS-friendly formatting** with clear tech keywords.  
-#    - All fields are preserved but adjusted for JD relevance.  
+1. **Role Alignment:** Highlight skills, projects, and experience that match the JD’s required skills, emphasizing **AI, Python, and .NET** wherever applicable.
+2. **Profile Summary Enhancement:** Tailor the summary to reflect alignment with the position (Developer Intern / Fresher), including keywords like **AI, Python, .NET, Angular, and full-stack development**.
+3. **Skills Mapping:** Prioritize JD-relevant skills in the JSON, keep other strong technical skills but categorize them appropriately under **Development, Cloud_DevOps, Databases, AI_ML_Analytics, Tools_Practices**.
+4. **Experience Tweaks:** Update project highlights and technologies to emphasize **Python, AI, .NET familiarity**, and cloud deployment skills while retaining achievements.
+5. **Certifications & Education:** Keep all existing certifications, highlighting those relevant to **AI, Python, .NET, or cloud technologies**.
+6. **JSON Output:**  
+   - Only output JSON.  
+   - Follow the same structure as the input JSON.  
+   - Ensure **ATS-friendly formatting** with clear tech keywords.  
+   - All fields are preserved but adjusted for JD relevance.  
