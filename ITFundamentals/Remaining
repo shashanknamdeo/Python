@@ -1,3 +1,5 @@
+Nginx / Gunicorn
+Caching (Redis)
 Docker
 kubernaties
 React
